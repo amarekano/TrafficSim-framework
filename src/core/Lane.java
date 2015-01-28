@@ -53,7 +53,7 @@ public class Lane {
 				int currentIndex = i;
 				Car c = nodes.get(currentIndex).getCar();
 				int currentVelocity = c.getVelocity();
-				if( currentIndex + currentVelocity > maxLength)
+				if( currentIndex + currentVelocity >= maxLength)
 				{
 					//Remove the car from the network
 					nodes.get(currentIndex).setCar(null);
@@ -61,11 +61,11 @@ public class Lane {
 				}
 				else
 				{
-					if(duplicateNodes.get(currentIndex + currentVelocity).isOccupied() == false)
+					int newIndex = currentIndex+currentVelocity;
+					if(newIndex < maxLength && duplicateNodes.get(newIndex).isOccupied() == false)
 					{
 						nodes.get(currentIndex).setOccupied(false);
 						nodes.get(currentIndex).setCar(null);
-						int newIndex = currentIndex+currentVelocity;
 						duplicateNodes.get(newIndex).setCar(c);
 						duplicateNodes.get(newIndex).setOccupied(true);
 					}
@@ -74,10 +74,10 @@ public class Lane {
 						//If the predicted node is occupied then
 						int reducedVelocity = 0;
 						//Calculate the new velocity for the car
-						for(; !duplicateNodes.get(reducedVelocity+1).isOccupied(); reducedVelocity++);
+						for(; (reducedVelocity+1 < maxLength) && !duplicateNodes.get(reducedVelocity+1).isOccupied(); reducedVelocity++);
 						
 						c.setVelocity(reducedVelocity);
-						int newIndex = currentIndex + reducedVelocity;
+						newIndex = currentIndex + reducedVelocity;
 						duplicateNodes.get(newIndex).setOccupied(true);
 						duplicateNodes.get(newIndex).setCar(c);
 						

@@ -42,6 +42,14 @@ public class Main {
 		}
 		
 		System.out.println(lane);
+		
+		for(int i =0; i < 10; i++)
+		{
+			lane.moveCars();
+			if(i == 1)
+				lane.addCar(car3);
+			System.out.println(lane);
+		}
 	}
 	
 }
