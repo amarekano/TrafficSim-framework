@@ -4,7 +4,6 @@ import java.util.*;
 public class Lane {
 	private List<Node> nodes;
 	private int maxLength;
-	private List<Node> temporaryNodes;
 	
 	public Lane()
 	{
@@ -12,10 +11,6 @@ public class Lane {
 		nodes = new ArrayList<Node>(maxLength);
 		Node node=new Node();
 		nodes.add(node);
-		
-		node = new Node();
-		temporaryNodes = new ArrayList<Node>(maxLength);
-		temporaryNodes.add(node);
 	}
 	
 	public Lane(int n)
@@ -26,12 +21,6 @@ public class Lane {
 		{
 			Node node=new Node();
 			nodes.add(node);
-		}
-
-		temporaryNodes = new ArrayList<Node>(maxLength);
-		for(int i=0;i<nodes.size();i++){
-			Node node=new Node();
-			temporaryNodes.add(node);
 		}
 	}
 	
@@ -86,7 +75,6 @@ public class Lane {
 						}
 					}
 						
-					
 					nodes.get(currentIndex).setOccupied(false);
 					nodes.get(currentIndex).setCar(null);
 					
