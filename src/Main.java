@@ -10,19 +10,21 @@ public class Main {
 		Car car3=new Car();
 		System.out.println("Adding car to network");
 		
-		String result = lane.addCar(car1) ? "Car added" : "Unable to add Car";
+		String result = lane.addCar(car1) ? "Car1 added" : "Unable to add Car1";
 		System.out.println(result);
 		
 		System.out.println(lane);
 		System.out.println("Adding another car");
-		result = lane.addCar(car2) ? "Car added" : "Unable to add Car";
+		result = lane.addCar(car2) ? "Car2 added" : "Unable to add Car2";
 		System.out.println(result);
 		
 		System.out.println(lane);
 		System.out.println("Moving cars");
 		lane.moveCars();
+		System.out.println("Cars moved");
 		System.out.println(lane);
-		result = lane.addCar(car2) ? "Car added" : "Unable to add Car";
+		result = lane.addCar(car2) ? "Car2 added" : "Unable to add Car2";
+		System.out.println(result);
 		System.out.println(lane);
 		
 		for(int i =0; i < 10; i++)

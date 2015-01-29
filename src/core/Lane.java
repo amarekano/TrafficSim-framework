@@ -4,6 +4,7 @@ import java.util.*;
 public class Lane {
 	private List<Node> nodes;
 	private int maxLength;
+	private List<Node> temporaryNodes;
 	
 	public Lane()
 	{
@@ -11,6 +12,10 @@ public class Lane {
 		nodes = new ArrayList<Node>(maxLength);
 		Node node=new Node();
 		nodes.add(node);
+		
+		node = new Node();
+		temporaryNodes = new ArrayList<Node>(maxLength);
+		temporaryNodes.add(node);
 	}
 	
 	public Lane(int n)
@@ -21,6 +26,12 @@ public class Lane {
 		{
 			Node node=new Node();
 			nodes.add(node);
+		}
+
+		temporaryNodes = new ArrayList<Node>(maxLength);
+		for(int i=0;i<nodes.size();i++){
+			Node node=new Node();
+			temporaryNodes.add(node);
 		}
 	}
 	
@@ -40,11 +51,8 @@ public class Lane {
 	
 	public void moveCars()
 	{
-		List<Node> duplicateNodes = new ArrayList<Node>(maxLength);
-		for(int i=0;i<nodes.size();i++){
-			Node node=new Node();
-			duplicateNodes.add(node);
-		}
+		
+		
 		for(int i = nodes.size()-1; i >= 0; i--)
 		{
 			if(nodes.get(i).isOccupied())
@@ -61,36 +69,36 @@ public class Lane {
 				}
 				else
 				{
-					int newIndex = currentIndex+currentVelocity;
-					if(newIndex < maxLength && duplicateNodes.get(newIndex).isOccupied() == false)
+					int predictedIndex = currentIndex+currentVelocity;
+					int finalIndex = currentIndex;
+					int finalVelocity = currentVelocity;
+					/* 
+					 * AM > Iterate from current position to predicted position
+					 *	to check for a clear path
+					*/
+					for(int j = 1; j <= predictedIndex && j <= currentVelocity; j++)
 					{
-						nodes.get(currentIndex).setOccupied(false);
-						nodes.get(currentIndex).setCar(null);
-						duplicateNodes.get(newIndex).setCar(c);
-						duplicateNodes.get(newIndex).setOccupied(true);
+						if(!nodes.get(currentIndex+j).isOccupied())
+						{
+							finalIndex = currentIndex +j;
+							finalVelocity = j;
+							break;
+						}
 					}
-					else
-					{
-						//If the predicted node is occupied then
-						int reducedVelocity = 0;
-						//Calculate the new velocity for the car
-						for(; (reducedVelocity+1 < maxLength) && !duplicateNodes.get(reducedVelocity+1).isOccupied(); reducedVelocity++);
 						
-						c.setVelocity(reducedVelocity);
-						newIndex = currentIndex + reducedVelocity;
-						duplicateNodes.get(newIndex).setOccupied(true);
-						duplicateNodes.get(newIndex).setCar(c);
-						
-						nodes.get(currentIndex).setOccupied(false);
-						nodes.get(currentIndex).setCar(null);
-					}
+					
+					nodes.get(currentIndex).setOccupied(false);
+					nodes.get(currentIndex).setCar(null);
+					
+					c.setVelocity(finalVelocity);
+					nodes.get(finalIndex).setOccupied(true);
+					nodes.get(finalIndex).setCar(c);
+					
+		
 				}
 			}
 		}
-		
-		nodes = new ArrayList<Node>(duplicateNodes);
 	}
-	
 	
 	public String toString(){
 		String state="";
