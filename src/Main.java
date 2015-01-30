@@ -5,9 +5,9 @@ public class Main {
 	public static void main(String[] args) {
 		Lane lane=new Lane(10);
 		System.out.println(lane);
-		Car car1=new Car();
+		Car car1=new Car(2);
 		Car car2=new Car();
-		Car car3=new Car();
+		Car car3=new Car(5);
 		System.out.println("Adding car to network");
 		
 		String result = lane.addCar(car1) ? "Car1 added" : "Unable to add Car1";

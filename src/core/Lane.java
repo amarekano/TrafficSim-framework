@@ -34,47 +34,47 @@ public class Lane {
 			return true;
 			
 		}
-		
-		
 	}
 	
 	public void moveCars()
 	{
-		
-		
 		for(int i = nodes.size()-1; i >= 0; i--)
 		{
 			if(nodes.get(i).isOccupied())
 			{
-				//We get the car and move it to a new location in the duplicate list
+				//AM > We get the car and compute its next position
 				int currentIndex = i;
 				Car c = nodes.get(currentIndex).getCar();
 				int currentVelocity = c.getVelocity();
-				if( currentIndex + currentVelocity >= maxLength)
+				int predictedIndex = currentIndex+currentVelocity;
+				
+				if( predictedIndex >= maxLength)
 				{
-					//Remove the car from the network
+					//AM > Remove the car from the network
 					nodes.get(currentIndex).setCar(null);
 					nodes.get(currentIndex).setOccupied(false);
 				}
 				else
 				{
-					int predictedIndex = currentIndex+currentVelocity;
 					int finalIndex = currentIndex;
-					int finalVelocity = currentVelocity;
+					int finalVelocity = 1;
 					/* 
 					 * AM > Iterate from current position to predicted position
 					 *	to check for a clear path
 					*/
-					for(int j = 1; j <= predictedIndex && j <= currentVelocity; j++)
+					int j = 1;
+					while(j <= currentVelocity)
 					{
-						if(!nodes.get(currentIndex+j).isOccupied())
+						if(!nodes.get(currentIndex + j).isOccupied())
 						{
-							finalIndex = currentIndex +j;
+							finalIndex++;
 							finalVelocity = j;
-							break;
 						}
+						else
+							break;
+						j++;
 					}
-						
+					
 					nodes.get(currentIndex).setOccupied(false);
 					nodes.get(currentIndex).setCar(null);
 					
