@@ -38,6 +38,8 @@ public class Lane {
 	
 	public void moveCars()
 	{
+		int followingCarIndex = maxLength;
+		
 		for(int i = nodes.size()-1; i >= 0; i--)
 		{
 			if(nodes.get(i).isOccupied())
@@ -45,10 +47,11 @@ public class Lane {
 				//AM > We get the car and compute its next position
 				int currentIndex = i;
 				Car c = nodes.get(currentIndex).getCar();
-				int currentVelocity = c.getVelocity();
+				int currentVelocity = c.getVelocity() + c.getAcceleration();
+				
 				int predictedIndex = currentIndex+currentVelocity;
 				
-				if( predictedIndex >= maxLength)
+				if( predictedIndex >= maxLength && followingCarIndex == maxLength)
 				{
 					//AM > Remove the car from the network
 					nodes.get(currentIndex).setCar(null);
@@ -82,6 +85,7 @@ public class Lane {
 					nodes.get(finalIndex).setOccupied(true);
 					nodes.get(finalIndex).setCar(c);
 					
+					followingCarIndex = finalIndex;
 		
 				}
 			}

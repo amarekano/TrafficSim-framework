@@ -1,13 +1,19 @@
-import core.*;
+import core.Lane;
+import core.Car;
+
 
 public class Main {
 
 	public static void main(String[] args) {
-		Lane lane=new Lane(10);
+		int laneLength=20;
+		Lane lane=new Lane(laneLength);
 		System.out.println(lane);
-		Car car1=new Car(2);
+		Car car1=new Car();
 		Car car2=new Car();
-		Car car3=new Car(5);
+		Car car3=new Car(1,2);
+		
+		Car car4=new Car(2,1);
+		
 		System.out.println("Adding car to network");
 		
 		String result = lane.addCar(car1) ? "Car1 added" : "Unable to add Car1";
@@ -27,11 +33,13 @@ public class Main {
 		System.out.println(result);
 		System.out.println(lane);
 		
-		for(int i =0; i < 10; i++)
+		for(int i =0; i < laneLength; i++)
 		{
 			lane.moveCars();
-			if(i == 1)
+			if(i == 3)
 				lane.addCar(car3);
+			if(i == 7)
+				lane.addCar(car4);
 			System.out.println(lane);
 		}
 	}
