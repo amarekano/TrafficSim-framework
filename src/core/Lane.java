@@ -96,10 +96,10 @@ public class Lane {
 		String state="";
 		for(int i=0;i<nodes.size();i++){
 			if(nodes.get(i).isOccupied()){
-				state=state.concat("1 ");
+				state=state.concat("1");
 			}
 			else{
-				state=state.concat("0 ");
+				state=state.concat("0");
 			}
 		}
 		return state;
