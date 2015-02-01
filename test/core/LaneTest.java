@@ -41,6 +41,19 @@ public class LaneTest {
 	}
 	
 	@Test
+	public void test_car_leaving_the_lane()
+	{
+		Car c1 = new Car();
+		Lane lane = new Lane(2);
+		lane.addCar(c1);
+		assertEquals(true, lane.toString().equalsIgnoreCase("10"));
+		lane.moveCars();
+		assertEquals(true,lane.toString().equalsIgnoreCase("01"));
+		lane.moveCars();
+		assertEquals(true, lane.toString().equalsIgnoreCase("00"));
+	}
+	
+	@Test
 	public void test_lane_state_on_moving_car_with_variable_velocity()
 	{
 		Car c1 = new Car(3);
@@ -49,6 +62,17 @@ public class LaneTest {
 		assertEquals(true, lane.toString().equalsIgnoreCase("10000"));
 		lane.moveCars();
 		assertEquals(true, lane.toString().equalsIgnoreCase("00010"));
+	}
+	
+	@Test
+	public void test_car_with_variable_velocity_leaving_the_lane()
+	{
+		Car c1 = new Car(5);
+		Lane lane = new Lane(3);
+		lane.addCar(c1);
+		assertEquals(true, lane.toString().equalsIgnoreCase("100"));
+		lane.moveCars();
+		assertEquals(true, lane.toString().equalsIgnoreCase("000"));
 	}
 	
 	@Test
@@ -65,5 +89,25 @@ public class LaneTest {
 		assertEquals(true, lane.toString().equalsIgnoreCase("0100100"));
 		lane.moveCars();
 		assertEquals(true, lane.toString().equalsIgnoreCase("0010001"));
+	}
+	
+	@Test
+	public void test_multiple_cars_leaving_lane()
+	{
+		Car c1 = new Car(2);
+		Car c2 = new Car(1);
+		Lane lane = new Lane(4);
+		lane.addCar(c1);
+		lane.moveCars();
+		lane.addCar(c2);
+		
+		assertEquals(true, lane.toString().equalsIgnoreCase("1010"));
+		lane.moveCars();
+		assertEquals(true, lane.toString().equalsIgnoreCase("0100"));
+		lane.moveCars();
+		lane.moveCars();
+		assertEquals(true, lane.toString().equalsIgnoreCase("0001"));
+		lane.moveCars();
+		assertEquals(true, lane.toString().equalsIgnoreCase("0000"));
 	}
 }
