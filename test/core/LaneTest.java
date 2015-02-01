@@ -110,4 +110,36 @@ public class LaneTest {
 		lane.moveCars();
 		assertEquals(true, lane.toString().equalsIgnoreCase("0000"));
 	}
+	
+	@Test
+	public void test_car_following()
+	{
+		Car c1 = new Car(2);
+		Car c2 = new Car(4);
+		
+		Lane lane = new Lane(5);
+		lane.addCar(c1);
+		lane.moveCars();
+		lane.addCar(c2);
+		assertEquals(true, lane.toString().equalsIgnoreCase("10100"));
+		lane.moveCars();
+		assertEquals(true,lane.toString().equalsIgnoreCase("00011"));
+		assertEquals(3, c2.getVelocity());
+	}
+	
+	@Test
+	public void test_car_following_when_trailing_car_has_velocity_greater_than_lane_length()
+	{
+		Car c1 = new Car(2);
+		Car c2 = new Car(20);
+		
+		Lane lane = new Lane(5);
+		lane.addCar(c1);
+		lane.moveCars();
+		lane.addCar(c2);
+		assertEquals(true, lane.toString().equalsIgnoreCase("10100"));
+		lane.moveCars();
+		assertEquals(true,lane.toString().equalsIgnoreCase("00011"));
+		assertEquals(3, c2.getVelocity());
+	}
 }
