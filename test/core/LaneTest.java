@@ -56,7 +56,7 @@ public class LaneTest {
 	@Test
 	public void test_lane_state_on_moving_car_with_variable_velocity()
 	{
-		Car c1 = new Car(3);
+		Car c1 = new Car(3,0,3);
 		Lane lane = new Lane(5);
 		lane.addCar(c1);
 		assertEquals(true, lane.toString().equalsIgnoreCase("10000"));
@@ -67,7 +67,7 @@ public class LaneTest {
 	@Test
 	public void test_car_with_variable_velocity_leaving_the_lane()
 	{
-		Car c1 = new Car(5);
+		Car c1 = new Car(5,0,5);
 		Lane lane = new Lane(3);
 		lane.addCar(c1);
 		assertEquals(true, lane.toString().equalsIgnoreCase("100"));
@@ -78,8 +78,8 @@ public class LaneTest {
 	@Test
 	public void test_lane_state_with_multiple_cars()
 	{
-		Car c1 = new Car(2);
-		Car c2 = new Car(1);
+		Car c1 = new Car(2,0,2);
+		Car c2 = new Car(1,0,1);
 		Lane lane = new Lane(7);
 		lane.addCar(c1);
 		lane.moveCars();
@@ -94,8 +94,8 @@ public class LaneTest {
 	@Test
 	public void test_multiple_cars_leaving_lane()
 	{
-		Car c1 = new Car(2);
-		Car c2 = new Car(1);
+		Car c1 = new Car(2,0,2);
+		Car c2 = new Car(1,0,2);
 		Lane lane = new Lane(4);
 		lane.addCar(c1);
 		lane.moveCars();
@@ -114,8 +114,8 @@ public class LaneTest {
 	@Test
 	public void test_car_following()
 	{
-		Car c1 = new Car(2);
-		Car c2 = new Car(4);
+		Car c1 = new Car(2,0,2);
+		Car c2 = new Car(4,0,4);
 		
 		Lane lane = new Lane(5);
 		lane.addCar(c1);
@@ -130,8 +130,8 @@ public class LaneTest {
 	@Test
 	public void test_car_following_when_trailing_car_has_velocity_greater_than_lane_length()
 	{
-		Car c1 = new Car(2);
-		Car c2 = new Car(20);
+		Car c1 = new Car(2,0,2);
+		Car c2 = new Car(20,0,20);
 		
 		Lane lane = new Lane(5);
 		lane.addCar(c1);

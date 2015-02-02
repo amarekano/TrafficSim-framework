@@ -9,7 +9,7 @@ public class AccelerationTest {
 	@Test
 	public void test_car_acceleration()
 	{
-		Car c1 = new Car(1,2);
+		Car c1 = new Car(1,2,20);
 		Lane lane = new Lane(9);
 		lane.addCar(c1);
 		assertEquals(true, lane.toString().equalsIgnoreCase("100000000"));
@@ -24,8 +24,8 @@ public class AccelerationTest {
 	@Test
 	public void test_car_acceleration_with_multiple_cars()
 	{
-		Car c1 = new Car(1,2);
-		Car c2 = new Car(1,1);
+		Car c1 = new Car(1,2,20);
+		Car c2 = new Car(1,1,20);
 		Lane lane = new Lane(12);
 		lane.addCar(c1);
 		lane.moveCars();
@@ -43,8 +43,8 @@ public class AccelerationTest {
 	@Test
 	public void test_car_following_when_cars_have_acceleration()
 	{
-		Car c1 = new Car(2);
-		Car c2 = new Car(2,2);
+		Car c1 = new Car(2,0,2);
+		Car c2 = new Car(2,2,20);
 		Lane lane = new Lane(5);
 		lane.addCar(c1);
 		lane.moveCars();

@@ -47,7 +47,12 @@ public class Lane {
 				//AM > We get the car and compute its next position
 				int currentIndex = i;
 				Car c = nodes.get(currentIndex).getCar();
+				
 				int currentVelocity = c.getVelocity() + c.getAcceleration();
+				
+				//AM > Ensure there is no over speeding
+				if(currentVelocity > c.getMax_velocity())
+					currentVelocity = c.getMax_velocity();
 				
 				int predictedIndex = currentIndex+currentVelocity;
 				
@@ -80,8 +85,9 @@ public class Lane {
 					
 					nodes.get(currentIndex).setOccupied(false);
 					nodes.get(currentIndex).setCar(null);
-					
+									
 					c.setVelocity(finalVelocity);
+					
 					nodes.get(finalIndex).setOccupied(true);
 					nodes.get(finalIndex).setCar(c);
 					
