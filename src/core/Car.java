@@ -1,15 +1,19 @@
 package core;
 
+import java.util.Random;
+
 public class Car {
 	private int velocity;
 	private int acceleration;
 	private int max_velocity;
+	private double decelaration_probability;
 	
 	public Car()
 	{
 		this.velocity = 1;
 		this.acceleration = 0;
 		this.max_velocity = 1;
+		this.decelaration_probability = 0.0;
 	}
 	
 	public Car(int velocity, int acceleration, int max_velocity)
@@ -25,8 +29,17 @@ public class Car {
 			this.acceleration = acceleration;
 		}
 		this.max_velocity = max_velocity < this.velocity ? this.velocity : max_velocity;
+		this.decelaration_probability = 0.0;
 	}
 	
+	public double getDecelaration_probability() {
+		return decelaration_probability;
+	}
+
+	public void setDecelaration_probability(double decelaration_probability) {
+		this.decelaration_probability = decelaration_probability;
+	}
+
 	public int getMax_velocity() {
 		return max_velocity;
 	}
@@ -36,6 +49,10 @@ public class Car {
 	}
 
 	public int getAcceleration() {
+		if(new Random().nextDouble() <= decelaration_probability)
+		{
+			acceleration = acceleration > 1 ? acceleration -1 : 0;
+		}
 		return acceleration;
 	}
 
