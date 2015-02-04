@@ -57,4 +57,56 @@ public class Road {
 		}
 	}
 	
+	
+	public boolean addCar(Car c, int laneNumber)
+	{
+		//NC
+		if(laneNumber<1 || laneNumber>lanes.size()){
+			return false;
+		}
+		Lane choosenLane = lanes.get(laneNumber-1);
+		
+		if(choosenLane.addCar(c))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public int getCarLaneIndex(Car c)
+	{
+		//NC >> Returns the lane number where the car is on. If the car is not found it returns -1
+		int carIndex=-1;
+		
+			for(int i=0;i<lanes.size();i++){
+				carIndex=lanes.get(i).getCarIndex(c);
+				if(carIndex!=-1){
+					return i;
+				}
+			}
+		
+		return -1;
+	}
+	
+	public int getCarNodeIndex(Car c)
+	{
+		//NC >> Returns the car index where the car is on. If the car is not found it returns -1
+		int carIndex=-1;
+		
+			for(int i=0;i<lanes.size();i++){
+				carIndex=lanes.get(i).getCarIndex(c);
+				if(carIndex!=-1){
+					return carIndex;
+				}
+			}
+		
+		return carIndex;
+	}
+	
+	public void moveTraffic(){
+		for(int i=0;i<lanes.size();i++){
+			lanes.get(i).moveCars();
+		}
+	}
+	
 }
