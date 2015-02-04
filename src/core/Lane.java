@@ -110,4 +110,18 @@ public class Lane {
 		}
 		return state;
 	}
+	
+	public int getCarIndex(Car c)
+	{
+		//NC >> returns the index of the car in the lane. If it doesn't exists returns -1
+		
+		for(int i=0;i<nodes.size();i++){
+			Car currentCar = nodes.get(i).getCar();
+			if(currentCar != null && currentCar.equals(c)){
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 }
