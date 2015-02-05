@@ -1,5 +1,6 @@
-import core.Lane;
-import core.Car;
+import core.network.Lane;
+import core.vehicle.Car;
+import core.vehicle.Vehicle;
 
 
 public class Main {
@@ -8,38 +9,38 @@ public class Main {
 		int laneLength=20;
 		Lane lane=new Lane(laneLength);
 		System.out.println(lane);
-		Car car1=new Car();
-		Car car2=new Car();
-		Car car3=new Car(1,2,20);
+		Vehicle car1=new Car();
+		Vehicle car2=new Car();
+		Vehicle car3=new Car(1,2,20);
 		
-		Car car4=new Car(2,1,20);
+		Vehicle car4=new Car(2,1,20);
 		
 		System.out.println("Adding car to network");
 		
-		String result = lane.addCar(car1) ? "Car1 added" : "Unable to add Car1";
+		String result = lane.addVehicle(car1) ? "Car1 added" : "Unable to add Car1";
 		System.out.println(result);
 		
 		System.out.println(lane);
 		System.out.println("Adding another car");
-		result = lane.addCar(car2) ? "Car2 added" : "Unable to add Car2";
+		result = lane.addVehicle(car2) ? "Car2 added" : "Unable to add Car2";
 		System.out.println(result);
 		
 		System.out.println(lane);
 		System.out.println("Moving cars");
-		lane.moveCars();
+		lane.moveVehicles();
 		System.out.println("Cars moved");
 		System.out.println(lane);
-		result = lane.addCar(car2) ? "Car2 added" : "Unable to add Car2";
+		result = lane.addVehicle(car2) ? "Car2 added" : "Unable to add Car2";
 		System.out.println(result);
 		System.out.println(lane);
 		
 		for(int i =0; i < laneLength; i++)
 		{
-			lane.moveCars();
+			lane.moveVehicles();
 			if(i == 3)
-				lane.addCar(car3);
+				lane.addVehicle(car3);
 			if(i == 7)
-				lane.addCar(car4);
+				lane.addVehicle(car4);
 			System.out.println(lane);
 		}
 	}

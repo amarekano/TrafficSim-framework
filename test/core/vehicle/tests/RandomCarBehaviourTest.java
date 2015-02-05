@@ -1,8 +1,10 @@
-package core;
+package core.vehicle.tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import core.vehicle.Car;
 
 public class RandomCarBehaviourTest {
 

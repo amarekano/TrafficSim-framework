@@ -1,14 +1,16 @@
-package core;
+package core.network;
+
+import core.vehicle.Vehicle;;
 
 public class Node {
 
 	private boolean isOccupied;
-	private Car car;
+	private Vehicle vehicle;
 	
 	public Node()
 	{
 		isOccupied = false;
-		car = null;
+		vehicle = null;
 	}
 
 	public boolean isOccupied() {
@@ -19,11 +21,11 @@ public class Node {
 		this.isOccupied = isOccupied;
 	}
 
-	public Car getCar() {
-		return car;
+	public Vehicle getVehicle() {
+		return vehicle;
 	}
 
-	public void setCar(Car car) {
-		this.car = car;
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
 	}
 }

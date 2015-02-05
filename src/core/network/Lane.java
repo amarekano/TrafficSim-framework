@@ -1,5 +1,8 @@
-package core;
+package core.network;
 import java.util.*;
+
+import core.vehicle.Car;
+import core.vehicle.Vehicle;
 
 public class Lane {
 	private List<Node> nodes;
@@ -25,21 +28,21 @@ public class Lane {
 		}
 	}
 	
-	public boolean addCar(Car car){
+	public boolean addVehicle(Vehicle vehicle){
 		if(nodes.get(0).isOccupied()){
 			return false;
 		}
 		else{
-			nodes.get(0).setCar(car);
+			nodes.get(0).setVehicle(vehicle);
 			nodes.get(0).setOccupied(true);
 			return true;
 			
 		}
 	}
 	
-	public void moveCars()
+	public void moveVehicles()
 	{
-		int followingCarIndex = maxLength;
+		int followingVehicleIndex = maxLength;
 		
 		for(int i = nodes.size()-1; i >= 0; i--)
 		{
@@ -47,20 +50,20 @@ public class Lane {
 			{
 				//AM > We get the car and compute its next position
 				int currentIndex = i;
-				Car c = nodes.get(currentIndex).getCar();
+				Vehicle vehicle = nodes.get(currentIndex).getVehicle();
 				
-				int currentVelocity = c.getVelocity() + c.getAcceleration();
+				int currentVelocity = vehicle.getVelocity() + vehicle.getAcceleration();
 				
 				//AM > Ensure there is no over speeding
-				if(currentVelocity > c.getMax_velocity())
-					currentVelocity = c.getMax_velocity();
+				if(currentVelocity > vehicle.getMax_velocity())
+					currentVelocity = vehicle.getMax_velocity();
 				
 				int predictedIndex = currentIndex+currentVelocity;
 				
-				if( predictedIndex >= maxLength && followingCarIndex == maxLength)
+				if( predictedIndex >= maxLength && followingVehicleIndex == maxLength)
 				{
 					//AM > Remove the car from the network
-					nodes.get(currentIndex).setCar(null);
+					nodes.get(currentIndex).setVehicle(null);
 					nodes.get(currentIndex).setOccupied(false);
 				}
 				else
@@ -85,14 +88,14 @@ public class Lane {
 					}
 					
 					nodes.get(currentIndex).setOccupied(false);
-					nodes.get(currentIndex).setCar(null);
+					nodes.get(currentIndex).setVehicle(null);
 									
-					c.setVelocity(finalVelocity);
+					vehicle.setVelocity(finalVelocity);
 					
 					nodes.get(finalIndex).setOccupied(true);
-					nodes.get(finalIndex).setCar(c);
+					nodes.get(finalIndex).setVehicle(vehicle);
 					
-					followingCarIndex = finalIndex;
+					followingVehicleIndex = finalIndex;
 		
 				}
 			}
@@ -112,13 +115,13 @@ public class Lane {
 		return state;
 	}
 	
-	public int getCarIndex(Car c)
+	public int getVehicleIndex(Vehicle v)
 	{
 		//NC >> returns the index of the car in the lane. If it doesn't exists returns -1
 		
 		for(int i=0;i<nodes.size();i++){
-			Car currentCar = nodes.get(i).getCar();
-			if(currentCar != null && currentCar.equals(c)){
+			Vehicle currentVehicle = nodes.get(i).getVehicle();
+			if(currentVehicle != null && currentVehicle.equals(v)){
 				return i;
 			}
 		}

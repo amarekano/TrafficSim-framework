@@ -1,8 +1,11 @@
-package core;
+package core.vehicle.tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import core.network.Lane;
+import core.vehicle.Car;
 
 public class MaxVelocityTest {
 
@@ -12,9 +15,9 @@ public class MaxVelocityTest {
 		Car c1 = new Car(1,2,4);
 		Lane lane = new Lane(9);
 		
-		lane.addCar(c1);
-		lane.moveCars();
-		lane.moveCars();
+		lane.addVehicle(c1);
+		lane.moveVehicles();
+		lane.moveVehicles();
 		assertEquals(4, c1.getVelocity());
 		assertEquals(true, lane.toString().equalsIgnoreCase("000000010"));
 	}
@@ -27,10 +30,10 @@ public class MaxVelocityTest {
 		
 		Lane lane = new Lane(10);
 		
-		lane.addCar(c1);
-		lane.moveCars();
-		lane.addCar(c2);
-		lane.moveCars();
+		lane.addVehicle(c1);
+		lane.moveVehicles();
+		lane.addVehicle(c2);
+		lane.moveVehicles();
 		assertEquals(3, c2.getVelocity());
 		
 	}

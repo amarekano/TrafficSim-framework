@@ -1,8 +1,11 @@
-package core;
+package core.network.tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import core.network.Road;
+import core.vehicle.Car;
 
 public class RoadTest {
 
@@ -11,7 +14,7 @@ public class RoadTest {
 	{
 		Road r1 = new Road(1, 10);
 		Car c = new Car();
-		assertEquals(true, r1.addCar(c));
+		assertEquals(true, r1.addVehicle(c));
 	}
 
 	@Test
@@ -21,8 +24,8 @@ public class RoadTest {
 		Car c1 = new Car();
 		Car c2 = new Car();
 		
-		assertEquals(true, r1.addCar(c1));
-		assertEquals(false, r1.addCar(c2));
+		assertEquals(true, r1.addVehicle(c1));
+		assertEquals(false, r1.addVehicle(c2));
 	}
 	
 	@Test
@@ -32,8 +35,8 @@ public class RoadTest {
 		Car c1 = new Car();
 		Car c2 = new Car();
 		
-		assertEquals(true, r1.addCar(c1));
-		assertEquals(true, r1.addCar(c2));
+		assertEquals(true, r1.addVehicle(c1));
+		assertEquals(true, r1.addVehicle(c2));
 	}
 	
 	@Test
@@ -44,7 +47,7 @@ public class RoadTest {
 		for(int i = 0; i < max_lanes; i++)
 		{
 			Car c = new Car();
-			assertEquals(true,r1.addCar(c));
+			assertEquals(true,r1.addVehicle(c));
 		}
 	}
 	
@@ -54,8 +57,8 @@ public class RoadTest {
 		Road r1 = new Road(5, 10);
 		Car c1 = new Car();
 		
-		assertEquals(true, r1.addCar(c1, 2));
-		assertEquals(1,r1.getCarLaneIndex(c1));
+		assertEquals(true, r1.addVehicle(c1, 2));
+		assertEquals(1,r1.getVehicleLaneIndex(c1));
 	}
 	
 	@Test
@@ -64,8 +67,8 @@ public class RoadTest {
 		Road r1 = new Road(5, 10);
 		Car c1 = new Car();
 		
-		assertEquals(true, r1.addCar(c1, 2));
-		assertEquals(0,r1.getCarNodeIndex(c1));
+		assertEquals(true, r1.addVehicle(c1, 2));
+		assertEquals(0,r1.getVehicleNodeIndex(c1));
 	}
 	
 	@Test
@@ -74,18 +77,18 @@ public class RoadTest {
 		Road r1 = new Road(1,5);
 		Car c1 = new Car(2,0,10);
 		Car c2 = new Car(1,0,10);
-		r1.addCar(c1,1);
+		r1.addVehicle(c1,1);
 		r1.moveTraffic();
-		assertEquals(0,r1.getCarLaneIndex(c1));
-		assertEquals(2,r1.getCarNodeIndex(c1));
+		assertEquals(0,r1.getVehicleLaneIndex(c1));
+		assertEquals(2,r1.getVehicleNodeIndex(c1));
 		
-		r1.addCar(c2,1);
+		r1.addVehicle(c2,1);
 		r1.moveTraffic();
-		assertEquals(0,r1.getCarLaneIndex(c1));
-		assertEquals(4,r1.getCarNodeIndex(c1));
+		assertEquals(0,r1.getVehicleLaneIndex(c1));
+		assertEquals(4,r1.getVehicleNodeIndex(c1));
 		
-		assertEquals(0,r1.getCarLaneIndex(c2));
-		assertEquals(1,r1.getCarNodeIndex(c2));
+		assertEquals(0,r1.getVehicleLaneIndex(c2));
+		assertEquals(1,r1.getVehicleNodeIndex(c2));
 	}
 	
 	@Test
@@ -94,17 +97,24 @@ public class RoadTest {
 		Road r1 = new Road(3, 5);
 		Car c1 = new Car(2,0,10);
 		Car c2 = new Car(1,0,10);
-		r1.addCar(c1,1);
+		r1.addVehicle(c1,1);
 		r1.moveTraffic();
-		assertEquals(0,r1.getCarLaneIndex(c1));
-		assertEquals(2,r1.getCarNodeIndex(c1));
+		assertEquals(0,r1.getVehicleLaneIndex(c1));
+		assertEquals(2,r1.getVehicleNodeIndex(c1));
 		
-		r1.addCar(c2,2);
+		r1.addVehicle(c2,2);
 		r1.moveTraffic();
-		assertEquals(0,r1.getCarLaneIndex(c1));
-		assertEquals(4,r1.getCarNodeIndex(c1));
+		assertEquals(0,r1.getVehicleLaneIndex(c1));
+		assertEquals(4,r1.getVehicleNodeIndex(c1));
 		
-		assertEquals(1,r1.getCarLaneIndex(c2));
-		assertEquals(1,r1.getCarNodeIndex(c2));
+		assertEquals(1,r1.getVehicleLaneIndex(c2));
+		assertEquals(1,r1.getVehicleNodeIndex(c2));
+	}
+	
+	@Test
+	public void test_road_transfer()
+	{
+		Road r1 = new Road(1, 10);
+		Road r2 = new Road(1, 10);
 	}
 }

@@ -1,8 +1,9 @@
-package core;
+package core.vehicle;
 
 import java.util.Random;
 
-public class Car {
+public class Car extends Vehicle 
+{
 	private int velocity;
 	private int acceleration;
 	private int max_velocity;

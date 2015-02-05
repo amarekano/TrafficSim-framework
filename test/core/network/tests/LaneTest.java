@@ -1,33 +1,36 @@
-package core;
+package core.network.tests;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
+
+import core.network.Lane;
+import core.vehicle.Car;
+import core.vehicle.Vehicle;
 
 public class LaneTest {
 
 	@Test
 	public void test_adding_car_to_lane() {
-		Car c = new Car();
+		Vehicle v = new Car();
 		Lane lane = new Lane(2);
-		assertEquals(true, lane.addCar(c));
+		assertEquals(true, lane.addVehicle(v));
 	}
 
 	@Test
 	public void test_adding_car_to_occupied_lane()
 	{
-		Car c1 = new Car();
-		Car c2 = new Car();
+		Vehicle c1 = new Car();
+		Vehicle c2 = new Car();
 		Lane lane = new Lane(2);
-		assertEquals(true, lane.addCar(c1));
-		assertEquals(false, lane.addCar(c2));
+		assertEquals(true, lane.addVehicle(c1));
+		assertEquals(false, lane.addVehicle(c2));
 	}
 	
 	@Test
 	public void test_lane_state_on_adding_cars() {
-		Car c1 = new Car();
+		Vehicle c1 = new Car();
 		Lane lane = new Lane(2);
-		lane.addCar(c1);
+		lane.addVehicle(c1);
 		assertEquals(true, lane.toString().equalsIgnoreCase("10"));
 	}
 	
@@ -35,8 +38,8 @@ public class LaneTest {
 	public void test_lane_state_on_moving_car() {
 		Car c1 = new Car();
 		Lane lane = new Lane(2);
-		lane.addCar(c1);
-		lane.moveCars();
+		lane.addVehicle(c1);
+		lane.moveVehicles();
 		assertEquals(true, lane.toString().equalsIgnoreCase("01"));
 	}
 	
@@ -45,11 +48,11 @@ public class LaneTest {
 	{
 		Car c1 = new Car();
 		Lane lane = new Lane(2);
-		lane.addCar(c1);
+		lane.addVehicle(c1);
 		assertEquals(true, lane.toString().equalsIgnoreCase("10"));
-		lane.moveCars();
+		lane.moveVehicles();
 		assertEquals(true,lane.toString().equalsIgnoreCase("01"));
-		lane.moveCars();
+		lane.moveVehicles();
 		assertEquals(true, lane.toString().equalsIgnoreCase("00"));
 	}
 	
@@ -58,9 +61,9 @@ public class LaneTest {
 	{
 		Car c1 = new Car(3,0,3);
 		Lane lane = new Lane(5);
-		lane.addCar(c1);
+		lane.addVehicle(c1);
 		assertEquals(true, lane.toString().equalsIgnoreCase("10000"));
-		lane.moveCars();
+		lane.moveVehicles();
 		assertEquals(true, lane.toString().equalsIgnoreCase("00010"));
 	}
 	
@@ -69,9 +72,9 @@ public class LaneTest {
 	{
 		Car c1 = new Car(5,0,5);
 		Lane lane = new Lane(3);
-		lane.addCar(c1);
+		lane.addVehicle(c1);
 		assertEquals(true, lane.toString().equalsIgnoreCase("100"));
-		lane.moveCars();
+		lane.moveVehicles();
 		assertEquals(true, lane.toString().equalsIgnoreCase("000"));
 	}
 	
@@ -81,13 +84,13 @@ public class LaneTest {
 		Car c1 = new Car(2,0,2);
 		Car c2 = new Car(1,0,1);
 		Lane lane = new Lane(7);
-		lane.addCar(c1);
-		lane.moveCars();
+		lane.addVehicle(c1);
+		lane.moveVehicles();
 		assertEquals(true, lane.toString().equalsIgnoreCase("0010000"));
-		assertEquals(true, lane.addCar(c2));
-		lane.moveCars();
+		assertEquals(true, lane.addVehicle(c2));
+		lane.moveVehicles();
 		assertEquals(true, lane.toString().equalsIgnoreCase("0100100"));
-		lane.moveCars();
+		lane.moveVehicles();
 		assertEquals(true, lane.toString().equalsIgnoreCase("0010001"));
 	}
 	
@@ -97,17 +100,17 @@ public class LaneTest {
 		Car c1 = new Car(2,0,2);
 		Car c2 = new Car(1,0,2);
 		Lane lane = new Lane(4);
-		lane.addCar(c1);
-		lane.moveCars();
-		lane.addCar(c2);
+		lane.addVehicle(c1);
+		lane.moveVehicles();
+		lane.addVehicle(c2);
 		
 		assertEquals(true, lane.toString().equalsIgnoreCase("1010"));
-		lane.moveCars();
+		lane.moveVehicles();
 		assertEquals(true, lane.toString().equalsIgnoreCase("0100"));
-		lane.moveCars();
-		lane.moveCars();
+		lane.moveVehicles();
+		lane.moveVehicles();
 		assertEquals(true, lane.toString().equalsIgnoreCase("0001"));
-		lane.moveCars();
+		lane.moveVehicles();
 		assertEquals(true, lane.toString().equalsIgnoreCase("0000"));
 	}
 	
@@ -118,11 +121,11 @@ public class LaneTest {
 		Car c2 = new Car(4,0,4);
 		
 		Lane lane = new Lane(5);
-		lane.addCar(c1);
-		lane.moveCars();
-		lane.addCar(c2);
+		lane.addVehicle(c1);
+		lane.moveVehicles();
+		lane.addVehicle(c2);
 		assertEquals(true, lane.toString().equalsIgnoreCase("10100"));
-		lane.moveCars();
+		lane.moveVehicles();
 		assertEquals(true,lane.toString().equalsIgnoreCase("00011"));
 		assertEquals(3, c2.getVelocity());
 	}
@@ -134,11 +137,11 @@ public class LaneTest {
 		Car c2 = new Car(20,0,20);
 		
 		Lane lane = new Lane(5);
-		lane.addCar(c1);
-		lane.moveCars();
-		lane.addCar(c2);
+		lane.addVehicle(c1);
+		lane.moveVehicles();
+		lane.addVehicle(c2);
 		assertEquals(true, lane.toString().equalsIgnoreCase("10100"));
-		lane.moveCars();
+		lane.moveVehicles();
 		assertEquals(true,lane.toString().equalsIgnoreCase("00011"));
 		assertEquals(3, c2.getVelocity());
 	}

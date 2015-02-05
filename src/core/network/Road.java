@@ -1,10 +1,14 @@
-package core;
+package core.network;
 
 import java.util.*;
+import core.endpoints.EndPoint;
+import core.vehicle.Vehicle;
 
 public class Road {
 	private List<Lane> lanes;
 	private int number_of_lanes;
+	private EndPoint source;
+	private EndPoint sink;
 	
 	//AM > Create lane(s) and set their length
 	public Road(int number_of_lanes, int lane_length)
@@ -28,7 +32,7 @@ public class Road {
 		this.lanes = lanes;
 	}
 	
-	public boolean addCar(Car c)
+	public boolean addVehicle(Vehicle v)
 	{
 		/*
 		 * AM > Randomly add car to a lane
@@ -39,7 +43,7 @@ public class Road {
 		int randomLane = new Random().nextInt((number_of_lanes - 1) + 1) + 1;
 		Lane chosenLane = lanes.get(randomLane-1);
 		
-		if(chosenLane.addCar(c))
+		if(chosenLane.addVehicle(v))
 		{
 			return true;
 		}
@@ -50,7 +54,7 @@ public class Road {
 			{
 				if(!l.equals(chosenLane))
 				{
-					if(l.addCar(c))
+					if(l.addVehicle(v))
 						return true;
 				}
 			}
@@ -60,7 +64,7 @@ public class Road {
 	}
 	
 	
-	public boolean addCar(Car c, int laneNumber)
+	public boolean addVehicle(Vehicle v, int laneNumber)
 	{
 		/*
 		 * NC >> Add car to a chosen lane
@@ -70,20 +74,20 @@ public class Road {
 		}
 		Lane chosenLane = lanes.get(laneNumber-1);
 		
-		if(chosenLane.addCar(c))
+		if(chosenLane.addVehicle(v))
 		{
 			return true;
 		}
 		return false;
 	}
 	
-	public int getCarLaneIndex(Car c)
+	public int getVehicleLaneIndex(Vehicle v)
 	{
 		//NC >> Returns the lane number where the car is on. If the car is not found it returns -1
 		int carIndex=-1;
 		
 			for(int i=0;i<lanes.size();i++){
-				carIndex=lanes.get(i).getCarIndex(c);
+				carIndex=lanes.get(i).getVehicleIndex(v);
 				if(carIndex!=-1){
 					return i;
 				}
@@ -92,13 +96,13 @@ public class Road {
 		return -1;
 	}
 	
-	public int getCarNodeIndex(Car c)
+	public int getVehicleNodeIndex(Vehicle v)
 	{
 		//NC >> Returns the car index where the car is on. If the car is not found it returns -1
 		int carIndex=-1;
 		
 			for(int i=0;i<lanes.size();i++){
-				carIndex=lanes.get(i).getCarIndex(c);
+				carIndex=lanes.get(i).getVehicleIndex(v);
 				if(carIndex!=-1){
 					return carIndex;
 				}
@@ -109,7 +113,7 @@ public class Road {
 	
 	public void moveTraffic(){
 		for(int i=0;i<lanes.size();i++){
-			lanes.get(i).moveCars();
+			lanes.get(i).moveVehicles();
 		}
 	}
 	
