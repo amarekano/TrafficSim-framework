@@ -1,6 +1,10 @@
 package core.network.tests;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import core.network.Lane;
@@ -144,5 +148,65 @@ public class LaneTest {
 		lane.moveVehicles();
 		assertEquals(true,lane.toString().equalsIgnoreCase("00011"));
 		assertEquals(3, c2.getVelocity());
+	}
+	
+	@Test
+	public void test_moving_vehicle_on_an_empty_lane_should_return_an_empty_list()
+	{
+		Lane lane = new Lane(5);
+		List<Vehicle> exiting_vehicles = new ArrayList<Vehicle>();
+		
+		exiting_vehicles.addAll(lane.moveVehicles());
+		
+		assertEquals(0, exiting_vehicles.size());
+		
+	}
+	
+	@Test
+	public void test_move_vehicles_returns_a_list_of_exiting_vehicles()
+	{
+		Lane lane = new Lane(5);
+		Vehicle v1 = new Car();
+		Vehicle v2 = new Car(2,0,2);
+		Vehicle v3 = new Car(4,0,4);
+		
+		List<Vehicle> exiting_vehicles = new ArrayList<Vehicle>();
+		
+		lane.addVehicle(v3);
+		exiting_vehicles.addAll(lane.moveVehicles());
+		assertEquals(0, exiting_vehicles.size());
+		lane.addVehicle(v2);
+		exiting_vehicles.addAll(lane.moveVehicles());
+		assertEquals(1, exiting_vehicles.size());
+		lane.addVehicle(v1);
+		lane.moveVehicles();
+		exiting_vehicles.addAll(lane.moveVehicles());
+		assertEquals(2, exiting_vehicles.size());
+		for(int i = 0; i < 2; i++)
+			lane.moveVehicles();
+		exiting_vehicles.addAll(lane.moveVehicles());
+		assertEquals(3, exiting_vehicles.size());
+	}
+	
+	@Test
+	public void test_exited_vehicle_exists_in_list()
+	{
+		Lane lane = new Lane(2);
+		Vehicle v1 = new Car();
+		Vehicle v2 = new Car();
+		
+		List<Vehicle> exiting_vehicles = new ArrayList<Vehicle>();
+		
+		lane.addVehicle(v1);
+		for(int i = 0; i < 5; i++)
+		{
+			exiting_vehicles.addAll(lane.moveVehicles());
+			if(i == 2)
+				lane.addVehicle(v2);
+		}
+		
+		assertEquals(2, exiting_vehicles.size());
+		assertEquals(true,exiting_vehicles.contains(v1));
+		assertEquals(true,exiting_vehicles.contains(v2));
 	}
 }

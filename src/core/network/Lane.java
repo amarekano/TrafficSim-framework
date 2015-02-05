@@ -40,9 +40,10 @@ public class Lane {
 		}
 	}
 	
-	public void moveVehicles()
+	public List<Vehicle> moveVehicles()
 	{
 		int followingVehicleIndex = maxLength;
+		List<Vehicle> exitingVehicles = new ArrayList<Vehicle>();
 		
 		for(int i = nodes.size()-1; i >= 0; i--)
 		{
@@ -65,6 +66,7 @@ public class Lane {
 					//AM > Remove the car from the network
 					nodes.get(currentIndex).setVehicle(null);
 					nodes.get(currentIndex).setOccupied(false);
+					exitingVehicles.add(vehicle);
 				}
 				else
 				{
@@ -100,6 +102,8 @@ public class Lane {
 				}
 			}
 		}
+		
+		return exitingVehicles;
 	}
 	
 	public String toString(){
