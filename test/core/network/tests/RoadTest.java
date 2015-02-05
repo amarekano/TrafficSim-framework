@@ -1,11 +1,14 @@
 package core.network.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.*; 
 
 import org.junit.Test;
 
 import core.network.Road;
+import core.vehicle.Vehicle;
 import core.vehicle.Car;
+import core.endpoints.EndPoint;
+import core.endpoints.Destination;
 
 public class RoadTest {
 
@@ -112,9 +115,25 @@ public class RoadTest {
 	}
 	
 	@Test
-	public void test_road_transfer()
+	public void test_vehicles_move_from_one_destination_to_another()
 	{
 		Road r1 = new Road(1, 10);
-		Road r2 = new Road(1, 10);
+		EndPoint A = new Destination();
+		EndPoint B = new Destination();
+		
+		r1.setSource(A);
+		r1.setSink(B);
+		
+		Vehicle v1 = new Car(4,0,4);
+		Vehicle v2 = new Car(2,1,10);
+		
+		A.addVehicle(v1);
+		for(int i = 0; i < 10; i++)
+		{
+			r1.moveTraffic();
+			if(i == 2)
+				A.addVehicle(v2);
+		}
+		assertEquals(2, B.getQueueLength());
 	}
 }

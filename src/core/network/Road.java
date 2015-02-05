@@ -1,6 +1,7 @@
 package core.network;
 
 import java.util.*;
+
 import core.endpoints.EndPoint;
 import core.vehicle.Vehicle;
 
@@ -32,14 +33,30 @@ public class Road {
 		this.lanes = lanes;
 	}
 	
+	public EndPoint getSource() {
+		return source;
+	}
+
+	public void setSource(EndPoint source) {
+		this.source = source;
+	}
+
+	public EndPoint getSink() {
+		return sink;
+	}
+
+	public void setSink(EndPoint sink) {
+		this.sink = sink;
+	}
+
+	/*
+	 * AM > Randomly add car to a lane
+	 * if the lane is occupied add car to the next lane
+	 * if all lanes are full then return false
+	 * on successful insertion return true;
+	 */
 	public boolean addVehicle(Vehicle v)
 	{
-		/*
-		 * AM > Randomly add car to a lane
-		 * if the lane is occupied add car to the next lane
-		 * if all lanes are full then return false
-		 * on successful insertion return true;
-		 */
 		int randomLane = new Random().nextInt((number_of_lanes - 1) + 1) + 1;
 		Lane chosenLane = lanes.get(randomLane-1);
 		
@@ -111,9 +128,38 @@ public class Road {
 		return carIndex;
 	}
 	
+	/*
+	 * AM > Pull vehicle from the source and add them to the road. Move the traffic along.
+	 * 		If vehicles are leaving the network then push them into the sink  
+	 */
 	public void moveTraffic(){
+		//AM > If source is not null check if it has a vehicle to be added
+		if(source != null)
+		{
+			while(source.getQueueLength() > 0)
+			{
+				Vehicle v = source.getVehicle();
+				//AM > If adding vehicle was successful release the vehicle from the source
+				if(addVehicle(v))
+				{
+					source.releaseVehicle(v);
+				}
+			}
+		}
+		
+		//AM > Move traffic along
+		List<Vehicle> exitingVehicles = new ArrayList<Vehicle>();
 		for(int i=0;i<lanes.size();i++){
-			lanes.get(i).moveVehicles();
+		  exitingVehicles.addAll(lanes.get(i).moveVehicles());
+		}
+		
+		//AM > If we have vehicles that have exited the road and sink is not null
+		if(sink != null && exitingVehicles.size() > 0)
+		{
+			for(Vehicle v : exitingVehicles)
+			{
+				sink.addVehicle(v);
+			}
 		}
 	}
 	
