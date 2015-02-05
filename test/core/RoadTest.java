@@ -66,7 +66,6 @@ public class RoadTest {
 		
 		assertEquals(true, r1.addCar(c1, 2));
 		assertEquals(0,r1.getCarNodeIndex(c1));
-		//assertEquals(1,r1.getCarIndex(c1));
 	}
 	
 	@Test

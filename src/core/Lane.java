@@ -15,7 +15,8 @@ public class Lane {
 	
 	public Lane(int n)
 	{
-		maxLength = n;
+		//AM > Lane cannot have length less than 1
+		maxLength = n < 1 ? 1 : n;
 		nodes = new ArrayList<Node>(maxLength);
 		for(int i = 0; i < maxLength; i++)
 		{

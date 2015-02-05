@@ -9,7 +9,9 @@ public class Road {
 	//AM > Create lane(s) and set their length
 	public Road(int number_of_lanes, int lane_length)
 	{
-		this.number_of_lanes = number_of_lanes;
+		//AM > There has to be atleast one lane
+		this.number_of_lanes = number_of_lanes < 1 ? 1 : number_of_lanes;
+		
 		lanes = new ArrayList<Lane>();
 		for(int i = 0; i < this.number_of_lanes; i++)
 		{
@@ -35,9 +37,9 @@ public class Road {
 		 * on successful insertion return true;
 		 */
 		int randomLane = new Random().nextInt((number_of_lanes - 1) + 1) + 1;
-		Lane choosenLane = lanes.get(randomLane-1);
+		Lane chosenLane = lanes.get(randomLane-1);
 		
-		if(choosenLane.addCar(c))
+		if(chosenLane.addCar(c))
 		{
 			return true;
 		}
@@ -46,7 +48,7 @@ public class Road {
 			//AM > Attempt to add a car to another lane.
 			for(Lane l: lanes)
 			{
-				if(!l.equals(choosenLane))
+				if(!l.equals(chosenLane))
 				{
 					if(l.addCar(c))
 						return true;
@@ -60,13 +62,15 @@ public class Road {
 	
 	public boolean addCar(Car c, int laneNumber)
 	{
-		//NC
+		/*
+		 * NC >> Add car to a chosen lane
+		 */
 		if(laneNumber<1 || laneNumber>lanes.size()){
 			return false;
 		}
-		Lane choosenLane = lanes.get(laneNumber-1);
+		Lane chosenLane = lanes.get(laneNumber-1);
 		
-		if(choosenLane.addCar(c))
+		if(chosenLane.addCar(c))
 		{
 			return true;
 		}
