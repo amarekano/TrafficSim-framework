@@ -9,6 +9,7 @@ import core.vehicle.Vehicle;
 import core.vehicle.Car;
 import core.endpoints.EndPoint;
 import core.endpoints.Destination;
+import core.endpoints.InvalidEndPointException;
 
 public class RoadTest {
 
@@ -75,7 +76,7 @@ public class RoadTest {
 	}
 	
 	@Test
-	public void test_moving_cars_on_a_single_lane_road()
+	public void test_moving_cars_on_a_single_lane_road() throws InvalidEndPointException
 	{
 		Road r1 = new Road(1,5);
 		Car c1 = new Car(2,0,10);
@@ -95,7 +96,7 @@ public class RoadTest {
 	}
 	
 	@Test
-	public void test_moving_cars_on_a_multi_lane_road()
+	public void test_moving_cars_on_a_multi_lane_road() throws InvalidEndPointException
 	{
 		Road r1 = new Road(3, 5);
 		Car c1 = new Car(2,0,10);
@@ -115,11 +116,11 @@ public class RoadTest {
 	}
 	
 	@Test
-	public void test_vehicles_move_from_one_destination_to_another()
+	public void test_vehicles_move_from_one_destination_to_another() throws InvalidEndPointException
 	{
 		Road r1 = new Road(1, 10);
-		EndPoint A = new Destination();
-		EndPoint B = new Destination();
+		Destination A = new Destination();
+		Destination B = new Destination();
 		
 		r1.setSource(A);
 		r1.setSink(B);
