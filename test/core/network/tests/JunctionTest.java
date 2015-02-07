@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import core.endpoints.Destination;
-import core.endpoints.JunctionExit;
-import core.network.junction.InvalidInterfaceException;
+import core.endpoints.InterfaceExit;
+import core.network.interfaces.InvalidInterfaceException;
 import core.network.junction.InvalidRouteException;
 import core.network.junction.Junction;
 import core.network.junction.Junction.JUNCTION;
@@ -69,8 +69,8 @@ public class JunctionTest {
 		table.add(D, junction.getInterface(JUNCTION.WEST));
 		junction.setRoutingTable(table);
 		
-		JunctionExit actualExit = junction.getExit(A,B);
-		JunctionExit expectedExit = junction.getJunctionExit(JUNCTION.EAST);
+		InterfaceExit actualExit = junction.getExit(A,B);
+		InterfaceExit expectedExit = junction.getJunctionExit(JUNCTION.EAST);
 		assertEquals(expectedExit,actualExit);
 		
 		actualExit = junction.getExit(C, A);

@@ -3,7 +3,8 @@ package core.network.junction;
 import java.util.HashMap;
 
 import core.endpoints.Destination;
-import core.endpoints.JunctionExit;
+import core.endpoints.InterfaceExit;
+import core.network.interfaces.Interface;
 
 public class JunctionRouter {
 
@@ -22,7 +23,7 @@ public class JunctionRouter {
 		}
 	}
 
-	public JunctionExit getExit(Destination dest) throws InvalidRouteException {
+	public InterfaceExit getExit(Destination dest) throws InvalidRouteException {
 		Interface inf = map.get(dest);
 		if(inf == null)
 		{

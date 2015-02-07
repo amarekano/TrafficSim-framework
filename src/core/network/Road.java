@@ -7,8 +7,8 @@ import java.util.Random;
 import core.endpoints.Destination;
 import core.endpoints.EndPoint;
 import core.endpoints.InvalidEndPointException;
-import core.endpoints.JunctionEntry;
-import core.endpoints.JunctionExit;
+import core.endpoints.InterfaceEntry;
+import core.endpoints.InterfaceExit;
 import core.vehicle.Vehicle;
 
 public class Road {
@@ -161,7 +161,7 @@ public class Road {
 					}
 				}
 			}
-			else if(source.getClass() == JunctionExit.class)
+			else if(source.getClass() == InterfaceExit.class)
 			{
 				//AM > We don't bother with JunctionExits, just added to force proper assignments to source
 			}
@@ -189,7 +189,7 @@ public class Road {
 					dest.addVehicle(v);
 				}
 			}
-			else if(sink.getClass() == JunctionEntry.class)
+			else if(sink.getClass() == InterfaceEntry.class)
 			{
 				//AM > Move traffic over to the connected road
 			}

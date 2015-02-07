@@ -1,4 +1,4 @@
-package core.network.junction;
+package core.network.interfaces;
 
 public class InvalidInterfaceException extends Exception {
 
