@@ -1,7 +1,6 @@
 package core.network.junction;
 
 import core.endpoints.Destination;
-import core.endpoints.EndPoint;
 import core.endpoints.JunctionEntry;
 import core.endpoints.JunctionExit;
 
@@ -108,7 +107,7 @@ public class Junction {
 		}
 		
 		if(enabledInterfaceCount < 2)
-			throw new InvalidJunctionConfigurationException();
+			throw new InvalidJunctionConfigurationException("There needs to be a minimum of two enabled Inferfaces");
 	}
 	
 	public int getEnabledInterfaceCount() {

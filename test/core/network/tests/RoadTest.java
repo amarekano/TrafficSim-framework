@@ -7,7 +7,6 @@ import org.junit.Test;
 import core.network.Road;
 import core.vehicle.Vehicle;
 import core.vehicle.Car;
-import core.endpoints.EndPoint;
 import core.endpoints.Destination;
 import core.endpoints.InvalidEndPointException;
 

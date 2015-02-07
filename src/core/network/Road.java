@@ -168,7 +168,7 @@ public class Road {
 			else
 			{
 				//AM > Most likely an invalid source assignment. throw exception.
-				throw new InvalidEndPointException();
+				throw new InvalidEndPointException("Unknown Endpoint assignment");
 			}
 		}
 
@@ -191,16 +191,12 @@ public class Road {
 			}
 			else if(sink.getClass() == JunctionEntry.class)
 			{
-				JunctionEntry junc_entry = (JunctionEntry)sink;
-				for(Lane l: lanes)
-				{
-					//l.moveVehicles(junc_entry);
-				}
+				//AM > Move traffic over to the connected road
 			}
 			else
 			{
 				//AM > Most likely an invalid assignment. throw exception.
-				throw new InvalidEndPointException();
+				throw new InvalidEndPointException("Unknown Endpoint assignment");
 			}
 		}
 	}

@@ -1,8 +1,6 @@
 package core.network;
 import java.util.*;
 
-import core.endpoints.JunctionExit;
-import core.vehicle.Car;
 import core.vehicle.Vehicle;
 
 public class Lane {

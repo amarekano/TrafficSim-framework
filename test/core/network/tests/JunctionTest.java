@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import core.endpoints.Destination;
-import core.endpoints.JunctionEntry;
 import core.endpoints.JunctionExit;
 import core.network.junction.InvalidInterfaceException;
 import core.network.junction.InvalidRouteException;

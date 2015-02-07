@@ -1,6 +1,5 @@
 package core.network.junction;
 
-import core.endpoints.EndPoint;
 import core.endpoints.JunctionEntry;
 import core.endpoints.JunctionExit;
 
