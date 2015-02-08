@@ -30,4 +30,15 @@ public class TrafficSignal {
 		}
 	}
 	
+	public void setSignal(Interface face, boolean state) throws InvalidInterfaceException
+	{
+		if(lights.containsKey(face))
+		{
+			lights.put(face, state);
+		}
+		else
+		{
+			throw new InvalidInterfaceException("Unknown Interface");
+		}
+	}
 }

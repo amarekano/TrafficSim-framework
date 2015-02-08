@@ -46,5 +46,17 @@ public class TrafficSignalTest {
 	{
 		TrafficSignal signal = new TrafficSignal(north,south,south);
 	}
-
+	
+	@Test
+	public void test_signal_should_allow_setting_of_lights() throws InvalidInterfaceException
+	{
+		TrafficSignal signal = new TrafficSignal(north, south, east);
+		assertEquals(false, signal.getSignal(north));
+		signal.setSignal(north, true);
+		assertEquals(true, signal.getSignal(north));
+		signal.setSignal(south, true);
+		assertEquals(true,signal.getSignal(south));
+		signal.setSignal(north, false);
+		assertEquals(false, signal.getSignal(north));
+	}
 }
