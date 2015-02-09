@@ -1,9 +1,9 @@
 package core.endpoints;
 
-public class InvalidEndPointException extends Exception {
+public class EndPointException extends Exception {
 	private String message;
 	
-	public InvalidEndPointException(String message)
+	public EndPointException(String message)
 	{
 		this.message = message;
 	}

@@ -5,18 +5,18 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import core.endpoints.Destination;
-import core.endpoints.InterfaceExit;
-import core.network.interfaces.InvalidInterfaceException;
+import core.network.interfaces.Interface;
+import core.network.interfaces.InterfaceException;
 import core.network.junction.InvalidRouteException;
 import core.network.junction.Junction;
 import core.network.junction.Junction.JUNCTION;
-import core.network.junction.InvalidJunctionConfigurationException;
+import core.network.junction.JunctionException;
 import core.network.junction.JunctionRouter;
 
 public class JunctionTest {
 
-	@Test(expected=InvalidJunctionConfigurationException.class)
-	public void test_junction_with_less_than_two_enabled_interfaces() throws InvalidInterfaceException, InvalidJunctionConfigurationException
+	@Test(expected=JunctionException.class)
+	public void test_junction_with_less_than_two_enabled_interfaces() throws InterfaceException, JunctionException
 	{
 		Junction junction = new Junction();
 		junction.disableInterface(JUNCTION.EAST);
@@ -26,21 +26,21 @@ public class JunctionTest {
 	}
 	
 	@Test
-	public void test_junction_with_three_enabled_interfaces() throws InvalidInterfaceException
+	public void test_junction_with_three_enabled_interfaces() throws InterfaceException
 	{
 		try
 		{
 			Junction junction = new Junction();
 			junction.disableInterface(JUNCTION.EAST);
 		}
-		catch(InvalidJunctionConfigurationException e)
+		catch(JunctionException e)
 		{
 			fail();
 		}
 	}
 	
 	@Test
-	public void test_enabled_interface_count_when_enabling_disabling_interfaces() throws InvalidInterfaceException, InvalidJunctionConfigurationException
+	public void test_enabled_interface_count_when_enabling_disabling_interfaces() throws InterfaceException, JunctionException
 	{
 		Junction junction = new Junction();
 		junction.disableInterface(JUNCTION.NORTH);
@@ -53,7 +53,7 @@ public class JunctionTest {
 	}
 	
 	@Test
-	public void test_junction_entries_should_route_vehicles_to_the_correct_exit() throws InvalidInterfaceException, InvalidRouteException
+	public void test_junction_entries_should_route_vehicles_to_the_correct_exit() throws InterfaceException, InvalidRouteException
 	{
 		Junction junction = new Junction();
 		Destination A = new Destination();
@@ -69,21 +69,21 @@ public class JunctionTest {
 		table.add(D, junction.getInterface(JUNCTION.WEST));
 		junction.setRoutingTable(table);
 		
-		InterfaceExit actualExit = junction.getExit(A,B);
-		InterfaceExit expectedExit = junction.getJunctionExit(JUNCTION.EAST);
+		Interface actualExit = junction.getExitInterface(B);
+		Interface expectedExit = junction.getInterface(JUNCTION.EAST);
 		assertEquals(expectedExit,actualExit);
 		
-		actualExit = junction.getExit(C, A);
-		expectedExit = junction.getJunctionExit(JUNCTION.WEST);
+		actualExit = junction.getExitInterface(A);
+		expectedExit = junction.getInterface(JUNCTION.WEST);
 		assertEquals(expectedExit,actualExit);
 		
-		actualExit = junction.getExit(C, D);
-		expectedExit = junction.getJunctionExit(JUNCTION.WEST);
+		actualExit = junction.getExitInterface(D);
+		expectedExit = junction.getInterface(JUNCTION.WEST);
 		assertEquals(expectedExit,actualExit);
 	}
 	
 	@Test(expected=InvalidRouteException.class)
-	public void test_junction_routing_to_unregistered_destination() throws InvalidInterfaceException, InvalidRouteException
+	public void test_junction_routing_to_unregistered_destination() throws InterfaceException, InvalidRouteException
 	{
 		Junction junction = new Junction();
 		Destination A = new Destination();
@@ -93,7 +93,7 @@ public class JunctionTest {
 		table.add(B, junction.getInterface(JUNCTION.EAST));
 		junction.setRoutingTable(table);
 		
-		junction.getExit(B, A);
+		junction.getExitInterface(A);
 	}
 	
 }

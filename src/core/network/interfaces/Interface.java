@@ -1,12 +1,14 @@
 package core.network.interfaces;
 
-import core.endpoints.InterfaceEntry;
-import core.endpoints.InterfaceExit;
+import core.endpoints.EndPoint;
+import core.endpoints.JunctionEntry;
+import core.endpoints.JunctionExit;
 
-public class Interface {
+public class Interface
+{
 	
-	private InterfaceExit exit;
-	private InterfaceEntry entry;
+	private JunctionExit exit;
+	private JunctionEntry entry;
 	private boolean enabled;
 	private TrafficSignal signals;
 	
@@ -16,16 +18,16 @@ public class Interface {
 		this.enabled = true;
 	}
 	
-	public void setSignals(Interface leftTurn, Interface forward, Interface rightTurn) throws InvalidInterfaceException
+	public void configureSignal(Interface leftTurn, Interface forward, Interface rightTurn) throws InterfaceException
 	{
 		//AM > Setup traffic lights
 		signals = new TrafficSignal(leftTurn, forward, rightTurn);
 	}
-	public InterfaceEntry getEntry() {
+	public JunctionEntry getEntry() {
 		return entry;
 	}
 
-	public InterfaceExit getExit() {
+	public JunctionExit getExit() {
 		return exit;
 	}
 	
@@ -41,7 +43,7 @@ public class Interface {
 		return enabled;
 	}
 
-	public boolean isExitGreen(Interface dest) throws InvalidInterfaceException {
+	public boolean isExitGreen(Interface dest) throws InterfaceException {
 		return signals.getSignal(dest);
 	}
 }

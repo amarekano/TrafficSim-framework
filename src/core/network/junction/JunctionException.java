@@ -1,9 +1,9 @@
 package core.network.junction;
 
-public class InvalidJunctionConfigurationException extends Exception {
+public class JunctionException extends Exception {
 	private String message;
 	
-	public InvalidJunctionConfigurationException(String message)
+	public JunctionException(String message)
 	{
 		this.message = message;
 	}

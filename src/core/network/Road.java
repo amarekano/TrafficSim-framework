@@ -6,9 +6,12 @@ import java.util.Random;
 
 import core.endpoints.Destination;
 import core.endpoints.EndPoint;
-import core.endpoints.InvalidEndPointException;
-import core.endpoints.InterfaceEntry;
-import core.endpoints.InterfaceExit;
+import core.endpoints.EndPointException;
+import core.endpoints.JunctionEntry;
+import core.endpoints.JunctionExit;
+import core.network.interfaces.InterfaceException;
+import core.network.junction.Junction;
+import core.network.junction.Junction.JUNCTION;
 import core.vehicle.Vehicle;
 
 public class Road {
@@ -16,6 +19,8 @@ public class Road {
 	private int number_of_lanes;
 	private EndPoint source;
 	private EndPoint sink;
+	private Junction sourceJunction;
+	private Junction sinkJunction;
 
 	//AM > Create lane(s) and set their length
 	public Road(int number_of_lanes, int lane_length)
@@ -29,6 +34,10 @@ public class Road {
 			Lane lane = new Lane(lane_length);
 			lanes.add(lane);
 		}	
+		
+		//AM > Road isn't connected to any junctions
+		sourceJunction = null;
+		sinkJunction = null;
 	}
 
 	public List<Lane> getLanes() {
@@ -43,16 +52,36 @@ public class Road {
 		return source;
 	}
 
-	public void setSource(EndPoint source) {
+	public void setSource(Destination source) {
 		this.source = source;
+	}
+	
+	public void setSource(Junction junction, JUNCTION face) throws InterfaceException
+	{
+		//AM > Store junction information
+		sourceJunction = junction;
+		
+		//AM > Set source to JunctionExit
+		JunctionExit juncExit = sourceJunction.getJunctionExit(face);
+		juncExit.setLanes(lanes);
 	}
 
 	public EndPoint getSink() {
 		return sink;
 	}
 
-	public void setSink(EndPoint sink) {
+	public void setSink(Destination sink) {
 		this.sink = sink;
+	}
+	
+	public void setSink(Junction junction, JUNCTION face) throws InterfaceException
+	{
+		//AM > Store junction information
+		sinkJunction = junction;
+		
+		//AM > Set sink to JunctionEntry
+		JunctionEntry juncEntry = sinkJunction.getJunctionEntry(face);
+		juncEntry.setLanes(lanes);
 	}
 
 	/*
@@ -138,7 +167,7 @@ public class Road {
 	 * AM > Pull vehicle from the source and add them to the road. Move the traffic along.
 	 * 		If vehicles are leaving the network then push them into the sink  
 	 */
-	public void moveTraffic() throws InvalidEndPointException{
+	public void moveTraffic() throws EndPointException{
 		//AM > If source is not null check if it has a vehicle to be added
 		if(source != null)
 		{
@@ -161,14 +190,14 @@ public class Road {
 					}
 				}
 			}
-			else if(source.getClass() == InterfaceExit.class)
+			else if(source.getClass() == JunctionExit.class)
 			{
 				//AM > We don't bother with JunctionExits, just added to force proper assignments to source
 			}
 			else
 			{
 				//AM > Most likely an invalid source assignment. throw exception.
-				throw new InvalidEndPointException("Unknown Endpoint assignment");
+				throw new EndPointException("Unknown Endpoint assignment");
 			}
 		}
 
@@ -189,14 +218,24 @@ public class Road {
 					dest.addVehicle(v);
 				}
 			}
-			else if(sink.getClass() == InterfaceEntry.class)
+			else if(sink.getClass() == JunctionEntry.class)
 			{
-				//AM > Move traffic over to the connected road
+				//AM > For each car exiting a lane
+				//AM > Get its destination
+				//AM > Get the interface for that destination
+				//AM > Check the signal to that Interface
+				//AM > If signal is green
+				//AM > 	if exit is free
+				//AM >    lanes.transfer(sink.getLanes());
+				//AM >  else
+				//AM > 	   lanes.moveVehiclesAndWait();
+				//AM > else if signal is read
+				//AM >    lanes.moveVehiclesAndWait();
 			}
 			else
 			{
 				//AM > Most likely an invalid assignment. throw exception.
-				throw new InvalidEndPointException("Unknown Endpoint assignment");
+				throw new EndPointException("Unknown Endpoint assignment");
 			}
 		}
 	}

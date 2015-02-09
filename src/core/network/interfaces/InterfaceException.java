@@ -1,10 +1,10 @@
 package core.network.interfaces;
 
-public class InvalidInterfaceException extends Exception {
+public class InterfaceException extends Exception {
 
 	private String message;
 	
-	public InvalidInterfaceException(String string) {
+	public InterfaceException(String string) {
 		this.message = string;
 	}
 	

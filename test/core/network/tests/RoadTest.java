@@ -8,7 +8,7 @@ import core.network.Road;
 import core.vehicle.Vehicle;
 import core.vehicle.Car;
 import core.endpoints.Destination;
-import core.endpoints.InvalidEndPointException;
+import core.endpoints.EndPointException;
 
 public class RoadTest {
 
@@ -75,7 +75,7 @@ public class RoadTest {
 	}
 	
 	@Test
-	public void test_moving_cars_on_a_single_lane_road() throws InvalidEndPointException
+	public void test_moving_cars_on_a_single_lane_road() throws EndPointException
 	{
 		Road r1 = new Road(1,5);
 		Car c1 = new Car(2,0,10);
@@ -95,7 +95,7 @@ public class RoadTest {
 	}
 	
 	@Test
-	public void test_moving_cars_on_a_multi_lane_road() throws InvalidEndPointException
+	public void test_moving_cars_on_a_multi_lane_road() throws EndPointException
 	{
 		Road r1 = new Road(3, 5);
 		Car c1 = new Car(2,0,10);
@@ -115,7 +115,7 @@ public class RoadTest {
 	}
 	
 	@Test
-	public void test_vehicles_move_from_one_destination_to_another() throws InvalidEndPointException
+	public void test_vehicles_move_from_one_destination_to_another() throws EndPointException
 	{
 		Road r1 = new Road(1, 10);
 		Destination A = new Destination();

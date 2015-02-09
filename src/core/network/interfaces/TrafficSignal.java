@@ -6,7 +6,7 @@ public class TrafficSignal {
 
 	private HashMap<Interface, Boolean> lights;
 	
-	public TrafficSignal(Interface leftTurn, Interface forward, Interface rightTurn) throws InvalidInterfaceException
+	public TrafficSignal(Interface leftTurn, Interface forward, Interface rightTurn) throws InterfaceException
 	{
 		lights = new HashMap<Interface, Boolean>();
 		
@@ -15,10 +15,10 @@ public class TrafficSignal {
 		lights.put(forward, false);
 		
 		if(lights.size() < 3)
-			throw new InvalidInterfaceException("Duplicate Interface detected");
+			throw new InterfaceException("Duplicate Interface detected");
 	}
 	
-	public boolean getSignal(Interface face) throws InvalidInterfaceException
+	public boolean getSignal(Interface face) throws InterfaceException
 	{
 		if(lights.containsKey(face))
 		{
@@ -26,11 +26,11 @@ public class TrafficSignal {
 		}
 		else
 		{
-			throw new InvalidInterfaceException("Unknown Interface");
+			throw new InterfaceException("Unknown Interface");
 		}
 	}
 	
-	public void setSignal(Interface face, boolean state) throws InvalidInterfaceException
+	public void setSignal(Interface face, boolean state) throws InterfaceException
 	{
 		if(lights.containsKey(face))
 		{
@@ -38,7 +38,7 @@ public class TrafficSignal {
 		}
 		else
 		{
-			throw new InvalidInterfaceException("Unknown Interface");
+			throw new InterfaceException("Unknown Interface");
 		}
 	}
 }

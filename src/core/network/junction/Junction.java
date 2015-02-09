@@ -1,10 +1,10 @@
 package core.network.junction;
 
 import core.endpoints.Destination;
-import core.endpoints.InterfaceEntry;
-import core.endpoints.InterfaceExit;
+import core.endpoints.JunctionEntry;
+import core.endpoints.JunctionExit;
 import core.network.interfaces.Interface;
-import core.network.interfaces.InvalidInterfaceException;
+import core.network.interfaces.InterfaceException;
 
 public class Junction {
 	private Interface west;
@@ -17,7 +17,7 @@ public class Junction {
 	
 	public enum JUNCTION {WEST, EAST, NORTH, SOUTH};
 	
-	public Junction() throws InvalidInterfaceException
+	public Junction() throws InterfaceException
 	{
 		//AM > A Junction is created with all it's interfaces enabled
 		west = new Interface();
@@ -28,13 +28,13 @@ public class Junction {
 		enabledInterfaceCount = 4;
 		
 		//AM > Setup traffic signals
-		west.setSignals(north,east,south);
-		east.setSignals(south,west,north);
-		south.setSignals(west,north,east);
-		north.setSignals(east,south,west);
+		west.configureSignal(north,east,south);
+		east.configureSignal(south,west,north);
+		south.configureSignal(west,north,east);
+		north.configureSignal(east,south,west);
 	}
 	
-	public void enableInterface(JUNCTION face) throws InvalidInterfaceException
+	public void enableInterface(JUNCTION face) throws InterfaceException
 	{
 		Interface inf = getInterface(face);
 		if(!inf.isEnabled())
@@ -44,7 +44,7 @@ public class Junction {
 		}
 	}
 	
-	public void disableInterface(JUNCTION face) throws InvalidInterfaceException, InvalidJunctionConfigurationException
+	public void disableInterface(JUNCTION face) throws InterfaceException, JunctionException
 	{	
 		Interface inf = getInterface(face);
 		if(inf.isEnabled())
@@ -54,7 +54,7 @@ public class Junction {
 		}
 		
 		if(enabledInterfaceCount < 2)
-			throw new InvalidJunctionConfigurationException("There needs to be a minimum of two enabled Inferfaces");
+			throw new JunctionException("There needs to be a minimum of two enabled Inferfaces");
 	}
 	
 	public int getEnabledInterfaceCount() {
@@ -65,7 +65,7 @@ public class Junction {
 		this.enabledInterfaceCount = enabledInterfaceCount;
 	}
 
-	public Interface getInterface(JUNCTION face) throws InvalidInterfaceException
+	public Interface getInterface(JUNCTION face) throws InterfaceException
 	{
 		if(face == JUNCTION.EAST && east != null)
 		{
@@ -85,16 +85,16 @@ public class Junction {
 		}
 		else
 		{
-			throw new InvalidInterfaceException("Invalid Interface selected or interface is disabled");
+			throw new InterfaceException("Invalid Interface selected or interface is disabled");
 		}
 	}
 	
-	public InterfaceEntry getJunctionEntry(JUNCTION face) throws InvalidInterfaceException
+	public JunctionEntry getJunctionEntry(JUNCTION face) throws InterfaceException
 	{
 		return getInterface(face).getEntry();
 	}
 	
-	public InterfaceExit getJunctionExit(JUNCTION face) throws InvalidInterfaceException
+	public JunctionExit getJunctionExit(JUNCTION face) throws InterfaceException
 	{
 		return getInterface(face).getExit();
 	}
@@ -103,22 +103,18 @@ public class Junction {
 	public JunctionRouter getRoutingTable() {
 		return router;
 	}
-	
 
 	public void setRoutingTable(JunctionRouter router) {
 		this.router = router;
 	}
 	
-	public InterfaceExit getExit(Destination source, Destination dest) throws InvalidRouteException
+	public Interface getExitInterface(Destination dest) throws InvalidRouteException
 	{
-		if(source == dest)
-			throw new InvalidRouteException("Source and Destination are the same");
-		
-		return router.getExit(dest);
+		return router.getExitInterface(dest);
 	}
 	
 	//AM > is there a green signal from source to destination
-	public boolean isExitGreen(Interface source, Interface dest) throws InvalidInterfaceException
+	public boolean isExitGreen(Interface source, Interface dest) throws InterfaceException
 	{
 		return source.isExitGreen(dest);
 	}
