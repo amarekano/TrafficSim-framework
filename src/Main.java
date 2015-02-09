@@ -1,7 +1,6 @@
 import java.util.List;
 
 import core.endpoints.Destination;
-import core.endpoints.InvalidEndPointException;
 import core.network.Lane;
 import core.network.Road;
 import core.vehicle.Car;
@@ -63,7 +62,7 @@ public class Main {
 				r2.moveTraffic();
 				r1.moveTraffic();
 				
-			} catch (InvalidEndPointException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			if(i == 2){
