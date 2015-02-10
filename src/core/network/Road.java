@@ -225,8 +225,9 @@ public class Road {
 				//AM > Get the interface for that destination
 				//AM > Check the signal to that Interface
 				//AM > If signal is green
+				//AM >  Get exit to this Interface
 				//AM > 	if exit is free
-				//AM >    lanes.transfer(sink.getLanes());
+				//AM >    lanes.transfer(exit.getLanes());
 				//AM >  else
 				//AM > 	   lanes.moveVehiclesAndWait();
 				//AM > else if signal is read

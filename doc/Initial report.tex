@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+
+\begin{document}
+	\title{7CCSMGPR Group Project\\Initial Report - The Undecided}
+	\author{Nathalie Caliacmani, Amar Menezes, \\ Belema Norman-William, Paul Orlean-Taub, Tony Sellen}
+	\date{Feb 2015}
+	\maketitle
+	\section{Project description}
+	\subsection{Introduction}
+
+	We started by examining the uses of traffic simulation systems, which are mainly employed to model
+	changes to road use or to overall demand on the network.
+	Our target user is a transport planning consultant who is advising a local authority on changes to road use.
+\\	\\
+	Documents we found particularly useful in providing us with an insight into the development and use
+	of traffic simulators include \cite{namekawal}, \cite{traff} \& \cite{vistraff}.		
+		
+\subsection{Objectives}
+	Our primary objective is to create a system which can take as input a road system
+	and a journey matrix and produce overall statistics about journey times between the entry/exit points
+	and allow us to change something about the network or the demand and produce new statistics for
+	comparison. Our aim is to model individual vehicle movements as realistically as possible, taking 
+	into account driver type, vehicle type, car following behaviour, lane switching behaviour and junction
+	modelling. The system will output statistics and raw data for each vehicle journey which could be
+	further analysed using a statistical analysis tool such as SPSS.
+\\ \\
+	\subsection{Project Roadmap}
+	
+	\begin{description}
+		\item[Stage 1] Decide on a model for traffic simulation.
+		\item[Stage 2] Research existing implementations.
+		\item[Stage 3] Develop architecture for the system(see \ref{secarch}).
+		\item[Stage 4] Decide on a development methodology and technology to build the system.
+		\item[Stage 5] Build the Core. The Core consists of the building blocks of the simulation i.e. Roads, Junctions, Vehicles.
+		\item[Stage 6] Build Services around the Core. Services control the running of simulation, traffic light scheduling, populating the demand matrix, gathering and reporting statistics.  
+		\item[Stage 7] Build a Client. The Client is a User Interface to the system. The Client allows the user to access system services.
+		\item[Stage 8] Final report.
+		\\
+	\end{description}
+	
+	\subsection{Design}
+		\label{secarch}
+	The Core of the system consists of the following entities
+	\begin{enumerate}
+		\item Vehicle: This describes an entity travelling on the network. Vehicles have speed, acceleration, a maximum speed and behaviour. The vehicle is configured with a Source node and Destination node when it's added to the simulation. 
+		
+		\item Node: A node is the base component of our road model. A node represents a cell in the cell automata model. Each node can accommodate a vehicle of length one. A sequence of nodes forms a lane.
+		
+		\item Lane: A lane is a sequence of nodes that represents a lane on a road. Each lane supports traffic in one direction.
+		
+		\item Road: A road is comprised of one or more lanes. They allow travel in one direction, from a source, to a sink.
+		
+		\item Junctions: Junctions allow for transferring traffic between two or more road segments. In our base model we will allow each junction to have four interfaces (North, East, South \& West). Each interface has a junction entry and an exit mapping onto roads to build the network.
+	\end{enumerate}
+	The Services provided by the system are as follows
+	\begin{enumerate}
+		\item Control the running of the simulation by modifying the tick of the global clock.
+		
+		\item Configure the schedule of the traffic signals at the different junctions.
+		
+		\item Populate the Demand Matrix which specifies the density of traffic between two destinations.
+		
+		\item Mechanism to gather statistics on average journey time, average speed, etc.
+	\end{enumerate}
+	
+	\subsubsection{Routing configuration}
+		Each junction maintains a routing table to move vehicles to the appropriate junction exit towards their destination. These routing tables will be initially static, but may be made to function dynamically as we increase the sophistication of our network.
+		
+	\subsubsection{Policy configuration}
+	
+	\begin{enumerate}
+		\item The user can supply a demand matrix to the simulation. This demand matrix will determine the relative frequency of vehicles travelling between any two destinations. A multiplier will then be calculated using other available information to determine the absolute values.
+		\item The user can control the scheduling of traffic signals at junctions.
+	\end{enumerate}
+	
+	\section{Project organisation}
+	\subsection{Team structure}
+	
+	\begin{itemize}
+		\item We have split the task into separate sections, each of which has a sub-team of at most two members (a person can be a member of multiple sub-teams).
+		\item If a sub-team has two members then one is assigned as the lead.
+		\item We have weekly whole team progress meetings to evaluate how each sub-team is performing and discuss any necessary changes to the overall structure of the group or of the project.
+		\item Any ideas raised at the meetings are recorded and subsequently emailed to all team members.
+		\item Sub-teams are free to organise their own meeting schedule.
+		\item We have not yet agreed on a process for peer assessment, however we believe that our organisational structure should ensure that every team member provides an equally important and significant input.
+		\item We have attempted to avoid conflict by having a clear separation of roles. In the event of a conflict we have decided that majority opinion of the group will prevail.
+	\end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{bib}
+\end{document}
