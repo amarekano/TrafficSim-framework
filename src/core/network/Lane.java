@@ -6,6 +6,9 @@ import core.vehicle.Vehicle;
 public class Lane {
 	private List<Node> nodes;
 	private int maxLength;
+	private LANE state;
+	
+	public enum LANE { MOVE, WAIT };
 	
 	public Lane()
 	{
@@ -13,6 +16,8 @@ public class Lane {
 		nodes = new ArrayList<Node>(maxLength);
 		Node node=new Node();
 		nodes.add(node);
+		//AM > Default lane behavior is to move vehicles along
+		state = LANE.MOVE;
 	}
 	
 	public Lane(int n)
@@ -23,10 +28,20 @@ public class Lane {
 		for(int i = 0; i < maxLength; i++)
 		{
 			Node node=new Node();
-			nodes.add(node);
+			nodes.add(node);	
 		}
+		//AM > Default behavior is to move vehicles along
+		state = LANE.MOVE;
 	}
 	
+	public LANE getState() {
+		return state;
+	}
+
+	public void setState(LANE state) {
+		this.state = state;
+	}
+
 	public boolean addVehicle(Vehicle vehicle){
 		if(nodes.get(0).isOccupied()){
 			return false;
@@ -62,10 +77,27 @@ public class Lane {
 				
 				if( predictedIndex >= maxLength && followingVehicleIndex == maxLength)
 				{
-					//AM > Remove the car from the network
-					nodes.get(currentIndex).setVehicle(null);
-					nodes.get(currentIndex).setOccupied(false);
-					exitingVehicles.add(vehicle);
+					//AM > If lane state is MOVE
+					if(state == LANE.MOVE)
+					{
+						//AM > Remove the car from the network
+						nodes.get(currentIndex).setVehicle(null);
+						nodes.get(currentIndex).setOccupied(false);
+						exitingVehicles.add(vehicle);
+					}
+					else
+					{
+						int finalIndex = followingVehicleIndex - 1;
+						//AM > move vehicles to the end of the lane
+						if(finalIndex != currentIndex)
+						{
+							nodes.get(finalIndex).setVehicle(vehicle);
+							nodes.get(finalIndex).setOccupied(true);
+							nodes.get(currentIndex).setVehicle(null);
+							nodes.get(currentIndex).setOccupied(false);
+						}
+						followingVehicleIndex = finalIndex;
+					}
 				}
 				else
 				{
@@ -105,6 +137,7 @@ public class Lane {
 		return exitingVehicles;
 	}
 	
+	//AM > Primitive visualization of lane state
 	public String toString(){
 		String state="";
 		for(int i=0;i<nodes.size();i++){
@@ -131,4 +164,7 @@ public class Lane {
 		
 		return -1;
 	}
+	
+	
 }
+

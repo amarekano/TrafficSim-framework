@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import core.network.Lane;
+import core.network.Lane.LANE;
 import core.vehicle.Car;
 import core.vehicle.Vehicle;
 
@@ -208,5 +209,54 @@ public class LaneTest {
 		assertEquals(2, exiting_vehicles.size());
 		assertEquals(true,exiting_vehicles.contains(v1));
 		assertEquals(true,exiting_vehicles.contains(v2));
+	}
+	
+	@Test
+	public void test_cars_exit_lane_when_laneState_is_move()
+	{
+		Lane lane = new Lane(4);
+		Vehicle v1 = new Car(2,0,2);
+		Vehicle v2 = new Car(1,1,4);
+		
+		List<Vehicle> exiting_vehicles = new ArrayList<Vehicle>();
+		
+		lane.addVehicle(v1);
+		for(int i = 0; i < 5; i++)
+		{
+			exiting_vehicles.addAll(lane.moveVehicles());
+			if(i == 1)
+				lane.addVehicle(v2);
+		}
+		assertEquals(true, lane.getState() == LANE.MOVE);
+		assertEquals(2, exiting_vehicles.size());
+	}
+	
+	@Test
+	public void test_cars_wait_at_end_of_lane_when_laneState_is_wait()
+	{
+		Lane lane = new Lane(10);
+		Vehicle v1 = new Car(2,0,2);
+		Vehicle v2 = new Car(1,1,4);
+		Vehicle v3 = new Car(2,2,10);
+		
+		List<Vehicle> exiting_vehicles = new ArrayList<Vehicle>();
+		
+		lane.setState(LANE.WAIT);
+		lane.addVehicle(v1);
+		for(int i = 0; i < 15; i++)
+		{
+			exiting_vehicles.addAll(lane.moveVehicles());
+			if(i == 1)
+				lane.addVehicle(v2);
+			if(i == 5)
+				lane.addVehicle(v3);
+			
+		}
+		
+		assertEquals(true, lane.getState() == LANE.WAIT);
+		assertEquals(0, exiting_vehicles.size());
+		assertEquals(9, lane.getVehicleIndex(v1));
+		assertEquals(8, lane.getVehicleIndex(v2));
+		assertEquals(7,lane.getVehicleIndex(v3));
 	}
 }
