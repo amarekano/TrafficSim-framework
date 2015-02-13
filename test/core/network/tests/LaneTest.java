@@ -259,4 +259,52 @@ public class LaneTest {
 		assertEquals(8, lane.getVehicleIndex(v2));
 		assertEquals(7,lane.getVehicleIndex(v3));
 	}
+
+	@Test
+	public void test_adding_cars_to_full_lane_in_waiting_state()
+	{
+		Lane lane = new Lane(2);
+		lane.setState(LANE.WAIT);
+		
+		Vehicle v1 = new Car();
+		Vehicle v2 = new Car();
+		Vehicle v3 = new Car();
+		
+		lane.addVehicle(v1);
+		lane.moveVehicles();
+		lane.addVehicle(v2);
+		lane.moveVehicles();
+		
+		assertEquals(false, lane.addVehicle(v3));
+	}
+	
+	@Test
+	public void test_changing_lane_state_from_wait_to_move()
+	{
+		Lane lane = new Lane(2);
+		lane.setState(LANE.WAIT);
+		
+		List<Vehicle> exitingVehicles = new ArrayList<Vehicle>();
+		
+		lane.addVehicle(new Car());
+		lane.moveVehicles();
+		lane.addVehicle(new Car());
+		lane.moveVehicles();
+		lane.addVehicle(new Car());
+		for(int i = 0; i < 3; i++)
+		{
+			exitingVehicles.addAll(lane.moveVehicles());
+		}
+		assertEquals(true, lane.getState() == LANE.WAIT);
+		assertEquals(0, exitingVehicles.size());
+		
+		lane.setState(LANE.MOVE);
+		for(int i =0; i < 3; i++)
+		{
+			exitingVehicles.addAll(lane.moveVehicles());
+		}
+		
+		assertEquals(true, lane.getState() == LANE.MOVE);
+		assertEquals(2, exitingVehicles.size());
+	}
 }
