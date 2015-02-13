@@ -2,12 +2,15 @@ package core.vehicle;
 
 import java.util.Random;
 
+import core.endpoints.Destination;
+
 public class Car extends Vehicle 
 {
 	private int velocity;
 	private int acceleration;
 	private int max_velocity;
 	private double decelaration_probability;
+	private Destination destination;
 	
 	public Car()
 	{
@@ -33,6 +36,14 @@ public class Car extends Vehicle
 		this.decelaration_probability = 0.0;
 	}
 	
+	public Destination getDestination() {
+		return destination;
+	}
+
+	public void setDestination(Destination destination) {
+		this.destination = destination;
+	}
+
 	public double getDecelaration_probability() {
 		return decelaration_probability;
 	}
