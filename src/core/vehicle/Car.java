@@ -18,6 +18,7 @@ public class Car extends Vehicle
 		this.acceleration = 0;
 		this.max_velocity = 1;
 		this.decelaration_probability = 0.0;
+		this.destination = null;
 	}
 	
 	public Car(int velocity, int acceleration, int max_velocity)
@@ -34,6 +35,7 @@ public class Car extends Vehicle
 		}
 		this.max_velocity = max_velocity < this.velocity ? this.velocity : max_velocity;
 		this.decelaration_probability = 0.0;
+		this.destination = null;
 	}
 	
 	public Destination getDestination() {

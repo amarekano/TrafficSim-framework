@@ -10,9 +10,9 @@ public class TrafficSignal {
 	{
 		lights = new HashMap<Interface, Boolean>();
 		
-		lights.put(leftTurn, false);
-		lights.put(rightTurn, false);
-		lights.put(forward, false);
+		lights.put(leftTurn, true);
+		lights.put(rightTurn, true);
+		lights.put(forward, true);
 		
 		if(lights.size() < 3)
 			throw new InterfaceException("Duplicate Interface detected");

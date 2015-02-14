@@ -2,6 +2,8 @@ package core.network;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 import core.endpoints.Destination;
@@ -9,18 +11,23 @@ import core.endpoints.EndPoint;
 import core.endpoints.EndPointException;
 import core.endpoints.JunctionEntry;
 import core.endpoints.JunctionExit;
+import core.network.Lane.LANE;
+import core.network.interfaces.Interface;
 import core.network.interfaces.InterfaceException;
+import core.network.junction.InvalidRouteException;
 import core.network.junction.Junction;
 import core.network.junction.Junction.JUNCTION;
+import core.network.junction.JunctionException;
 import core.vehicle.Vehicle;
 
-public class Road {
+public class Road implements Observer{
 	private List<Lane> lanes;
 	private int number_of_lanes;
 	private EndPoint source;
 	private EndPoint sink;
 	private Junction sourceJunction;
 	private Junction sinkJunction;
+	private JUNCTION face;
 
 	//AM > Create lane(s) and set their length
 	public Road(int number_of_lanes, int lane_length)
@@ -32,7 +39,9 @@ public class Road {
 		for(int i = 0; i < this.number_of_lanes; i++)
 		{
 			Lane lane = new Lane(lane_length);
+			lane.addObserver(this);
 			lanes.add(lane);
+			
 		}	
 		
 		//AM > Road isn't connected to any junctions
@@ -64,6 +73,7 @@ public class Road {
 		//AM > Set source to JunctionExit
 		JunctionExit juncExit = sourceJunction.getJunctionExit(face);
 		juncExit.setLanes(lanes);
+		source = juncExit;
 	}
 
 	public EndPoint getSink() {
@@ -79,9 +89,13 @@ public class Road {
 		//AM > Store junction information
 		sinkJunction = junction;
 		
+		//AM > Store interface information
+		this.face = face;
+		
 		//AM > Set sink to JunctionEntry
-		JunctionEntry juncEntry = sinkJunction.getJunctionEntry(face);
+		JunctionEntry juncEntry = sinkJunction.getJunctionEntry(this.face);
 		juncEntry.setLanes(lanes);
+		sink = juncEntry;
 	}
 
 	/*
@@ -114,7 +128,6 @@ public class Road {
 			return false;
 		}
 	}
-
 
 	public boolean addVehicle(Vehicle v, int laneNumber)
 	{
@@ -200,18 +213,16 @@ public class Road {
 				throw new EndPointException("Unknown Endpoint assignment");
 			}
 		}
-
-		//AM > Move traffic along
-		List<Vehicle> exitingVehicles = new ArrayList<Vehicle>();
-		for(int i=0;i<lanes.size();i++){
-		 exitingVehicles.addAll(lanes.get(i).moveVehicles());
-		}
 		
 		if(sink != null)
 		{
 			//AM > If sink is a destination, then collect exiting vehicles and add them to the destination
 			if(sink.getClass() == Destination.class)
 			{
+				List<Vehicle> exitingVehicles = new ArrayList<Vehicle>();
+				for(Lane l : lanes){
+				 exitingVehicles.addAll(l.moveVehicles());
+				}
 				Destination dest = (Destination) sink;
 				for(Vehicle v : exitingVehicles)
 				{
@@ -220,24 +231,61 @@ public class Road {
 			}
 			else if(sink.getClass() == JunctionEntry.class)
 			{
-				//AM > For each car exiting a lane
-				//AM > Get its destination
-				//AM > Get the interface for that destination
-				//AM > Check the signal to that Interface
-				//AM > If signal is green
-				//AM >  Get exit to this Interface
-				//AM > 	if exit is free
-				//AM >    lanes.transfer(exit.getLanes());
-				//AM >  else
-				//AM > 	   lanes.moveVehiclesAndWait();
-				//AM > else if signal is read
-				//AM >    lanes.moveVehiclesAndWait();
+				for(Lane l : lanes)
+					l.moveVehicles();
 			}
 			else
 			{
 				//AM > Most likely an invalid assignment. throw exception.
 				throw new EndPointException("Unknown Endpoint assignment");
 			}
+		}
+		else
+		{
+			for(Lane l : lanes)
+				l.moveVehicles();
+		}
+	}
+
+	@Override
+	public void update(Observable lane, Object vehicle)
+	{
+		Vehicle v = (Vehicle) vehicle;
+		Lane l = (Lane) lane;
+		
+		if(sink instanceof Destination)
+		{
+			l.setState(LANE.MOVE);
+		}
+		else if(sink instanceof JunctionEntry)
+		{
+			try
+			{
+				//AM > Get the vehicles destination
+				Destination d = v.getDestination();
+				//AM > Get the destination interface
+				Interface exitInterface = sinkJunction.getExitInterface(d);
+				//AM > If signal to interface is green
+				if(sinkJunction.isExitGreen(sinkJunction.getInterface(face), exitInterface))
+				{
+					//AM > Get lanes to junction exit
+					List<Lane> exitLanes = exitInterface.getExit().getLanes();
+
+					//AM > Perform lane transfer
+					l.setTransferLanes(exitLanes);
+					l.setState(LANE.TRANSFER);
+				}
+			}
+			catch(InvalidRouteException e)
+			{
+				e.printStackTrace();
+			} catch (InterfaceException e) {
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			l.setState(LANE.MOVE);
 		}
 	}
 }

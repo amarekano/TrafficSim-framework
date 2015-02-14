@@ -1,6 +1,5 @@
 package core.network.interfaces;
 
-import core.endpoints.EndPoint;
 import core.endpoints.JunctionEntry;
 import core.endpoints.JunctionExit;
 
@@ -16,6 +15,8 @@ public class Interface
 	{
 		//AM > Enable the interface
 		this.enabled = true;
+		exit = new JunctionExit();
+		entry = new JunctionEntry();
 	}
 	
 	public void configureSignal(Interface leftTurn, Interface forward, Interface rightTurn) throws InterfaceException

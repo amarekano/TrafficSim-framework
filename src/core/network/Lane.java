@@ -79,6 +79,7 @@ public class Lane extends Observable{
 				if( predictedIndex >= maxLength && followingVehicleIndex == maxLength)
 				{
 					//AM > Notify observers (i.e Road) that we have an exiting vehicle
+					setChanged();
 					notifyObservers(vehicle);
 					
 					//AM > If lane state is TRANSFER
