@@ -3,12 +3,13 @@ import java.util.*;
 
 import core.vehicle.Vehicle;
 
-public class Lane {
+public class Lane extends Observable{
 	private List<Node> nodes;
 	private int maxLength;
 	private LANE state;
+	private List<Lane> transferLanes;
 	
-	public enum LANE { MOVE, WAIT };
+	public enum LANE { MOVE, WAIT, TRANSFER };
 	
 	public Lane()
 	{
@@ -77,15 +78,33 @@ public class Lane {
 				
 				if( predictedIndex >= maxLength && followingVehicleIndex == maxLength)
 				{
-					//AM > If lane state is MOVE
-					if(state == LANE.MOVE)
+					//AM > Notify observers (i.e Road) that we have an exiting vehicle
+					notifyObservers(vehicle);
+					
+					//AM > If lane state is TRANSFER
+					if(state == LANE.TRANSFER)
 					{
-						//AM > Remove the car from the network
-						nodes.get(currentIndex).setVehicle(null);
-						nodes.get(currentIndex).setOccupied(false);
-						exitingVehicles.add(vehicle);
+						//AM > If the transfer fails make the vehicle wait
+						if(!transferVehicle(vehicle))
+						{
+							int finalIndex = followingVehicleIndex - 1;
+							//AM > move vehicles to the end of the lane
+							if(finalIndex != currentIndex)
+							{
+								nodes.get(finalIndex).setVehicle(vehicle);
+								nodes.get(finalIndex).setOccupied(true);
+								nodes.get(currentIndex).setVehicle(null);
+								nodes.get(currentIndex).setOccupied(false);
+							}
+							followingVehicleIndex = finalIndex;
+						}
+						else
+						{
+							nodes.get(currentIndex).setVehicle(null);
+							nodes.get(currentIndex).setOccupied(false);
+						}
 					}
-					else
+					else if(state == LANE.WAIT)
 					{
 						int finalIndex = followingVehicleIndex - 1;
 						//AM > move vehicles to the end of the lane
@@ -97,6 +116,14 @@ public class Lane {
 							nodes.get(currentIndex).setOccupied(false);
 						}
 						followingVehicleIndex = finalIndex;
+					}
+					//AM > Default action is to move cars
+					else
+					{
+						//AM > Remove the car from the network
+						nodes.get(currentIndex).setVehicle(null);
+						nodes.get(currentIndex).setOccupied(false);
+						exitingVehicles.add(vehicle);
 					}
 				}
 				else
@@ -165,6 +192,30 @@ public class Lane {
 		return -1;
 	}
 	
-	
+	public List<Lane> getTransferLanes() {
+		return transferLanes;
+	}
+
+	public void setTransferLanes(List<Lane> transferLanes) {
+		this.transferLanes = transferLanes;
+	}
+
+	//AM > Move exiting vehicles to destination lanes
+	public boolean transferVehicle(Vehicle v)
+	{
+		if(transferLanes == null)
+		{
+			return false;
+		}
+		else
+		{
+			for(Lane l : transferLanes)
+			{
+				if(l.addVehicle(v))
+					return true;
+			}
+			return false;
+		}
+	}
 }
 

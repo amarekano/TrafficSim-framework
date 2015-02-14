@@ -318,4 +318,106 @@ public class LaneTest {
 		assertEquals(true, lane.getState() == LANE.MOVE);
 		assertEquals(2, exitingVehicles.size());
 	}
+	
+	@Test
+	public void test_transfering_vehicles_when_transfer_lanes_is_null()
+	{
+		Lane srcLane = new Lane(2);
+		Vehicle v1 = new Car();
+		
+		srcLane.setState(LANE.TRANSFER);
+		srcLane.addVehicle(v1);
+		
+		for(int i = 0; i < 3; i++)
+			srcLane.moveVehicles();
+		
+		assertEquals(1, srcLane.getVehicleIndex(v1));
+	}
+	
+	@Test
+	public void test_transfering_vehicle_to_single_lane()
+	{
+		Lane lane = new Lane(2);
+		List<Lane> transferLane = new ArrayList<Lane>();
+		Lane destLane = new Lane(2);
+		
+		Vehicle v1 = new Car();
+		lane.addVehicle(v1);
+		
+		lane.setTransferLanes(transferLane);
+		lane.setState(LANE.TRANSFER);
+		
+		destLane.setState(LANE.WAIT);
+		transferLane.add(destLane);
+		
+		for(int i = 0; i < 5; i++)
+			lane.moveVehicles();
+		
+		assertEquals(0, destLane.getVehicleIndex(v1));
+	}
+	
+	@Test
+	public void test_transfering_vehicles_to_a_full_lane()
+	{
+		Lane srcLane = new Lane(2);
+		Lane destLane = new Lane(2);
+		List<Lane> transferLanes = new ArrayList<Lane>();
+		transferLanes.add(destLane);
+		
+		Vehicle v1 = new Car();
+		Vehicle v2 = new Car(2,0,2);
+		Vehicle v3 = new Car();
+		
+		srcLane.addVehicle(v1);
+		srcLane.setState(LANE.TRANSFER);
+		srcLane.setTransferLanes(transferLanes);
+		
+		//AM > Fill the destination lane
+		destLane.setState(LANE.WAIT);
+		destLane.addVehicle(v2);
+		destLane.moveVehicles();
+		destLane.addVehicle(v3);
+		
+		for(int i = 0; i < 3; i++)
+			srcLane.moveVehicles();
+		
+		assertEquals(1, srcLane.getVehicleIndex(v1));
+		assertEquals(0, destLane.getVehicleIndex(v3));
+		assertEquals(1, destLane.getVehicleIndex(v2));
+	}
+	
+	@Test
+	public void test_transfering_vehicles_to_multiple_lanes()
+	{
+		Lane srcLane = new Lane(2);
+		List<Lane> transferLanes = new ArrayList<Lane>();
+		Lane destLane1 = new Lane(1);
+		Lane destLane2 = new Lane(1);
+		destLane1.setState(LANE.WAIT);
+		destLane2.setState(LANE.WAIT);
+		transferLanes.add(destLane1);
+		transferLanes.add(destLane2);
+		
+		srcLane.setState(LANE.TRANSFER);
+		srcLane.setTransferLanes(transferLanes);
+		
+		Vehicle v1 = new Car();
+		Vehicle v2 = new Car();
+		Vehicle v3 = new Car();
+		
+		srcLane.addVehicle(v1);
+		for(int i = 0; i < 7; i++)
+		{
+			srcLane.moveVehicles();
+			if(i == 1)
+				srcLane.addVehicle(v2);
+			if(i == 2)
+				srcLane.addVehicle(v3);
+		}
+		
+		assertEquals(0, transferLanes.get(0).getVehicleIndex(v1));
+		assertEquals(0, transferLanes.get(1).getVehicleIndex(v2));
+		assertEquals(1, srcLane.getVehicleIndex(v3));
+	}
+	
 }
