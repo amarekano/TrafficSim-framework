@@ -86,9 +86,9 @@ public class IntegrationTest {
 			r4.moveTraffic();
 		}
 		
-		assertEquals(1, B.getQueueLength());
-		assertEquals(1, C.getQueueLength());
-		assertEquals(1, D.getQueueLength());
+		assertEquals(1, B.getWaitingQueueLength());
+		assertEquals(1, C.getWaitingQueueLength());
+		assertEquals(1, D.getWaitingQueueLength());
 	}
 
 }

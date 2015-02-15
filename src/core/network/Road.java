@@ -185,9 +185,9 @@ public class Road implements Observer{
 		if(source instanceof Destination)
 		{
 			Destination origin = (Destination) source;
-			while(origin.getQueueLength() > 0)
+			while(origin.getWaitingQueueLength() > 0)
 			{
-				Vehicle v = origin.getVehicle();
+				Vehicle v = origin.getWaitingVehicle();
 				//AM > If adding vehicle was successful release the vehicle from the source
 				if(addVehicle(v))
 				{
