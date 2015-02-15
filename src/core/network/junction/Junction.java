@@ -107,9 +107,12 @@ public class Junction {
 		this.router = router;
 	}
 	
-	public Interface getExitInterface(Destination dest) throws InvalidRouteException
+	public Interface getExitInterface(Destination dest) throws InvalidRouteException, JunctionException
 	{
-		return router.getExitInterface(dest);
+		if(router != null)
+			return router.getExitInterface(dest);
+		else
+			throw new JunctionException("Routing Table not set");
 	}
 	
 	//AM > is there a green signal from source to destination

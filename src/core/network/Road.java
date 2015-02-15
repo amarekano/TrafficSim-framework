@@ -256,6 +256,8 @@ public class Road implements Observer{
 				e.printStackTrace();
 			} catch (InterfaceException e) {
 				e.printStackTrace();
+			} catch (JunctionException e) {
+				e.printStackTrace();
 			}
 		}
 		else

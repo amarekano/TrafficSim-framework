@@ -53,7 +53,7 @@ public class JunctionTest {
 	}
 	
 	@Test
-	public void test_junction_entries_should_route_vehicles_to_the_correct_exit() throws InterfaceException, InvalidRouteException
+	public void test_junction_entries_should_route_vehicles_to_the_correct_exit() throws InterfaceException, InvalidRouteException, JunctionException
 	{
 		Junction junction = new Junction();
 		Destination A = new Destination();
@@ -83,7 +83,7 @@ public class JunctionTest {
 	}
 	
 	@Test(expected=InvalidRouteException.class)
-	public void test_junction_routing_to_unregistered_destination() throws InterfaceException, InvalidRouteException
+	public void test_junction_routing_to_unregistered_destination() throws InterfaceException, InvalidRouteException, JunctionException
 	{
 		Junction junction = new Junction();
 		Destination A = new Destination();
