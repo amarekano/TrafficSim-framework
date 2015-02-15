@@ -159,6 +159,9 @@ public class RoadTest {
 		r2.setSource(junc, JUNCTION.EAST);
 		r2.setSink(B);
 		
+		//AM > Set lights to green
+		junc.getInterface(JUNCTION.WEST).setSignal(junc.getInterface(JUNCTION.EAST), true);
+		
 		//AM > Setup routing information
 		JunctionRouter juncR = new JunctionRouter();
 		juncR.add(A, junc.getInterface(JUNCTION.WEST));

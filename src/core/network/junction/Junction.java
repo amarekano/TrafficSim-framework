@@ -116,6 +116,6 @@ public class Junction {
 	//AM > is there a green signal from source to destination
 	public boolean isExitGreen(Interface source, Interface dest) throws InterfaceException
 	{
-		return source.isExitGreen(dest);
+		return source.getSignal(dest);
 	}
 }

@@ -44,7 +44,12 @@ public class Interface
 		return enabled;
 	}
 
-	public boolean isExitGreen(Interface dest) throws InterfaceException {
-		return signals.getSignal(dest);
+	public boolean getSignal(Interface exitInterface) throws InterfaceException {
+		return signals.getSignal(exitInterface);
+	}
+
+	public void setSignal(Interface exitInterface, boolean state) throws InterfaceException
+	{
+		signals.setSignal(exitInterface, state);
 	}
 }
