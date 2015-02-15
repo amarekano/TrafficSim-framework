@@ -16,4 +16,11 @@ public class JunctionExit extends EndPoint {
 	{
 		this.lanes = lanes;
 	}
+
+	public boolean isConnected() {
+		if(lanes != null)
+			return true;
+		else
+			return false;
+	}
 }

@@ -91,12 +91,20 @@ public class Junction {
 	
 	public JunctionEntry getJunctionEntry(JUNCTION face) throws InterfaceException
 	{
-		return getInterface(face).getEntry();
+		JunctionEntry entry = getInterface(face).getEntry(); 
+		if(entry.isConnected())
+			throw new InterfaceException("Junction Entry has a Road connected");
+		else
+			return entry;
 	}
 	
 	public JunctionExit getJunctionExit(JUNCTION face) throws InterfaceException
 	{
-		return getInterface(face).getExit();
+		JunctionExit exit = getInterface(face).getExit();
+		if(exit.isConnected())
+			throw new InterfaceException("Junction Exit has a Road connected");
+		else
+		return exit;
 	}
 
 	public JunctionRouter getRoutingTable() {
