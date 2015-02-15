@@ -211,7 +211,7 @@ public class Road implements Observer{
 			Destination dest = (Destination) sink;
 			for(Vehicle v : exitingVehicles)
 			{
-				dest.addVehicle(v);
+				dest.consumeVehicle(v);
 			}
 		}
 		else

@@ -86,9 +86,44 @@ public class IntegrationTest {
 			r4.moveTraffic();
 		}
 		
-		assertEquals(1, B.getWaitingQueueLength());
-		assertEquals(1, C.getWaitingQueueLength());
-		assertEquals(1, D.getWaitingQueueLength());
+		assertEquals(1, B.getConsumedQueueLength());
+		assertEquals(1, C.getConsumedQueueLength());
+		assertEquals(1, D.getConsumedQueueLength());
 	}
 
+	@Test
+	public void test_bidirectional_traffic_between_two_destinations() throws EndPointException
+	{
+		Destination A = new Destination();
+		Destination B = new Destination();
+		
+		Road r1 = new Road(1,3);
+		Road r2 = new Road(1,4);
+		
+		/*
+		 * AM > Setup wiring
+		 * |A|-->--r1-->--|B|
+		 * |A|--<--r2--<--|B|
+		 */
+		r1.setSource(A);
+		r1.setSink(B);
+		r2.setSource(B);
+		r2.setSink(A);
+		
+		//AM > Add 5 vehicles to A
+		for(int i = 0; i < 5; i++)
+			A.addVehicle(new Car());
+		//AM > Add 3 vehicles to B with speed of 2
+		for(int i = 0; i < 3; i++)
+			B.addVehicle(new Car(2,0,2));
+		
+		for(int i = 0; i < 8; i++)
+		{
+			r1.moveTraffic();
+			r2.moveTraffic();
+		}
+		
+		assertEquals(3,A.getConsumedQueueLength());
+		assertEquals(5,B.getConsumedQueueLength());
+	}
 }

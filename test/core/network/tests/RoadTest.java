@@ -139,7 +139,7 @@ public class RoadTest {
 			if(i == 2)
 				A.addVehicle(v2);
 		}
-		assertEquals(2, B.getWaitingQueueLength());
+		assertEquals(2, B.getConsumedQueueLength());
 	}
 	
 	@Test
@@ -185,6 +185,6 @@ public class RoadTest {
 			r1.moveTraffic();
 		}
 		
-		assertEquals(3, B.getWaitingQueueLength());
+		assertEquals(3, B.getConsumedQueueLength());
 	}
 }
