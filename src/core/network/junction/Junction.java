@@ -99,7 +99,6 @@ public class Junction {
 		return getInterface(face).getExit();
 	}
 
-	
 	public JunctionRouter getRoutingTable() {
 		return router;
 	}

@@ -73,7 +73,6 @@ public class Road implements Observer{
 		//AM > Set source to JunctionExit
 		JunctionExit juncExit = sourceJunction.getJunctionExit(face);
 		juncExit.setLanes(lanes);
-		source = juncExit;
 	}
 
 	public EndPoint getSink() {
@@ -201,12 +200,6 @@ public class Road implements Observer{
 				}
 			}
 		}
-		else
-		{
-			//AM > We just move the vehicles along
-		}
-
-
 
 		//AM > If sink is a destination, then collect exiting vehicles and add them to the destination
 		if(sink instanceof Destination)
@@ -226,7 +219,6 @@ public class Road implements Observer{
 			for(Lane l : lanes)
 				l.moveVehicles();
 		}
-
 	}
 	
 
