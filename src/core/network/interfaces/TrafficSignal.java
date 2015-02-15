@@ -6,16 +6,13 @@ public class TrafficSignal {
 
 	private HashMap<Interface, Boolean> lights;
 	
-	public TrafficSignal(Interface leftTurn, Interface forward, Interface rightTurn) throws InterfaceException
+	public TrafficSignal(Interface leftTurn, Interface forward, Interface rightTurn) 
 	{
 		lights = new HashMap<Interface, Boolean>();
 		
 		lights.put(leftTurn, false);
 		lights.put(rightTurn, false);
 		lights.put(forward, false);
-		
-		if(lights.size() < 3)
-			throw new InterfaceException("Duplicate Interface detected");
 	}
 	
 	public boolean getSignal(Interface face) throws InterfaceException

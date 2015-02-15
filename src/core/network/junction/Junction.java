@@ -17,7 +17,7 @@ public class Junction {
 	
 	public enum JUNCTION {WEST, EAST, NORTH, SOUTH};
 	
-	public Junction() throws InterfaceException
+	public Junction()
 	{
 		//AM > A Junction is created with all it's interfaces enabled
 		west = new Interface();

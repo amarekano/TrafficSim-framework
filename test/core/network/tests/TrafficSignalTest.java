@@ -41,12 +41,6 @@ public class TrafficSignalTest {
 		signal.getSignal(west);
 	}
 	
-	@Test(expected=InterfaceException.class)
-	public void test_attempting_to_add_the_same_interface_twice() throws InterfaceException
-	{
-		TrafficSignal signal = new TrafficSignal(north,south,south);
-	}
-	
 	@Test
 	public void test_signal_should_allow_setting_of_lights() throws InterfaceException
 	{

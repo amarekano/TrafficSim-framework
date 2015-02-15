@@ -19,7 +19,7 @@ public class Interface
 		entry = new JunctionEntry();
 	}
 	
-	public void configureSignal(Interface leftTurn, Interface forward, Interface rightTurn) throws InterfaceException
+	public void configureSignal(Interface leftTurn, Interface forward, Interface rightTurn)
 	{
 		//AM > Setup traffic lights
 		signals = new TrafficSignal(leftTurn, forward, rightTurn);

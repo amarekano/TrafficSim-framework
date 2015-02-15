@@ -143,7 +143,7 @@ public class RoadTest {
 	}
 	
 	@Test
-	public void test_moving_vehicles_across_a_two_interface_junction() throws InterfaceException, JunctionException, EndPointException
+	public void test_moving_vehicles_across_a_two_interface_junction() throws InterfaceException, JunctionException, EndPointException 
 	{
 		Road r1 = new Road(4,5);
 		Road r2 = new Road(2,10);
