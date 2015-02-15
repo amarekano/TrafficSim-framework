@@ -181,63 +181,44 @@ public class Road implements Observer{
 	 * 		If vehicles are leaving the network then push them into the sink  
 	 */
 	public void moveTraffic() throws EndPointException{
-		//AM > If source is not null check if it has a vehicle to be added
-		if(source != null)
+
+		//AM > If source is a Destination
+		if(source instanceof Destination)
 		{
-			//AM > If source is a Destination
-			if(source.getClass() == Destination.class)
+			Destination origin = (Destination) source;
+			while(origin.getQueueLength() > 0)
 			{
-				Destination origin = (Destination) source;
-				while(origin.getQueueLength() > 0)
+				Vehicle v = origin.getVehicle();
+				//AM > If adding vehicle was successful release the vehicle from the source
+				if(addVehicle(v))
 				{
-					Vehicle v = origin.getVehicle();
-					//AM > If adding vehicle was successful release the vehicle from the source
-					if(addVehicle(v))
-					{
-						origin.releaseVehicle(v);
-					}
-					else
-					{
-						//AM > Road is full cannot add more vehicles
-						break;
-					}
+					origin.releaseVehicle(v);
 				}
-			}
-			else if(source.getClass() == JunctionExit.class)
-			{
-				//AM > We don't bother with JunctionExits, just added to force proper assignments to source
-			}
-			else
-			{
-				//AM > Most likely an invalid source assignment. throw exception.
-				throw new EndPointException("Unknown Endpoint assignment");
+				else
+				{
+					//AM > Road is full cannot add more vehicles
+					break;
+				}
 			}
 		}
-		
-		if(sink != null)
+		else
 		{
-			//AM > If sink is a destination, then collect exiting vehicles and add them to the destination
-			if(sink.getClass() == Destination.class)
-			{
-				List<Vehicle> exitingVehicles = new ArrayList<Vehicle>();
-				for(Lane l : lanes){
-				 exitingVehicles.addAll(l.moveVehicles());
-				}
-				Destination dest = (Destination) sink;
-				for(Vehicle v : exitingVehicles)
-				{
-					dest.addVehicle(v);
-				}
+			//AM > We just move the vehicles along
+		}
+
+
+
+		//AM > If sink is a destination, then collect exiting vehicles and add them to the destination
+		if(sink instanceof Destination)
+		{
+			List<Vehicle> exitingVehicles = new ArrayList<Vehicle>();
+			for(Lane l : lanes){
+				exitingVehicles.addAll(l.moveVehicles());
 			}
-			else if(sink.getClass() == JunctionEntry.class)
+			Destination dest = (Destination) sink;
+			for(Vehicle v : exitingVehicles)
 			{
-				for(Lane l : lanes)
-					l.moveVehicles();
-			}
-			else
-			{
-				//AM > Most likely an invalid assignment. throw exception.
-				throw new EndPointException("Unknown Endpoint assignment");
+				dest.addVehicle(v);
 			}
 		}
 		else
@@ -245,7 +226,9 @@ public class Road implements Observer{
 			for(Lane l : lanes)
 				l.moveVehicles();
 		}
+
 	}
+	
 
 	@Override
 	public void update(Observable lane, Object vehicle)
