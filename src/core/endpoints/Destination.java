@@ -11,38 +11,53 @@ import core.vehicle.Vehicle;
  */
 public class Destination extends EndPoint {
 
-	private List<Vehicle> vehicleQueue;
+	private List<Vehicle> waitingQueue;
+	private List<Vehicle> consumedQueue;
 	
 	public Destination()
 	{
-		vehicleQueue = new ArrayList<Vehicle>();
+		waitingQueue = new ArrayList<Vehicle>();
+		consumedQueue = new ArrayList<Vehicle>();
 	}
 	
-	public int getQueueLength()
+	public int getWaitingQueueLength()
 	{
-		return vehicleQueue.size();
+		return waitingQueue.size();
+	}
+	
+	public int getConsumedQueueLength()
+	{
+		return consumedQueue.size();
 	}
 	
 	public boolean addVehicle(Vehicle v)
 	{	
 		if(v != null)
 		{
-			vehicleQueue.add(v);
+			waitingQueue.add(v);
 			return true;
 		}
 		return false;
 	}
 	
-	public Vehicle getVehicle()
+	public void consumeVehicle(Vehicle v)
 	{
-		return vehicleQueue.get(0);
+		if(v != null)
+		{
+			consumedQueue.add(v);
+		}
+	}
+	
+	public Vehicle getWaitingVehicle()
+	{
+		return waitingQueue.get(0);
 	}
 	
 	public void releaseVehicle(Vehicle v)
 	{
 		if(v != null)
 		{
-			vehicleQueue.remove(v);
+			waitingQueue.remove(v);
 		}
 	}
 

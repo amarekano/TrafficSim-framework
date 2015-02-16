@@ -16,6 +16,7 @@ public class Bus extends Vehicle
 		
 	}
 	
+	@Override
 	public int getLength()
 	{
 		return length;

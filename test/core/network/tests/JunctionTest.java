@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import core.endpoints.Destination;
+import core.network.Road;
 import core.network.interfaces.Interface;
 import core.network.interfaces.InterfaceException;
 import core.network.junction.InvalidRouteException;
@@ -53,7 +54,7 @@ public class JunctionTest {
 	}
 	
 	@Test
-	public void test_junction_entries_should_route_vehicles_to_the_correct_exit() throws InterfaceException, InvalidRouteException
+	public void test_junction_entries_should_route_vehicles_to_the_correct_exit() throws InterfaceException, InvalidRouteException, JunctionException
 	{
 		Junction junction = new Junction();
 		Destination A = new Destination();
@@ -83,7 +84,7 @@ public class JunctionTest {
 	}
 	
 	@Test(expected=InvalidRouteException.class)
-	public void test_junction_routing_to_unregistered_destination() throws InterfaceException, InvalidRouteException
+	public void test_junction_routing_to_unregistered_destination() throws InterfaceException, InvalidRouteException, JunctionException
 	{
 		Junction junction = new Junction();
 		Destination A = new Destination();
@@ -96,4 +97,25 @@ public class JunctionTest {
 		junction.getExitInterface(A);
 	}
 	
+	@Test(expected=InterfaceException.class)
+	public void test_no_two_roads_can_have_the_same_junction_entry() throws InterfaceException
+	{
+		Junction junc = new Junction();
+		Road r1 = new Road(1,10);
+		Road r2 = new Road(1,10);
+		
+		r1.setSink(junc,JUNCTION.WEST);
+		r2.setSink(junc, JUNCTION.WEST);
+	}
+	
+	@Test(expected=InterfaceException.class)
+	public void test_no_two_roads_can_have_the_same_junction_exit() throws InterfaceException
+	{
+		Junction junc = new Junction();
+		Road r1 = new Road(1,2);
+		Road r2 = new Road(1,2);
+		
+		r1.setSource(junc, JUNCTION.NORTH);
+		r2.setSource(junc, JUNCTION.NORTH);
+	}
 }

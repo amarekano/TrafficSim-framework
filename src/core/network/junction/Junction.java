@@ -17,7 +17,7 @@ public class Junction {
 	
 	public enum JUNCTION {WEST, EAST, NORTH, SOUTH};
 	
-	public Junction() throws InterfaceException
+	public Junction()
 	{
 		//AM > A Junction is created with all it's interfaces enabled
 		west = new Interface();
@@ -91,15 +91,22 @@ public class Junction {
 	
 	public JunctionEntry getJunctionEntry(JUNCTION face) throws InterfaceException
 	{
-		return getInterface(face).getEntry();
+		JunctionEntry entry = getInterface(face).getEntry(); 
+		if(entry.isConnected())
+			throw new InterfaceException("Junction Entry has a Road connected");
+		else
+			return entry;
 	}
 	
 	public JunctionExit getJunctionExit(JUNCTION face) throws InterfaceException
 	{
-		return getInterface(face).getExit();
+		JunctionExit exit = getInterface(face).getExit();
+		if(exit.isConnected())
+			throw new InterfaceException("Junction Exit has a Road connected");
+		else
+		return exit;
 	}
 
-	
 	public JunctionRouter getRoutingTable() {
 		return router;
 	}
@@ -108,14 +115,17 @@ public class Junction {
 		this.router = router;
 	}
 	
-	public Interface getExitInterface(Destination dest) throws InvalidRouteException
+	public Interface getExitInterface(Destination dest) throws InvalidRouteException, JunctionException
 	{
-		return router.getExitInterface(dest);
+		if(router != null)
+			return router.getExitInterface(dest);
+		else
+			throw new JunctionException("Routing Table not set");
 	}
 	
 	//AM > is there a green signal from source to destination
 	public boolean isExitGreen(Interface source, Interface dest) throws InterfaceException
 	{
-		return source.isExitGreen(dest);
+		return source.getSignal(dest);
 	}
 }

@@ -1,6 +1,7 @@
 package core.vehicle;
 
 import java.util.Random;
+import core.endpoints.Destination;
 
 public abstract class Vehicle 
 {
@@ -8,6 +9,7 @@ public abstract class Vehicle
 	private int acceleration;
 	private int max_velocity;
 	private double decelaration_probability;
+	private Destination destination;
 	
 	public abstract int getLength();
 	
@@ -17,6 +19,7 @@ public abstract class Vehicle
 		this.acceleration = 0;
 		this.max_velocity = 1;
 		this.decelaration_probability = 0.0;
+		this.destination = null;
 	}
 	
 	protected Vehicle(int velocity, int acceleration, int max_velocity)
@@ -33,6 +36,15 @@ public abstract class Vehicle
 		}
 		this.max_velocity = max_velocity < this.velocity ? this.velocity : max_velocity;
 		this.decelaration_probability = 0.0;
+		this.destination = null;
+	}
+	
+	public Destination getDestination() {
+		return destination;
+	}
+
+	public void setDestination(Destination destination) {
+		this.destination = destination;
 	}
 	
 	public double getDecelaration_probability() {
@@ -72,7 +84,4 @@ public abstract class Vehicle
 	{
 		this.velocity = velocity;
 	}
-	
-	
-	
 }

@@ -13,9 +13,9 @@ public class Car extends Vehicle
 		//NC > for cars the length is 1
 		super(velocity, acceleration, max_velocity);
 		this.length=1;
-		
-	}
+	}	
 	
+	@Override
 	public int getLength()
 	{
 		return length;
