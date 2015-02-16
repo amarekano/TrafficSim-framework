@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import core.network.Lane;
 import core.network.Lane.LANE;
+import core.vehicle.Bus;
 import core.vehicle.Car;
 import core.vehicle.Vehicle;
 
@@ -420,4 +421,100 @@ public class LaneTest {
 		assertEquals(1, srcLane.getVehicleIndex(v3));
 	}
 	
+	@Test
+	public void test_adding_bus_to_a_empty_lane()
+	{
+		Lane lane = new Lane(3);
+		Vehicle bus = new Bus();
+		
+		assertEquals(true, lane.addVehicle(bus));
+		assertEquals(1,lane.getVehicleIndex(bus));
+	}
+	
+	@Test
+	public void test_adding_bus_to_occupied_lane(){
+		Lane lane=new Lane(3);
+		Vehicle bus = new Bus();
+		Vehicle car = new Car();
+		
+		assertEquals(true, lane.addVehicle(car));
+		assertEquals(false,lane.addVehicle(bus));
+	}
+	
+	@Test
+	public void test_adding_bus_to_lane_less_than_its_length()
+	{
+		Lane lane = new Lane();
+		Vehicle bus = new Bus();
+		
+		assertEquals(false, lane.addVehicle(bus));
+	}
+	
+	@Test
+	public void test_adding_more_than_one_bus_to_the_lane()
+	{
+		Lane lane = new Lane(10);
+		Vehicle b1 = new Bus();
+		Vehicle b2 = new Bus();
+		
+		assertEquals(true, lane.addVehicle(b1));
+		assertEquals(false, lane.addVehicle(b2));
+		lane.moveVehicles();
+		assertEquals(false, lane.addVehicle(b2));
+		lane.moveVehicles();
+		assertEquals(true, lane.addVehicle(b2));
+	}
+	
+	@Test
+	public void test_buses_follow_other_vehicles()
+	{
+		Lane lane = new Lane(10);
+		Vehicle b1 = new Bus(2,0,2);
+		Vehicle c1 = new Car();
+		
+		lane.addVehicle(c1);
+		lane.moveVehicles();
+		lane.moveVehicles();
+		assertEquals(true, lane.addVehicle(b1));
+		
+		for(int i = 0; i < 4; i++)
+			lane.moveVehicles();
+		
+		assertEquals(6, lane.getVehicleIndex(c1));
+		assertEquals(5, lane.getVehicleIndex(b1));
+	}
+	
+	@Test
+	public void test_buses_wait_at_end_of_lane()
+	{
+		Lane lane = new Lane(4);
+		Vehicle b1 = new Bus();
+		
+		lane.setState(LANE.WAIT);
+		lane.addVehicle(b1);
+		
+		for(int i = 0; i < 3; i++)
+			lane.moveVehicles();
+		
+		Vehicle c1 = new Car(2,0,2);
+		lane.addVehicle(c1);
+		for(int i = 0; i < 3; i++)
+			lane.moveVehicles();
+		
+		assertEquals(3, lane.getVehicleIndex(b1));
+		assertEquals(1, lane.getVehicleIndex(c1));
+	}
+	
+	@Test
+	public void test_when_a_bus_leaves_the_lane_the_nodes_are_freed_correctly()
+	{
+		Lane lane = new Lane(3);
+		Vehicle b1 = new Bus();
+		
+		assertEquals(true,lane.addVehicle(b1));
+		lane.moveVehicles();
+		assertEquals(2,lane.getVehicleIndex(b1));
+		lane.moveVehicles();
+		assertEquals(-1, lane.getVehicleIndex(b1));
+	}
 }

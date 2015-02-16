@@ -1,6 +1,8 @@
 package core.network;
 import java.util.*;
 
+import core.vehicle.Bus;
+import core.vehicle.Car;
 import core.vehicle.Vehicle;
 
 public class Lane extends Observable{
@@ -44,15 +46,22 @@ public class Lane extends Observable{
 	}
 
 	public boolean addVehicle(Vehicle vehicle){
-		if(nodes.get(0).isOccupied()){
+		int length=vehicle.getLength();
+		// NC > Vehicle length should be less than max length
+		if (length > maxLength) {
 			return false;
 		}
-		else{
-			nodes.get(0).setVehicle(vehicle);
-			nodes.get(0).setOccupied(true);
-			return true;
-			
+		
+		for(int i=0;i<length;i++){
+			if(nodes.get(i).isOccupied()){
+				return false;
+			}
 		}
+		for(int i=0;i<length;i++){
+			nodes.get(i).setVehicle(vehicle);
+			nodes.get(i).setOccupied(true);
+		}
+		return true;
 	}
 	
 	public List<Vehicle> moveVehicles()
@@ -122,9 +131,15 @@ public class Lane extends Observable{
 					else
 					{
 						//AM > Remove the car from the network
-						nodes.get(currentIndex).setVehicle(null);
-						nodes.get(currentIndex).setOccupied(false);
-						exitingVehicles.add(vehicle);
+						int length = vehicle.getLength();
+						for(int index = 0; index < length; index++)
+						{
+							nodes.get(currentIndex-index).setVehicle(null);
+							nodes.get(currentIndex-index).setOccupied(false);
+						}
+						if(!exitingVehicles.contains(vehicle)){
+							exitingVehicles.add(vehicle);
+						}
 					}
 				}
 				else
@@ -157,6 +172,7 @@ public class Lane extends Observable{
 					nodes.get(finalIndex).setVehicle(vehicle);
 					
 					followingVehicleIndex = finalIndex;
+					
 		
 				}
 			}
@@ -170,7 +186,13 @@ public class Lane extends Observable{
 		String state="";
 		for(int i=0;i<nodes.size();i++){
 			if(nodes.get(i).isOccupied()){
-				state=state.concat("1");
+				if (nodes.get(i).getVehicle() instanceof Car){
+					state=state.concat("1");
+				}
+				else if (nodes.get(i).getVehicle() instanceof Bus){
+					state=state.concat("2");
+				}
+				
 			}
 			else{
 				state=state.concat("0");
@@ -183,7 +205,7 @@ public class Lane extends Observable{
 	{
 		//NC >> returns the index of the car in the lane. If it doesn't exists returns -1
 		
-		for(int i=0;i<nodes.size();i++){
+		for(int i=nodes.size()-1;i>=0;i--){
 			Vehicle currentVehicle = nodes.get(i).getVehicle();
 			if(currentVehicle != null && currentVehicle.equals(v)){
 				return i;

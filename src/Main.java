@@ -3,6 +3,7 @@ import java.util.List;
 import core.endpoints.Destination;
 import core.network.Lane;
 import core.network.Road;
+import core.vehicle.Bus;
 import core.vehicle.Car;
 import core.vehicle.Vehicle;
 
@@ -37,10 +38,18 @@ public class Main {
 		Vehicle v4 = new Car(1,0,10);
 		Vehicle v5 = new Car(1,0,10);
 		
+		Vehicle v6 = new Bus(2,0,10);
+		Vehicle v7 = new Bus(3,0,10);
+		Vehicle v8 = new Bus(1,0,10);
+		
+		Vehicle c9 = new Car(3,0,10);
+		//Vehicle v10 = new Car(2,0,10);
+		//Vehicle v11 = new Car(1,1,10);
+		
 		A.addVehicle(v1);
 		System.out.println("Traffic Simulator");
 		
-		for(int i = 0; i < 20; i++)
+		for(int i = 0; i < 30; i++)
 		{
 			System.out.println("\nTick "+i);
 			List<Lane> lanes = r1.getLanes();
@@ -78,6 +87,20 @@ public class Main {
 			}
 			if(i == 5){
 				A.addVehicle(v5);
+			}
+			
+			if(i == 6){
+				A.addVehicle(v6);
+			}
+			
+			if(i == 7){
+				A.addVehicle(v7);
+			}
+			if(i == 8){
+				A.addVehicle(v8);
+			}
+			if(i == 9){
+				A.addVehicle(c9);
 			}
 				
 			
