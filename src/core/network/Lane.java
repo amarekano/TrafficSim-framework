@@ -140,7 +140,6 @@ public class Lane extends Observable{
 						if(!exitingVehicles.contains(vehicle)){
 							exitingVehicles.add(vehicle);
 						}
-						
 					}
 				}
 				else
