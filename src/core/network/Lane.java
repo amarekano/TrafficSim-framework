@@ -1,6 +1,8 @@
 package core.network;
 import java.util.*;
 
+import core.vehicle.Bus;
+import core.vehicle.Car;
 import core.vehicle.Vehicle;
 
 public class Lane {
@@ -65,7 +67,17 @@ public class Lane {
 					//AM > Remove the car from the network
 					nodes.get(currentIndex).setVehicle(null);
 					nodes.get(currentIndex).setOccupied(false);
-					exitingVehicles.add(vehicle);
+					//exitingVehicles.add(vehicle);
+					/*if(i-1>=0 && vehicle instanceof Bus && vehicle.equals(nodes.get(currentIndex-1).getVehicle()) ){
+						
+					}
+					else{
+						exitingVehicles.add(vehicle);
+					}*/
+					if(!exitingVehicles.contains(vehicle)){
+						exitingVehicles.add(vehicle);
+					}
+					
 				}
 				else
 				{
@@ -88,6 +100,38 @@ public class Lane {
 						j++;
 					}
 					
+					if((currentIndex-1>=0)&&vehicle instanceof Bus && vehicle.equals(nodes.get(currentIndex-1).getVehicle())){
+						nodes.get(currentIndex).setOccupied(false);
+						nodes.get(currentIndex).setVehicle(null);
+						
+						nodes.get(currentIndex-1).setOccupied(false);
+						nodes.get(currentIndex-1).setVehicle(null);
+										
+						vehicle.setVelocity(finalVelocity);
+						
+						nodes.get(finalIndex).setOccupied(true);
+						nodes.get(finalIndex).setVehicle(vehicle);
+						nodes.get(finalIndex-1).setOccupied(true);
+						nodes.get(finalIndex-1).setVehicle(vehicle);
+						followingVehicleIndex = finalIndex-1;
+						i--;
+
+					}
+					else if(currentIndex==0 && finalIndex-1>=0 && vehicle instanceof Bus){
+						nodes.get(currentIndex).setOccupied(false);
+						nodes.get(currentIndex).setVehicle(null);
+										
+						vehicle.setVelocity(finalVelocity);
+						
+						nodes.get(finalIndex).setOccupied(true);
+						nodes.get(finalIndex).setVehicle(vehicle);
+						nodes.get(finalIndex-1).setOccupied(true);
+						nodes.get(finalIndex-1).setVehicle(vehicle);
+						followingVehicleIndex = finalIndex-1;
+					}
+					else{
+					
+					
 					nodes.get(currentIndex).setOccupied(false);
 					nodes.get(currentIndex).setVehicle(null);
 									
@@ -95,8 +139,9 @@ public class Lane {
 					
 					nodes.get(finalIndex).setOccupied(true);
 					nodes.get(finalIndex).setVehicle(vehicle);
-					
 					followingVehicleIndex = finalIndex;
+					}
+					
 		
 				}
 			}
@@ -109,7 +154,13 @@ public class Lane {
 		String state="";
 		for(int i=0;i<nodes.size();i++){
 			if(nodes.get(i).isOccupied()){
-				state=state.concat("1");
+				if (nodes.get(i).getVehicle() instanceof Car){
+					state=state.concat("1");
+				}
+				else if (nodes.get(i).getVehicle() instanceof Bus){
+					state=state.concat("2");
+				}
+				
 			}
 			else{
 				state=state.concat("0");

@@ -1,20 +1,78 @@
 package core.vehicle;
 
-public abstract class Vehicle {
+import java.util.Random;
 
-	public abstract int getAcceleration();
+public abstract class Vehicle 
+{
+	private int velocity;
+	private int acceleration;
+	private int max_velocity;
+	private double decelaration_probability;
 	
-	public abstract void setAcceleration(int acceleration);
+	public abstract int getLength();
 	
-	public abstract int getVelocity();
+	protected Vehicle()
+	{
+		this.velocity = 1;
+		this.acceleration = 0;
+		this.max_velocity = 1;
+		this.decelaration_probability = 0.0;
+	}
 	
-	public abstract void setVelocity(int velocity);
+	protected Vehicle(int velocity, int acceleration, int max_velocity)
+	{
+		if(velocity < 1)
+		{
+			this.velocity = 1;
+			this.acceleration = 0;
+		}
+		else
+		{
+			this.velocity = velocity;
+			this.acceleration = acceleration;
+		}
+		this.max_velocity = max_velocity < this.velocity ? this.velocity : max_velocity;
+		this.decelaration_probability = 0.0;
+	}
 	
-	public abstract int getMax_velocity();
+	public double getDecelaration_probability() {
+		return decelaration_probability;
+	}
+
+	public void setDecelaration_probability(double decelaration_probability) {
+		this.decelaration_probability = decelaration_probability;
+	}
+
+	public int getMax_velocity() {
+		return max_velocity;
+	}
+
+	public void setMax_velocity(int max_velocity) {
+		this.max_velocity = max_velocity;
+	}
+
+	public int getAcceleration() {
+		if(new Random().nextDouble() <= decelaration_probability)
+		{
+			acceleration = acceleration > 1 ? acceleration -1 : 0;
+		}
+		return acceleration;
+	}
+
+	public void setAcceleration(int acceleration) {
+		this.acceleration = acceleration;
+	}
 	
-	public abstract void setMax_velocity(int max_velocity);
+	public int getVelocity()
+	{
+		return velocity;
+	}
 	
-	public abstract double getDecelaration_probability();
+	public void setVelocity(int velocity)
+	{
+		this.velocity = velocity;
+	}
 	
-	public abstract void setDecelaration_probability(double probability);
+	
+	
 }
