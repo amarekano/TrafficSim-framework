@@ -31,22 +31,22 @@ public class RoadTest {
 		Road r1 = new Road(1, 5);
 		Car c1 = new Car();
 		Car c2 = new Car();
-		
+
 		assertEquals(true, r1.addVehicle(c1));
 		assertEquals(false, r1.addVehicle(c2));
 	}
-	
+
 	@Test
 	public void test_adding_cars_to_dual_lane_road()
 	{
 		Road r1 = new Road(2,5);
 		Car c1 = new Car();
 		Car c2 = new Car();
-		
+
 		assertEquals(true, r1.addVehicle(c1));
 		assertEquals(true, r1.addVehicle(c2));
 	}
-	
+
 	@Test
 	public void test_adding_cars_to_multi_lane_road()
 	{
@@ -58,27 +58,27 @@ public class RoadTest {
 			assertEquals(true,r1.addVehicle(c));
 		}
 	}
-	
+
 	@Test
 	public void test_adding_car_to_a_specific_lane()
 	{
 		Road r1 = new Road(5, 10);
 		Car c1 = new Car();
-		
+
 		assertEquals(true, r1.addVehicle(c1, 2));
 		assertEquals(1,r1.getVehicleLaneIndex(c1));
 	}
-	
+
 	@Test
 	public void test_adding_car_to_a_specific_lane_check_car_index()
 	{
 		Road r1 = new Road(5, 10);
 		Car c1 = new Car();
-		
+
 		assertEquals(true, r1.addVehicle(c1, 2));
 		assertEquals(0,r1.getVehicleNodeIndex(c1));
 	}
-	
+
 	@Test
 	public void test_moving_cars_on_a_single_lane_road() throws EndPointException
 	{
@@ -89,16 +89,16 @@ public class RoadTest {
 		r1.moveTraffic();
 		assertEquals(0,r1.getVehicleLaneIndex(c1));
 		assertEquals(2,r1.getVehicleNodeIndex(c1));
-		
+
 		r1.addVehicle(c2,1);
 		r1.moveTraffic();
 		assertEquals(0,r1.getVehicleLaneIndex(c1));
 		assertEquals(4,r1.getVehicleNodeIndex(c1));
-		
+
 		assertEquals(0,r1.getVehicleLaneIndex(c2));
 		assertEquals(1,r1.getVehicleNodeIndex(c2));
 	}
-	
+
 	@Test
 	public void test_moving_cars_on_a_multi_lane_road() throws EndPointException
 	{
@@ -109,29 +109,29 @@ public class RoadTest {
 		r1.moveTraffic();
 		assertEquals(0,r1.getVehicleLaneIndex(c1));
 		assertEquals(2,r1.getVehicleNodeIndex(c1));
-		
+
 		r1.addVehicle(c2,2);
 		r1.moveTraffic();
 		assertEquals(0,r1.getVehicleLaneIndex(c1));
 		assertEquals(4,r1.getVehicleNodeIndex(c1));
-		
+
 		assertEquals(1,r1.getVehicleLaneIndex(c2));
 		assertEquals(1,r1.getVehicleNodeIndex(c2));
 	}
-	
+
 	@Test
 	public void test_vehicles_move_from_one_destination_to_another() throws EndPointException
 	{
 		Road r1 = new Road(1, 10);
 		Destination A = new Destination();
 		Destination B = new Destination();
-		
+
 		r1.setSource(A);
 		r1.setSink(B);
-		
+
 		Vehicle v1 = new Car(4,0,4);
 		Vehicle v2 = new Car(2,1,10);
-		
+
 		A.addVehicle(v1);
 		for(int i = 0; i < 10; i++)
 		{
@@ -141,7 +141,7 @@ public class RoadTest {
 		}
 		assertEquals(2, B.getConsumedQueueLength());
 	}
-	
+
 	@Test
 	public void test_moving_vehicles_across_a_two_interface_junction() throws InterfaceException, JunctionException, EndPointException 
 	{
@@ -152,22 +152,22 @@ public class RoadTest {
 		junc.disableInterface(JUNCTION.SOUTH);
 		Destination A = new Destination();
 		Destination B = new Destination();
-		
+
 		//AM > Road-Junction wiring
 		r1.setSource(A);
 		r1.setSink(junc, JUNCTION.WEST);
 		r2.setSource(junc, JUNCTION.EAST);
 		r2.setSink(B);
-		
+
 		//AM > Set lights to green
 		junc.getInterface(JUNCTION.WEST).setSignal(junc.getInterface(JUNCTION.EAST), true);
-		
+
 		//AM > Setup routing information
 		JunctionRouter juncR = new JunctionRouter();
 		juncR.add(A, junc.getInterface(JUNCTION.WEST));
 		juncR.add(B, junc.getInterface(JUNCTION.EAST));
 		junc.setRoutingTable(juncR);
-		
+
 		//AM > Create vehicle and set destination
 		Vehicle v1 = new Car(2,0,2);
 		Vehicle v2 = new Car(1,2,3);
@@ -175,7 +175,50 @@ public class RoadTest {
 		v1.setDestination(B);
 		v2.setDestination(B);
 		v3.setDestination(B);
-		
+
+		A.addVehicle(v1);
+		A.addVehicle(v2);
+		A.addVehicle(v3);
+		for(int i = 0; i < 20; i++)
+		{
+			r2.moveTraffic();
+			r1.moveTraffic();
+		}
+
+		assertEquals(3, B.getConsumedQueueLength());
+	}
+
+	@Test
+	public void test_moving_vehicles_across_a_two_interface_junction_when_the_signal_is_red() throws InterfaceException, JunctionException, EndPointException
+	{
+		Road r1 = new Road(1,5);
+		Road r2 = new Road(1,5);
+		Junction junc = new Junction();
+		junc.disableInterface(JUNCTION.NORTH);
+		junc.disableInterface(JUNCTION.SOUTH);
+		Destination A = new Destination();
+		Destination B = new Destination();
+
+		//AM > Road-Junction wiring
+		r1.setSource(A);
+		r1.setSink(junc, JUNCTION.WEST);
+		r2.setSource(junc, JUNCTION.EAST);
+		r2.setSink(B);
+
+		//AM > Setup routing information
+		JunctionRouter juncR = new JunctionRouter();
+		juncR.add(A, junc.getInterface(JUNCTION.WEST));
+		juncR.add(B, junc.getInterface(JUNCTION.EAST));
+		junc.setRoutingTable(juncR);
+
+		//AM > Create vehicle and set destination
+		Vehicle v1 = new Car(2,0,2);
+		Vehicle v2 = new Car(1,2,3);
+		Vehicle v3 = new Car(2,2,10);
+		v1.setDestination(B);
+		v2.setDestination(B);
+		v3.setDestination(B);
+
 		A.addVehicle(v1);
 		A.addVehicle(v2);
 		A.addVehicle(v3);
@@ -185,6 +228,9 @@ public class RoadTest {
 			r1.moveTraffic();
 		}
 		
-		assertEquals(3, B.getConsumedQueueLength());
+		assertEquals(4, r1.getVehicleNodeIndex(v1));
+		assertEquals(3, r1.getVehicleNodeIndex(v2));
+		assertEquals(2, r1.getVehicleNodeIndex(v3));
+
 	}
 }

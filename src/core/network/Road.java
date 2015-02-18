@@ -250,6 +250,10 @@ public class Road implements Observer{
 					l.setTransferLanes(exitLanes);
 					l.setState(LANE.TRANSFER);
 				}
+				else
+				{
+					l.setState(LANE.WAIT);
+				}
 			}
 			catch(InvalidRouteException e)
 			{
