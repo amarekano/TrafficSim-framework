@@ -13,11 +13,12 @@ import core.network.junction.Junction.JUNCTION;
 import core.network.junction.JunctionRouter;
 import core.vehicle.Car;
 import core.vehicle.Vehicle;
+import core.vehicle.VehicleException;
 
 public class IntegrationTest {
 
 	@Test
-	public void test_junction_transfer_to_three_destinations() throws InterfaceException, EndPointException 
+	public void test_junction_transfer_to_three_destinations() throws InterfaceException, EndPointException, VehicleException 
 	{
 		Destination A = new Destination();
 		Destination B = new Destination();
@@ -92,7 +93,7 @@ public class IntegrationTest {
 	}
 
 	@Test
-	public void test_bidirectional_traffic_between_two_destinations() throws EndPointException
+	public void test_bidirectional_traffic_between_two_destinations() throws EndPointException, VehicleException
 	{
 		Destination A = new Destination();
 		Destination B = new Destination();

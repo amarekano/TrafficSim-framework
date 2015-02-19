@@ -10,6 +10,7 @@ public abstract class Vehicle
 	private int max_velocity;
 	private double decelaration_probability;
 	private Destination destination;
+	private Destination source;
 	
 	public abstract int getLength();
 	
@@ -43,7 +44,10 @@ public abstract class Vehicle
 		return destination;
 	}
 
-	public void setDestination(Destination destination) {
+	public void setDestination(Destination destination) throws VehicleException {
+		if(destination == source)
+			throw new VehicleException("Destination cannot be the same as the source");
+		
 		this.destination = destination;
 	}
 	
@@ -84,4 +88,16 @@ public abstract class Vehicle
 	{
 		this.velocity = velocity;
 	}
+
+	public Destination getSource() {
+		return source;
+	}
+
+	public void setSource(Destination source) throws VehicleException {
+		if(source == destination)
+			throw new VehicleException("Source cannot be the same as the destination");
+		
+		this.source = source;
+	}
+	
 }
