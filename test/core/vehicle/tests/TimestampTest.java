@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import services.SimulationClock;
+import service.clock.SimulationClock;
 import core.endpoints.Destination;
 import core.endpoints.EndPointException;
 import core.network.Road;
@@ -23,7 +23,7 @@ public class TimestampTest {
 		Road road = new Road(numOfLanes, laneLength);
 		Destination A = new Destination();
 		Destination B = new Destination();
-		SimulationClock clock = new SimulationClock();
+		SimulationClock clock = SimulationClock.getInstance();
 		
 		A.setClock(clock);
 		B.setClock(clock);
