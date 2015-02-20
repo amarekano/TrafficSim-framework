@@ -10,6 +10,8 @@ public abstract class Vehicle
 	private int max_velocity;
 	private double decelaration_probability;
 	private Destination destination;
+	private int start_time;
+	private int end_time;
 	
 	public abstract int getLength();
 	
@@ -20,6 +22,8 @@ public abstract class Vehicle
 		this.max_velocity = 1;
 		this.decelaration_probability = 0.0;
 		this.destination = null;
+		this.start_time=0;
+		this.end_time=0;
 	}
 	
 	protected Vehicle(int velocity, int acceleration, int max_velocity)
@@ -37,6 +41,9 @@ public abstract class Vehicle
 		this.max_velocity = max_velocity < this.velocity ? this.velocity : max_velocity;
 		this.decelaration_probability = 0.0;
 		this.destination = null;
+		
+		this.start_time=0;
+		this.end_time=0;
 	}
 	
 	public Destination getDestination() {
@@ -83,5 +90,25 @@ public abstract class Vehicle
 	public void setVelocity(int velocity)
 	{
 		this.velocity = velocity;
+	}
+	
+	public int getStartTime()
+	{
+		return start_time;
+	}
+	
+	public void setStartTime(int start_time)
+	{
+		this.start_time = start_time;
+	}
+	
+	public int getEndTime()
+	{
+		return end_time;
+	}
+	
+	public void setEndTime(int end_time)
+	{
+		this.end_time = end_time;
 	}
 }
