@@ -3,7 +3,7 @@ package core.endpoints;
 import java.util.ArrayList;
 import java.util.List;
 
-import service.SimulationClock;
+import service.clock.SimulationClock;
 import core.vehicle.Vehicle;
 import core.vehicle.VehicleException;
 

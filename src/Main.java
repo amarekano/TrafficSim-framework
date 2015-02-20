@@ -1,7 +1,6 @@
 import java.util.List;
-import java.util.TimerTask;
 
-import service.SimulationClock;
+import service.clock.SimulationClock;
 import core.endpoints.Destination;
 import core.network.Lane;
 import core.network.Road;
@@ -10,7 +9,7 @@ import core.vehicle.Car;
 import core.vehicle.Vehicle;
 import core.vehicle.VehicleException;
 
-public class Main extends Thread{
+public class Main {
 	
 	public static void main(String[] args) {	
 		int laneLength=20;
@@ -26,8 +25,7 @@ public class Main extends Thread{
 		Destination B = new Destination();
 		Destination C = new Destination();
 		 
-		SimulationClock clock = new SimulationClock();
-			
+		SimulationClock clock = SimulationClock.getInstance();
 		A.setClock(clock);
 		B.setClock(clock);
 		C.setClock(clock);
