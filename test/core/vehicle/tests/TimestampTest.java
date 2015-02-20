@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import services.SimulationClock;
+import service.SimulationClock;
 import core.endpoints.Destination;
 import core.endpoints.EndPointException;
 import core.network.Road;
