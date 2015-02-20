@@ -12,11 +12,12 @@ import core.endpoints.EndPointException;
 import core.network.Road;
 import core.vehicle.Bus;
 import core.vehicle.Car;
+import core.vehicle.VehicleException;
 
 public class TimestampTest {
 
 	@Test
-	public void test_timestamp() throws EndPointException {
+	public void test_timestamp() throws EndPointException, VehicleException {
 		int laneLength=5;
 		int numOfLanes=1;
 		Road road = new Road(numOfLanes, laneLength);

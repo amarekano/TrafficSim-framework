@@ -14,6 +14,7 @@ public class Junction {
 	
 	private int enabledInterfaceCount;
 	private JunctionRouter router;
+	private TrafficSignalController signalController;
 	
 	public enum JUNCTION {WEST, EAST, NORTH, SOUTH};
 	
@@ -126,6 +127,15 @@ public class Junction {
 	//AM > is there a green signal from source to destination
 	public boolean isExitGreen(Interface source, Interface dest) throws InterfaceException
 	{
-		return source.getSignal(dest);
+		return source.getSignalState(dest);
+	}
+
+	
+	public TrafficSignalController getSignalController() {
+		return signalController;
+	}
+
+	public void setSignalController() throws InterfaceException {
+		this.signalController = new TrafficSignalController(this);
 	}
 }

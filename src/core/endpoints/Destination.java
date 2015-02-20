@@ -5,6 +5,7 @@ import java.util.List;
 
 import services.SimulationClock;
 import core.vehicle.Vehicle;
+import core.vehicle.VehicleException;
 
 /*
  * AM > This class represents a Destination.
@@ -15,6 +16,7 @@ public class Destination extends EndPoint {
 	private List<Vehicle> waitingQueue;
 	private List<Vehicle> consumedQueue;
 	private SimulationClock clock;
+	private String label;
 	
 	public Destination()
 	{
@@ -22,6 +24,21 @@ public class Destination extends EndPoint {
 		consumedQueue = new ArrayList<Vehicle>();
 	}
 	
+	public Destination(String label)
+	{
+		waitingQueue = new ArrayList<Vehicle>();
+		consumedQueue = new ArrayList<Vehicle>();
+		this.label = label;
+	}
+	
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
 	public int getWaitingQueueLength()
 	{
 		return waitingQueue.size();
@@ -32,6 +49,7 @@ public class Destination extends EndPoint {
 		return consumedQueue.size();
 	}
 	
+
 	public SimulationClock getClock() {
 		return clock;
 	}
@@ -40,13 +58,15 @@ public class Destination extends EndPoint {
 		this.clock = clock;
 	}
 
-	public boolean addVehicle(Vehicle v)
+
+	public boolean addVehicle(Vehicle v) throws VehicleException
 	{	
 		
 		if(v != null)
 		{
 			if(clock != null)
 				v.setStartTime(clock.getTime());
+			v.setSource(this);
 			waitingQueue.add(v);
 			return true;
 		}

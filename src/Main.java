@@ -8,7 +8,7 @@ import core.network.Road;
 import core.vehicle.Bus;
 import core.vehicle.Car;
 import core.vehicle.Vehicle;
-
+import core.vehicle.VehicleException;
 
 public class Main extends Thread{
 	
@@ -51,7 +51,11 @@ public class Main extends Thread{
 		
 		Vehicle c9 = new Car(3,0,10);
 		
-		A.addVehicle(v1);
+		try {
+			A.addVehicle(v1);
+		} catch (VehicleException e1) {
+			e1.printStackTrace();
+		}
 		System.out.println("Traffic Simulator");
 		
 		for(int i = 0; i < 30; i++)
@@ -76,37 +80,39 @@ public class Main extends Thread{
 				r2.moveTraffic();
 				r1.moveTraffic();
 				
+				if(i == 2){
+					A.addVehicle(v2);
+				}
+				
+				if(i == 3){
+					A.addVehicle(v3);
+				}
+				
+				if(i == 4){
+					A.addVehicle(v4);
+				}
+				if(i == 5){
+					A.addVehicle(v5);
+				}
+				
+				if(i == 6){
+					A.addVehicle(v6);
+				}
+				
+				if(i == 7){
+					A.addVehicle(v7);
+				}
+				if(i == 8){
+					A.addVehicle(v8);
+				}
+				if(i == 9){
+					A.addVehicle(c9);
+				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if(i == 2){
-				A.addVehicle(v2);
-			}
 			
-			if(i == 3){
-				A.addVehicle(v3);
-			}
-			
-			if(i == 4){
-				A.addVehicle(v4);
-			}
-			if(i == 5){
-				A.addVehicle(v5);
-			}
-			
-			if(i == 6){
-				A.addVehicle(v6);
-			}
-			
-			if(i == 7){
-				A.addVehicle(v7);
-			}
-			if(i == 8){
-				A.addVehicle(v8);
-			}
-			if(i == 9){
-				A.addVehicle(c9);
-			}
 				
 			clock.incrementClock();
 		}

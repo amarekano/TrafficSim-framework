@@ -12,6 +12,7 @@ import core.network.junction.JunctionException;
 import core.network.junction.JunctionRouter;
 import core.vehicle.Vehicle;
 import core.vehicle.Car;
+import core.vehicle.VehicleException;
 import core.endpoints.Destination;
 import core.endpoints.EndPointException;
 
@@ -120,7 +121,7 @@ public class RoadTest {
 	}
 
 	@Test
-	public void test_vehicles_move_from_one_destination_to_another() throws EndPointException
+	public void test_vehicles_move_from_one_destination_to_another() throws EndPointException, VehicleException
 	{
 		Road r1 = new Road(1, 10);
 		Destination A = new Destination();
@@ -143,7 +144,7 @@ public class RoadTest {
 	}
 
 	@Test
-	public void test_moving_vehicles_across_a_two_interface_junction() throws InterfaceException, JunctionException, EndPointException 
+	public void test_moving_vehicles_across_a_two_interface_junction() throws InterfaceException, JunctionException, EndPointException, VehicleException 
 	{
 		Road r1 = new Road(4,5);
 		Road r2 = new Road(2,10);
@@ -160,7 +161,7 @@ public class RoadTest {
 		r2.setSink(B);
 
 		//AM > Set lights to green
-		junc.getInterface(JUNCTION.WEST).setSignal(junc.getInterface(JUNCTION.EAST), true);
+		junc.getInterface(JUNCTION.WEST).setSignalState(junc.getInterface(JUNCTION.EAST), true);
 
 		//AM > Setup routing information
 		JunctionRouter juncR = new JunctionRouter();
@@ -189,7 +190,7 @@ public class RoadTest {
 	}
 
 	@Test
-	public void test_moving_vehicles_across_a_two_interface_junction_when_the_signal_is_red() throws InterfaceException, JunctionException, EndPointException
+	public void test_moving_vehicles_across_a_two_interface_junction_when_the_signal_is_red() throws InterfaceException, JunctionException, EndPointException, VehicleException
 	{
 		Road r1 = new Road(1,5);
 		Road r2 = new Road(1,5);
