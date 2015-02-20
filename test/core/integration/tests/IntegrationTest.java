@@ -66,9 +66,9 @@ public class IntegrationTest {
 		junc.setRoutingTable(juncRouter);
 		
 		//AM > Setup traffic signals
-		junc.getInterface(JUNCTION.WEST).setSignal(junc.getInterface(JUNCTION.EAST), true);
-		junc.getInterface(JUNCTION.WEST).setSignal(junc.getInterface(JUNCTION.NORTH), true);
-		junc.getInterface(JUNCTION.WEST).setSignal(junc.getInterface(JUNCTION.SOUTH), true);
+		junc.getInterface(JUNCTION.WEST).setSignalState(junc.getInterface(JUNCTION.EAST), true);
+		junc.getInterface(JUNCTION.WEST).setSignalState(junc.getInterface(JUNCTION.NORTH), true);
+		junc.getInterface(JUNCTION.WEST).setSignalState(junc.getInterface(JUNCTION.SOUTH), true);
 		
 		//AM > Setup vehicle destinations
 		v1.setDestination(B);

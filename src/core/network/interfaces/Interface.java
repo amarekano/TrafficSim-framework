@@ -44,12 +44,20 @@ public class Interface
 		return enabled;
 	}
 
-	public boolean getSignal(Interface exitInterface) throws InterfaceException {
+	public boolean getSignalState(Interface exitInterface) throws InterfaceException {
 		return signals.getSignal(exitInterface);
 	}
 
-	public void setSignal(Interface exitInterface, boolean state) throws InterfaceException
+	public void setSignalState(Interface exitInterface, boolean state) throws InterfaceException
 	{
 		signals.setSignal(exitInterface, state);
+	}
+
+	public TrafficSignal getSignals() {
+		return signals;
+	}
+
+	public void setSignals(TrafficSignal signals) {
+		this.signals = signals;
 	}
 }
