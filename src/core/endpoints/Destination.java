@@ -3,6 +3,7 @@ package core.endpoints;
 import java.util.ArrayList;
 import java.util.List;
 
+import services.SimulationClock;
 import core.vehicle.Vehicle;
 import core.vehicle.VehicleException;
 
@@ -14,6 +15,7 @@ public class Destination extends EndPoint {
 
 	private List<Vehicle> waitingQueue;
 	private List<Vehicle> consumedQueue;
+	private SimulationClock clock;
 	private String label;
 	
 	public Destination()
@@ -47,10 +49,23 @@ public class Destination extends EndPoint {
 		return consumedQueue.size();
 	}
 	
+
+	public SimulationClock getClock() {
+		return clock;
+	}
+
+	public void setClock(SimulationClock clock) {
+		this.clock = clock;
+	}
+
+
 	public boolean addVehicle(Vehicle v) throws VehicleException
 	{	
+		
 		if(v != null)
 		{
+			if(clock != null)
+				v.setStartTime(clock.getTime());
 			v.setSource(this);
 			waitingQueue.add(v);
 			return true;
@@ -62,6 +77,8 @@ public class Destination extends EndPoint {
 	{
 		if(v != null)
 		{
+			if(clock != null)
+				v.setEndTime(clock.getTime());
 			consumedQueue.add(v);
 		}
 	}
