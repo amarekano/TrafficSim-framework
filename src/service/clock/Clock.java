@@ -4,9 +4,9 @@ public class Clock implements Runnable{
 
 	private SimulationClock clock;
 	
-	public Thread t;
-	boolean suspended=false;
-	
+	private Thread t;
+	private volatile boolean suspended=false;
+	private volatile boolean terminate=false;
 	public Clock()
 	{
 		clock = SimulationClock.getInstance();
@@ -14,7 +14,7 @@ public class Clock implements Runnable{
 	
 	public void run()
 	{
-		while(true)
+		while(!terminate)
 		{
 			try {
 				Thread.sleep(clock.getInterval());
@@ -40,6 +40,11 @@ public class Clock implements Runnable{
 	
 	public void suspend(){
 		suspended=true;
+	}
+	
+	public void terminate()
+	{
+		terminate=true;
 	}
 	
 	public synchronized void resume(){

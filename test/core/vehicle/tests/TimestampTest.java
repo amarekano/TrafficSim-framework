@@ -24,7 +24,7 @@ public class TimestampTest {
 		Destination A = new Destination();
 		Destination B = new Destination();
 		SimulationClock clock = SimulationClock.getInstance();
-		
+		clock.resetClock();
 		A.setClock(clock);
 		B.setClock(clock);
 		road.setSource(A);

@@ -54,6 +54,7 @@ public class SimulationClockTest {
 		
 		assertEquals(-1,road.getVehicleNodeIndex(c1));
 		assertEquals(-1,road.getVehicleNodeIndex(b1));
+		clk1.terminate();
 	}
 	
 	@Test
@@ -88,5 +89,6 @@ public class SimulationClockTest {
 
 		assertEquals(-1,road.getVehicleNodeIndex(c1));
 		assertEquals(-1,road.getVehicleNodeIndex(b1));
+		clk1.terminate();
 	}
 }

@@ -2,21 +2,22 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
+import service.clock.SimulationClock;
 import core.network.interfaces.InterfaceException;
 import core.network.junction.TrafficSignalController;
 
-public class TrafficSignalScheduler {
+public class TrafficSignalScheduler implements Observer {
 	private List<TrafficSignalController> controllers;
 	private int signalInterval;
-	private int timer;
 	
 	public TrafficSignalScheduler()
 	{
 		controllers = new ArrayList<TrafficSignalController>();
 		//AM > default interval is 10 clock ticks
 		signalInterval = 10;
-		timer = 0;
 	}
 	
 	public void addSignalController(TrafficSignalController controller)
@@ -44,6 +45,20 @@ public class TrafficSignalScheduler {
 		for(TrafficSignalController sigCont: controllers)
 		{
 			sigCont.changeSignals();
+		}
+	}
+	
+	@Override
+	public void update(Observable obs, Object obj)
+	{
+		SimulationClock clock = (SimulationClock) obs;
+		if(clock.getTime() % signalInterval == 0)
+		{
+			try {
+				changeSignals();
+			} catch (InterfaceException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

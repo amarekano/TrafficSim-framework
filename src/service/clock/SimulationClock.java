@@ -10,6 +10,7 @@ public class SimulationClock extends Observable{
 	private SimulationClock()
 	{
 		this.currentTime = 0;
+		//AM > Time in ms between each clock tick
 		this.interval=1000;
 	}
 	
@@ -25,6 +26,11 @@ public class SimulationClock extends Observable{
 	public long getTime()
 	{
 		return currentTime;
+	}
+	
+	public void resetClock()
+	{
+		currentTime = 0;
 	}
 	
 	public void incrementClock()
