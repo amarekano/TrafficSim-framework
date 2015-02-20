@@ -1,7 +1,6 @@
 package core.network;
 import java.util.*;
 
-import core.timer.MyTimer;
 import core.vehicle.Bus;
 import core.vehicle.Car;
 import core.vehicle.Vehicle;
@@ -61,9 +60,6 @@ public class Lane extends Observable{
 		for(int i=0;i<length;i++){
 			nodes.get(i).setVehicle(vehicle);
 			nodes.get(i).setOccupied(true);
-			vehicle.setStartTime(MyTimer.time);
-			System.out.println("MyTimer.time");
-			System.out.println(MyTimer.time);
 		}
 		return true;
 	}
@@ -143,8 +139,6 @@ public class Lane extends Observable{
 						}
 						if(!exitingVehicles.contains(vehicle)){
 							exitingVehicles.add(vehicle);
-							vehicle.setEndTime(MyTimer.time);
-							System.out.println("end time "+MyTimer.time);
 						}
 					}
 				}

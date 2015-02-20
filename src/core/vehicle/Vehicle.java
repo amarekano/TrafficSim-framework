@@ -10,8 +10,8 @@ public abstract class Vehicle
 	private int max_velocity;
 	private double decelaration_probability;
 	private Destination destination;
-	private int start_time;
-	private int end_time;
+	private long start_time;
+	private long end_time;
 	
 	public abstract int getLength();
 	
@@ -92,22 +92,22 @@ public abstract class Vehicle
 		this.velocity = velocity;
 	}
 	
-	public int getStartTime()
+	public long getStartTime()
 	{
 		return start_time;
 	}
 	
-	public void setStartTime(int start_time)
+	public void setStartTime(long start_time)
 	{
 		this.start_time = start_time;
 	}
 	
-	public int getEndTime()
+	public long getEndTime()
 	{
 		return end_time;
 	}
 	
-	public void setEndTime(int end_time)
+	public void setEndTime(long end_time)
 	{
 		this.end_time = end_time;
 	}
