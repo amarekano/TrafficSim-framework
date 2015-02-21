@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import service.TrafficSignalScheduler;
-import service.clock.Clock;
+import service.clock.SystemClock;
 import service.clock.SimulationClock;
 import core.network.interfaces.InterfaceException;
 import core.network.junction.Junction;
@@ -27,7 +27,7 @@ public class TrafficSignalSchedulerTest {
 	public void test_signals_should_change_after_the_set_interval() throws InterfaceException, InterruptedException
 	{
 		SimulationClock clock = SimulationClock.getInstance();
-		Clock clk = new Clock();
+		SystemClock clk = new SystemClock();
 		clock.resetClock();
 		TrafficSignalScheduler scheduler = new TrafficSignalScheduler();
 		scheduler.setSignalInterval(10);

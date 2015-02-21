@@ -11,7 +11,7 @@ import core.vehicle.Bus;
 import core.vehicle.Car;
 import core.vehicle.VehicleException;
 import service.Network;
-import service.clock.Clock;
+import service.clock.SystemClock;
 import service.clock.SimulationClock;
 
 public class SimulationClockTest {
@@ -46,7 +46,7 @@ public class SimulationClockTest {
 		network.addRoad(road);
 		clock.addObserver(network);
 		
-		Clock clk1 = new Clock();
+		SystemClock clk1 = new SystemClock();
 		clk1.start();
 		Thread.sleep(10*1000);
 
@@ -80,7 +80,7 @@ public class SimulationClockTest {
 		network.addRoad(road);
 		clock.addObserver(network);
 		
-		Clock clk1 = new Clock();
+		SystemClock clk1 = new SystemClock();
 		clk1.start();
 		clk1.suspend();
 		Thread.sleep(5*1000);

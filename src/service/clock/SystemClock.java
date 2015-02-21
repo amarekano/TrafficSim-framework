@@ -1,13 +1,13 @@
 package service.clock;
 
-public class Clock implements Runnable{
+public class SystemClock implements Runnable{
 
 	private SimulationClock clock;
 	
 	private Thread t;
 	private volatile boolean suspended=false;
 	private volatile boolean terminate=false;
-	public Clock()
+	public SystemClock()
 	{
 		clock = SimulationClock.getInstance();
 	}

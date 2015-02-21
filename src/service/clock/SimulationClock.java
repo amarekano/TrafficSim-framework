@@ -4,7 +4,7 @@ import java.util.Observable;
 
 public class SimulationClock extends Observable{
 	private long currentTime;
-	public static SimulationClock clock;
+	public final static SimulationClock clock = new SimulationClock();
 	private long interval;
 	
 	private SimulationClock()
@@ -16,10 +16,6 @@ public class SimulationClock extends Observable{
 	
 	public static SimulationClock getInstance()
 	{
-		if(clock == null){
-			clock = new SimulationClock();
-		}
-		
 		return clock;
 	}
 	
