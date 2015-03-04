@@ -5,12 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import service.TrafficSignalScheduler;
-import service.clock.SystemClock;
 import service.clock.SimulationClock;
 import core.network.interfaces.InterfaceException;
 import core.network.junction.Junction;
 import core.network.junction.TrafficSignalController;
-import core.network.junction.Junction.JUNCTION;
 
 public class TrafficSignalSchedulerTest {
 
@@ -27,28 +25,27 @@ public class TrafficSignalSchedulerTest {
 	public void test_signals_should_change_after_the_set_interval() throws InterfaceException, InterruptedException
 	{
 		SimulationClock clock = SimulationClock.getInstance();
-		SystemClock clk = new SystemClock();
 		clock.resetClock();
 		TrafficSignalScheduler scheduler = new TrafficSignalScheduler();
 		scheduler.setSignalInterval(10);
 		clock.addObserver(scheduler);
-		
+		clock.resetClock();
+		clock.setInterval(1000);
+		clock.startClock();
 		Junction junc = new Junction();
 		TrafficSignalController signalController = new TrafficSignalController(junc);
 		scheduler.addSignalController(signalController);
 		
 		assertEquals(0,signalController.getCycle());
 		
-		clk.start();
 		Thread.sleep(10000);
-		clk.suspend();
+		clock.pauseClock();
 		
 		assertEquals(1, signalController.getCycle());
 		
-		clk.resume();
+		clock.resumeClock();
 		Thread.sleep(10000);
 		assertEquals(2, signalController.getCycle());
-		clk.terminate();
 	}
 
 }
