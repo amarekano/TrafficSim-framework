@@ -67,6 +67,7 @@ public class Destination extends EndPoint {
 			if(clock != null)
 				v.setStartTime(clock.getTime());
 			v.setSource(this);
+			if(!waitingQueue.contains(v))
 			waitingQueue.add(v);
 			return true;
 		}
@@ -79,7 +80,8 @@ public class Destination extends EndPoint {
 		{
 			if(clock != null)
 				v.setEndTime(clock.getTime());
-			consumedQueue.add(v);
+			if(!consumedQueue.contains(v))
+				consumedQueue.add(v);
 		}
 	}
 	
