@@ -44,10 +44,11 @@ public class SimulationClockTest {
 		Network network= new Network();
 		network.addRoad(road);
 		clock.addObserver(network);
+		clock.setInterval(100);
 		clock.resetClock();
 		clock.startClock();
 
-		Thread.sleep(10*1000);
+		Thread.sleep(10*100);
 
 		assertEquals(2, B.getConsumedQueueLength());
 		
@@ -77,15 +78,16 @@ public class SimulationClockTest {
 		Network network= new Network();
 		network.addRoad(road);
 		clock.addObserver(network);
+		clock.setInterval(100);
 		clock.resetClock();
 		clock.startClock();
 		
-		Thread.sleep(5*1000);
+		Thread.sleep(5*100);
 		clock.pauseClock();
 		assertEquals(5, clock.getTime());
 
 		clock.resumeClock();
-		Thread.sleep(10*1000);
+		Thread.sleep(10*100);
 
 		assertEquals(-1,road.getVehicleNodeIndex(c1));
 		assertEquals(-1,road.getVehicleNodeIndex(b1));
@@ -97,9 +99,9 @@ public class SimulationClockTest {
 		SimulationClock clock = SimulationClock.getInstance();
 		clock.resetClock();
 		clock.startClock();
-		Thread.sleep(5*1000);
+		Thread.sleep(5*100);
 		assertEquals(5, clock.getTime());
-		assertEquals(1000, clock.getInterval());
+		assertEquals(100, clock.getInterval());
 		
 		clock.setInterval(2000);
 		clock.resetClock();

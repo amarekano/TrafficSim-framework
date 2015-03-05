@@ -30,7 +30,7 @@ public class TrafficSignalSchedulerTest {
 		scheduler.setSignalInterval(10);
 		clock.addObserver(scheduler);
 		clock.resetClock();
-		clock.setInterval(1000);
+		clock.setInterval(100);
 		clock.startClock();
 		Junction junc = new Junction();
 		TrafficSignalController signalController = new TrafficSignalController(junc);
@@ -38,13 +38,13 @@ public class TrafficSignalSchedulerTest {
 		
 		assertEquals(0,signalController.getCycle());
 		
-		Thread.sleep(10000);
+		Thread.sleep(1000);
 		clock.pauseClock();
 		
 		assertEquals(1, signalController.getCycle());
 		
 		clock.resumeClock();
-		Thread.sleep(10000);
+		Thread.sleep(1000);
 		assertEquals(2, signalController.getCycle());
 	}
 
