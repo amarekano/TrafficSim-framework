@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import service.Network;
+import service.TrafficSignalScheduler;
 import service.clock.SimulationClock;
 import core.endpoints.Destination;
 import core.endpoints.EndPointException;
@@ -295,10 +296,11 @@ public class IntegrationTest {
 		juncRouter.add(D,  junc.getInterface(JUNCTION.SOUTH));
 		junc.setRoutingTable(juncRouter);
 		
-		//AM > Setup traffic signals
-		junc.getInterface(JUNCTION.WEST).setSignalState(junc.getInterface(JUNCTION.EAST), true);
-		junc.getInterface(JUNCTION.WEST).setSignalState(junc.getInterface(JUNCTION.NORTH), true);
-		junc.getInterface(JUNCTION.WEST).setSignalState(junc.getInterface(JUNCTION.SOUTH), true);
+		//AM > Setup signal scheduler
+		junc.setSignalController();
+		TrafficSignalScheduler scheduler = new TrafficSignalScheduler();
+		scheduler.setSignalInterval(5);
+		scheduler.addSignalController(junc.getSignalController());
 		
 		//AM > Setup vehicle destinations
 		v1.setDestination(B);
@@ -325,6 +327,7 @@ public class IntegrationTest {
 		clock.resetClock();
 		
 		clock.addObserver(network);
+		clock.addObserver(scheduler);
 		clock.startClock();
 		
 		Thread.sleep(5*1000);
