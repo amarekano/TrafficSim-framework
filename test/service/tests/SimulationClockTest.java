@@ -11,7 +11,7 @@ import core.vehicle.Bus;
 import core.vehicle.Car;
 import core.vehicle.VehicleException;
 import service.Network;
-import service.clock.SimulationClock;
+import service.SimulationClock;
 
 public class SimulationClockTest {
 

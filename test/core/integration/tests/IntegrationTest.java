@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import service.Network;
+import service.SimulationClock;
 import service.TrafficSignalScheduler;
-import service.clock.SimulationClock;
 import core.endpoints.Destination;
 import core.endpoints.EndPointException;
 import core.network.Road;

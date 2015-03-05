@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import service.SimulationClock;
 import service.TrafficSignalScheduler;
-import service.clock.SimulationClock;
 import core.network.interfaces.InterfaceException;
 import core.network.junction.Junction;
 import core.network.junction.TrafficSignalController;

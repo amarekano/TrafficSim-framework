@@ -1,8 +1,10 @@
 package core.vehicle.tests;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
-import service.clock.SimulationClock;
+
+import service.SimulationClock;
 import core.endpoints.Destination;
 import core.endpoints.EndPointException;
 import core.network.Road;

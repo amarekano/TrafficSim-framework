@@ -1,4 +1,4 @@
-package service.clock;
+package service;
 
 import java.util.Observable;
 

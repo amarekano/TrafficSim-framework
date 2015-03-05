@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import service.clock.SimulationClock;
 import core.network.interfaces.InterfaceException;
 import core.network.junction.TrafficSignalController;
 
