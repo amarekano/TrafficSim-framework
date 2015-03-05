@@ -365,21 +365,21 @@ public class IntegrationTest {
 		
 		Junction junc = new Junction();
 		Network network = new Network();
-						/*|B|
-						/\
-						|
-						ra_b
-						|
-		|A| --ra_j--> |	J | -- rj_c --> |C|
-			<--rj_a-- |	U |	 
-					  | N |	 <-- rc_j--
-					  | C |		
-						|
-						ra_d
-						|
-						\/
-						|D|*/
-		
+						
+		/*
+		 * AM > Road-junction wiring
+		 * 			   |B|
+		 *              ^
+		 * 			    |
+		 * 			    |
+		 * 				\/
+		 *   |A|<----->|junc|<----->|C|
+		 *              ^
+		 * 			    |
+		 * 			    |
+		 *              \/
+		 * 			   |D|
+		 */
 		
 		//AM > Roads from A, B, C and D to the junction
 		Road ra_j = new Road(number_of_lanes, lane_length);
