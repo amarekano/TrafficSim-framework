@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import core.endpoints.Destination;
+import core.vehicle.Car;
+import core.vehicle.VehicleException;
 import service.DemandMatrix;
 import service.DemandMatrixException;
 
@@ -101,16 +103,67 @@ public class DemandMatrixTest {
 		DemandMatrix dm = new DemandMatrix();
 		Destination A = new Destination();
 		Destination B = new Destination();
+		Destination C = new Destination();
+		
+		dm.addDestination(A);
+		dm.addDestination(B);
+		dm.addDestination(C);
+		
+		dm.initializeMatrix();
+		
+		dm.setDemand(A,B,99);
+		dm.setDemand(B,A,-12);
+		dm.setDemand(A,C, 0.6);
+		
+		assertEquals(1, dm.getDemand(A,B),0.0);
+		assertEquals(0, dm.getDemand(B,A),0.0);
+		assertEquals(0.6, dm.getDemand(A, C),0.0);
+	}
+	
+	@Test
+	public void test_should_generate_vehicles_at_destinations_based_on_demand() throws DemandMatrixException, InstantiationException, IllegalAccessException, VehicleException
+	{
+		DemandMatrix dm = new DemandMatrix();
+		Destination A = new Destination();
+		Destination B = new Destination();
 		
 		dm.addDestination(A);
 		dm.addDestination(B);
 		
 		dm.initializeMatrix();
 		
-		dm.setDemand(A,B,99);
-		dm.setDemand(B,A,-12);
+		dm.setVehicleType(Car.class);
 		
-		assertEquals(1, dm.getDemand(A,B),0.0);
-		assertEquals(0, dm.getDemand(B,A),0.0);
+		dm.setDemand(A, B, 0.66);
+		dm.setDemand(B, A, 1);
+		
+		for(int i = 0; i < 10; i++)
+		{
+			dm.generateVehicles();
+		}
+		
+		assertEquals(10, B.getWaitingQueueLength());
+		assertEquals(true, 5 <= A.getWaitingQueueLength());
+	}
+	
+	@Test
+	public void test_multiple_calls_to_initialize_matrix_should_not_wipe_out_data() throws DemandMatrixException
+	{
+		DemandMatrix dm = new DemandMatrix();
+		Destination A = new Destination();
+		Destination B = new Destination();
+		
+		dm.addDestination(A);
+		dm.addDestination(B);
+		
+		dm.initializeMatrix();
+		
+		dm.setDemand(A, B, 0.6);
+		dm.setDemand(B, A, 0.05);
+		
+		dm.initializeMatrix();
+		
+		assertEquals(0.6, dm.getDemand(A, B),0.0);
+		assertEquals(0.05, dm.getDemand(B,A),0.0);
 	}
 }
