@@ -97,5 +97,9 @@ public class Destination extends EndPoint {
 			waitingQueue.remove(v);
 		}
 	}
+	
+	public List<Vehicle> getConsumedVehicle(){
+		return consumedQueue;
+	}
 
 }
