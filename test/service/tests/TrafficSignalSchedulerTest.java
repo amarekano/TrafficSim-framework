@@ -25,26 +25,25 @@ public class TrafficSignalSchedulerTest {
 	public void test_signals_should_change_after_the_set_interval() throws InterfaceException, InterruptedException
 	{
 		SimulationClock clock = SimulationClock.getInstance();
-		clock.resetClock();
 		TrafficSignalScheduler scheduler = new TrafficSignalScheduler();
 		scheduler.setSignalInterval(10);
 		clock.addObserver(scheduler);
 		clock.resetClock();
-		clock.setInterval(100);
-		clock.startClock();
+		
 		Junction junc = new Junction();
 		TrafficSignalController signalController = new TrafficSignalController(junc);
 		scheduler.addSignalController(signalController);
 		
 		assertEquals(0,signalController.getCycle());
 		
-		Thread.sleep(1000);
-		clock.pauseClock();
+		for(int i = 0; i < 10; i++)
+			clock.incrementClock();		
 		
 		assertEquals(1, signalController.getCycle());
 		
-		clock.resumeClock();
-		Thread.sleep(1000);
+		for(int i = 0; i < 10; i++)
+			clock.incrementClock();
+		
 		assertEquals(2, signalController.getCycle());
 	}
 
