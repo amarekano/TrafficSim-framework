@@ -49,4 +49,49 @@ public class DemandMatrix {
 			matrix.put(d1, row);
 		}
 	}
+	
+	public double getDemand(Destination from, Destination to) throws DemandMatrixException
+	{
+		if(matrix.containsKey(from))
+		{
+			HashMap<Destination, Double> row = matrix.get(from);
+			if(row.containsKey(to))
+				return row.get(to);
+			else
+				throw new DemandMatrixException("Destination to does not exist in the matrix");
+		}
+		else
+		{
+			throw new DemandMatrixException("Destination from does not exist in the matrix");
+		}
+	}
+	
+	public void setDemand(Destination from, Destination to, double value) throws DemandMatrixException
+	{
+		if(from == to)
+		{
+			throw new DemandMatrixException("Cannot set demand between the same destination");
+		}
+		
+		if(matrix.containsKey(from))
+		{
+			HashMap<Destination, Double> row = matrix.get(from);
+			if(row.containsKey(to))
+			{
+				//AM > Minimum demand can be 0%
+				if(value > 0.0)
+				{
+					//AM > Maximum demand allowed is 100%
+					value = value > 1.0 ? 1.0 : value;
+					row.put(to,value);
+				}
+			}
+			else
+				throw new DemandMatrixException("Destination to does not exist in the matrix");
+		}
+		else
+		{
+			throw new DemandMatrixException("Destination from does not exist in the matrix");
+		}
+	}
 }
