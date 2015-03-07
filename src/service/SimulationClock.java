@@ -1,92 +1,41 @@
-package service;
+public class SimulationClock {
+    private long startTime;         /* Time Clock Started. */
+    private long delayTime;         /* Tracks total time clock has paused for. */
+    private long delayCurrent;      /* Current pause tracker. */
+    private long tickRate;          /* Number of ticks per second. */
 
-import java.util.Observable;
+    /* Wagwan. */
+    public SimulationClock() {
+        this.delayTime = 0;
+        this.tickRate  = 1;
+        this.startTime = System.currentTimeMillis();
+    }
 
-public class SimulationClock extends Observable implements Runnable{
-	private long currentTime;
-	public final static SimulationClock clock = new SimulationClock();
-	private long interval;
-	
-	private Thread systemClock;
-	private volatile boolean suspended = false;
-	private volatile boolean running = false;
-	
-	private SimulationClock()
-	{
-		this.currentTime = 0;
-		//AM > Time in ms between each clock tick
-		this.interval=1000;
-		systemClock = new Thread(this);
-	}
-	
-	public void run()
-	{
-		try
-		{
-			while(true)
-			{
-				Thread.sleep(clock.getInterval());
-				synchronized(this)
-				{
-					if(!suspended)
-					{
-						clock.incrementClock();
-					}
-				}
-			}
-		}
-		catch(InterruptedException e)
-		{
-		}
-	}
-	
-	public static SimulationClock getInstance()
-	{
-		return clock;
-	}
-	
-	public long getTime()
-	{
-		return currentTime;
-	}
-	
-	public void resetClock()
-	{
-		currentTime = 0;
-	}
-	
-	public void incrementClock()
-	{
-		setChanged();
-		notifyObservers();
-		this.currentTime++;
-	}
-	
-	public void setInterval(long interval){
-		this.interval=interval;
-	}
-	
-	public long getInterval()
-	{
-		return interval;
-	}
-	
-	public synchronized void pauseClock()
-	{
-		this.suspended = true;
-	}
-	
-	public synchronized void resumeClock()
-	{
-		this.suspended = false;
-	}
-	
-	public synchronized void startClock()
-	{
-		if(!running)
-		{
-			running = true;
-			systemClock.start();
-		}
-	}
+    /* Constructor for custom tickrate. */
+    public SimulationClock(long tickRate) {
+        this();
+        this.tickRate = tickRate;
+    }
+
+    public void resetClock() {
+        this.startTime = System.currentTimeMillis();
+        this.delayTime = 0;
+    }
+
+    public void pauseClock() {
+        this.delayCurrent = System.currentTimeMillis();
+    }
+
+    public void startClock() {
+        this.delayTime += System.currentTimeMillis() - this.delayCurrent;
+    }
+
+    public void incrementClock() {
+        this.startTime -= (1000 / this.tickRate);
+    }
+
+    public long getTime() {
+        long currentTick = System.currentTimeMillis() - this.startTime - this.delayTime;
+        return (currentTick / (1000 / this.tickRate));
+    }
 }
