@@ -1,4 +1,6 @@
-public class SimulationClock {
+import java.util.Observable;
+
+public class SimulationClock extends Observable {
     private long startTime;         /* Time Clock Started. */
     private long delayTime;         /* Tracks total time clock has paused for. */
     private long delayCurrent;      /* Current pause tracker. */
@@ -32,6 +34,7 @@ public class SimulationClock {
 
     public void incrementClock() {
         this.startTime -= (1000 / this.tickRate);
+        notifyObservers();
     }
 
     public long getTime() {
