@@ -92,21 +92,4 @@ public class SimulationClockTest {
 		assertEquals(-1,road.getVehicleNodeIndex(c1));
 		assertEquals(-1,road.getVehicleNodeIndex(b1));
 	}
-	
-	@Test
-	public void test_changing_tick_interval() throws InterruptedException
-	{
-		SimulationClock clock = SimulationClock.getInstance();
-		clock.resetClock();
-		clock.startClock();
-		Thread.sleep(5*100);
-		assertEquals(5, clock.getTime());
-		assertEquals(100, clock.getInterval());
-		
-		clock.setInterval(2000);
-		clock.resetClock();
-		Thread.sleep(6*1000);
-		assertEquals(3, clock.getTime());
-		assertEquals(2000, clock.getInterval());
-	}
 }
