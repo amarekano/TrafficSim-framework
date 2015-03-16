@@ -54,10 +54,10 @@ public class ReportGenerator {
 					fileWriter.append(SEMICOLON_DELIMETER);
 					fileWriter.append(String.valueOf(v.getDestination().getLabel()));
 					fileWriter.append(SEMICOLON_DELIMETER);
-					if(consumed_vehicles.get(0) instanceof Car){
+					if(v instanceof Car){
 						fileWriter.append("Car");
 					}
-					else if(consumed_vehicles.get(0) instanceof Bus){
+					else if(v instanceof Bus){
 						fileWriter.append("Bus");
 					}
 					fileWriter.write(System.getProperty("line.separator"));
