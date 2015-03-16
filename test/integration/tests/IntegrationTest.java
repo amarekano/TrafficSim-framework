@@ -2,9 +2,18 @@ package integration.tests;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import service.Network;
+import service.ReportGenerator;
 import service.SimulationClock;
 import service.TrafficSignalScheduler;
 import core.endpoints.Destination;
@@ -42,8 +51,8 @@ public class IntegrationTest {
 		Vehicle v2 = new Car();
 		Vehicle v3 = new Car();
 		
-		/*
-		 * AM > Road-junction wiring
+		
+		 /* AM > Road-junction wiring
 		 * 			  |B|
 		 * 			   |
 		 * 			   r2
@@ -107,8 +116,8 @@ public class IntegrationTest {
 		Road r1 = new Road(1, 3);
 		Road r2 = new Road(1,4);
 		
-		/*
-		 * AM > Setup wiring
+		
+		 /* AM > Setup wiring
 		 * |A|-->--r1-->--|B|
 		 * |A|--<--r2--<--|B|
 		 */
@@ -154,8 +163,8 @@ public class IntegrationTest {
 		Vehicle v2 = new Car();
 		Vehicle v3 = new Car();
 		
-		/*
-		 * AM > Road-junction wiring
+		
+		/* AM > Road-junction wiring
 		 * 			  |B|
 		 * 			   |
 		 * 			   r2
@@ -218,8 +227,8 @@ public class IntegrationTest {
 		Road r1 = new Road(1, 3);
 		Road r2 = new Road(1,4);
 		
-		/*
-		 * AM > Setup wiring
+		
+		 /* AM > Setup wiring
 		 * |A|-->--r1-->--|B|
 		 * |A|--<--r2--<--|B|
 		 */
@@ -274,8 +283,8 @@ public class IntegrationTest {
 		Vehicle v2 = new Car();
 		Vehicle v3 = new Car();
 		
-		/*
-		 * AM > Road-junction wiring
+		
+		 /* AM > Road-junction wiring
 		 * 			  |B|
 		 * 			   |
 		 * 			   r2
@@ -337,7 +346,7 @@ public class IntegrationTest {
 		clock.addObserver(scheduler);
 		clock.startClock();
 		
-		Thread.sleep(5*1000);
+		Thread.sleep(10*1000);
 
 		assertEquals(1, B.getConsumedQueueLength());
 		assertEquals(1, C.getConsumedQueueLength());
@@ -357,6 +366,153 @@ public class IntegrationTest {
 		Destination B = new Destination();
 		Destination C = new Destination();
 		Destination D = new Destination();
+		
+		A.setClock(clock);
+		B.setClock(clock);
+		C.setClock(clock);
+		D.setClock(clock);
+		
+		Junction junc = new Junction();
+		Network network = new Network();
+						
+		
+		 /* AM > Road-junction wiring
+		 * 			   |B|
+		 *              ^
+		 * 			    |
+		 * 			    |
+		 * 				\/
+		 *   |A|<----->|junc|<----->|C|
+		 *              ^
+		 * 			    |
+		 * 			    |
+		 *              \/
+		 * 			   |D|
+		 */
+		
+		//AM > Roads from A, B, C and D to the junction
+		Road ra_j = new Road(number_of_lanes, lane_length);
+		ra_j.setSource(A);
+		ra_j.setSink(junc,JUNCTION.WEST);
+		network.addRoad(ra_j);
+		
+		Road rb_j = new Road(number_of_lanes, lane_length);
+		rb_j.setSource(B);
+		rb_j.setSink(junc, JUNCTION.NORTH);
+		network.addRoad(rb_j);
+		
+		Road rc_j = new Road(number_of_lanes, lane_length);
+		rc_j.setSource(C);
+		rc_j.setSink(junc, JUNCTION.EAST);
+		network.addRoad(rc_j);
+		
+		Road rd_j = new Road(number_of_lanes, lane_length);
+		rd_j.setSource(D);
+		rd_j.setSink(junc, JUNCTION.SOUTH);
+		network.addRoad(rd_j);
+		
+		//AM > Roads from the Junction to A, B, C and D
+		Road rj_a = new Road(number_of_lanes, lane_length);
+		rj_a.setSink(A);
+		rj_a.setSource(junc,JUNCTION.WEST);
+		network.addRoad(rj_a);
+		
+		Road rj_b = new Road(number_of_lanes, lane_length);
+		rj_b.setSink(B);
+		rj_b.setSource(junc, JUNCTION.NORTH);
+		network.addRoad(rj_b);
+		
+		Road rj_c = new Road(number_of_lanes, lane_length);
+		rj_c.setSink(C);
+		rj_c.setSource(junc, JUNCTION.EAST);
+		network.addRoad(rj_c);
+		
+		Road rj_d = new Road(number_of_lanes, lane_length);
+		rj_d.setSink(D);
+		rj_d.setSource(junc, JUNCTION.SOUTH);
+		network.addRoad(rj_d);
+		
+		
+		//AM > Setup routing table
+		JunctionRouter juncRouter = new JunctionRouter();
+		juncRouter.add(A, junc.getInterface(JUNCTION.WEST));
+		juncRouter.add(B, junc.getInterface(JUNCTION.NORTH));
+		juncRouter.add(C, junc.getInterface(JUNCTION.EAST));
+		juncRouter.add(D,  junc.getInterface(JUNCTION.SOUTH));
+		junc.setRoutingTable(juncRouter);
+		
+		//AM > Setup signal scheduler
+		junc.setSignalController();
+		TrafficSignalScheduler scheduler = new TrafficSignalScheduler();
+		scheduler.setSignalInterval(5);
+		scheduler.addSignalController(junc.getSignalController());
+		
+		clock.addObserver(network);
+		clock.addObserver(scheduler);
+		
+		Vehicle va_b = new Car();
+		va_b.setDestination(B);
+		A.addVehicle(va_b);
+		Vehicle va_c = new Bus();
+		va_c.setDestination(C);
+		A.addVehicle(va_c);
+		Vehicle va_d = new Car();
+		va_d.setDestination(D);
+		A.addVehicle(va_d);
+
+		Vehicle vb_a = new Car();
+		vb_a.setDestination(A);
+		B.addVehicle(vb_a);
+		Vehicle vb_c = new Bus();
+		vb_c.setDestination(C);
+		B.addVehicle(vb_c);
+		Vehicle vb_d = new Car();
+		vb_d.setDestination(D);
+		B.addVehicle(vb_d);
+		
+		Vehicle vc_a = new Car();
+		vc_a.setDestination(A);
+		C.addVehicle(vc_a);
+		Vehicle vc_b = new Car();
+		vc_b.setDestination(B);
+		C.addVehicle(vc_b);
+		Vehicle vc_d = new Bus();
+		vc_d.setDestination(D);
+		C.addVehicle(vc_d);
+		
+		Vehicle vd_a = new Bus();
+		vd_a.setDestination(A);
+		D.addVehicle(vd_a);
+		Vehicle vd_b = new Car();
+		vd_b.setDestination(B);
+		D.addVehicle(vd_b);
+		Vehicle vd_c = new Car();
+		vd_c.setDestination(C);
+		D.addVehicle(vd_c);
+		
+		clock.resumeClock();
+		clock.startClock();
+		
+		Thread.sleep(10*1000);
+
+		assertEquals(3, A.getConsumedQueueLength());
+		assertEquals(3, B.getConsumedQueueLength());
+		assertEquals(3, C.getConsumedQueueLength());
+		assertEquals(3, D.getConsumedQueueLength());
+	}
+	
+	@Test
+	public void test_junction_transfer_using_simulation_clock_and_generating_report() throws InterfaceException, VehicleException, InterruptedException, IOException{
+		int number_of_lanes = 1;
+		int lane_length = 10;
+		
+		SimulationClock clock = SimulationClock.getInstance();
+		clock.setInterval(100);
+		
+		Destination A = new Destination("Athens");
+		Destination B = new Destination("Bonitsa");
+		Destination C = new Destination("Cesaloniki");
+		Destination D = new Destination("Delfoi");
 		
 		A.setClock(clock);
 		B.setClock(clock);
@@ -489,5 +645,42 @@ public class IntegrationTest {
 		assertEquals(3, B.getConsumedQueueLength());
 		assertEquals(3, C.getConsumedQueueLength());
 		assertEquals(3, D.getConsumedQueueLength());
+		
+		ReportGenerator report= new ReportGenerator();
+		report.addDestination(A);
+		report.addDestination(B);
+		report.addDestination(C);
+		report.addDestination(D);
+		
+		String path="greek_traffic.txt";
+		
+		report.saveReport(path);
+		
+		File file = new File(path);
+		
+		BufferedReader br = new BufferedReader(new FileReader(file));
+	 
+		String line = null;
+
+		List <String> lines=new ArrayList<String>();
+		while ((line = br.readLine()) != null) {
+			if(!lines.contains(line)){
+				lines.add(line);
+			}
+		}
+		br.close();
+		String text=va_b.getStartTime()+";"+va_b.getEndTime()+";"+va_b.getSource().getLabel()+";"+va_b.getDestination().getLabel()+";"+"Car";
+		assertEquals(true,lines.contains(text));
+		
+		text=vb_a.getStartTime()+";"+vb_a.getEndTime()+";"+vb_a.getSource().getLabel()+";"+vb_a.getDestination().getLabel()+";"+"Car";
+		assertEquals(true,lines.contains(text));
+		
+		text=vc_d.getStartTime()+";"+vc_d.getEndTime()+";"+vc_d.getSource().getLabel()+";"+vc_d.getDestination().getLabel()+";"+"Bus";
+		assertEquals(true,lines.contains(text));
+		
+		text=vd_a.getStartTime()+";"+vd_a.getEndTime()+";"+vd_a.getSource().getLabel()+";"+vd_a.getDestination().getLabel()+";"+"Bus";
+		assertEquals(true,lines.contains(text));
+		
+		file.delete();
 	}
 }
