@@ -83,7 +83,7 @@ public class DemandMatrixTest {
 	}
 	
 	@Test(expected=DemandMatrixException.class)
-	public void test_should_not_all_setting_demand_for_the_same_source_and_destination() throws DemandMatrixException
+	public void test_should_not_allow_setting_demand_for_the_same_source_and_destination() throws DemandMatrixException
 	{
 		DemandMatrix dm = new DemandMatrix();
 		Destination A = new Destination();
