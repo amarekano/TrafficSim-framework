@@ -14,7 +14,7 @@
  <property name="src.test" location="test"/>
  <property name="junit.results" value="test-results"/>
 	
-<property name="main-class"  value="client.Network3"/> 
+<property name="main-class"  value="client.Simulator"/> 
 
  <!-- Set library variables -->
  <property name="lib.dir" location="${dist}/lib" />
