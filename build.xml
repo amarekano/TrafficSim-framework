@@ -1,13 +1,11 @@
 <?xml version="1.0"?>
-<project name="TrafficSimulator" default="dist" basedir=".">
+<project name="TrafficSimulator" default="clean-build" basedir=".">
 
  <description>
-  Traffic Simulator build.xml file
- 	
+  Traffic Simulator build.xml file	
  </description>
 
  <!-- set global properties for this build -->
- <property file="build.properties" />
  <property name="src" location="src"/>
  <property name="build" location="build"/>
 <property name="bin" location="bin"/>	
@@ -73,15 +71,15 @@
  <!--
    Perform a clean distribution build
   -->
- <target name="dist-clean">
+ <target name="clean-build">
   <antcall target="clean" />
-  <antcall target="dist" />
+  <antcall target="build" />
  </target>
 
  <!--
    Build the distribution files
   -->
- <target name="dist" depends="test,compile,docs,jar" description="generate the distribution" >
+ <target name="build" depends="test,compile,docs,jar" description="generate the distribution" >
 
  </target>
 	
