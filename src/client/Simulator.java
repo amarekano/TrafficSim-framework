@@ -1,34 +1,16 @@
 package client;
-import java.awt.*;
-import javax.swing.*;
-import java.awt.Graphics2D;
 
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.GridLayout;
 
-import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
-import javax.swing.JSlider;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-
-
-import core.endpoints.EndPointException;
-import core.network.Road;
-import core.vehicle.Car;
-import core.vehicle.Vehicle;
-
-import java.awt.ScrollPane;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.Timer;
-import java.awt.geom.Line2D;
 
 
 public class Simulator extends JFrame

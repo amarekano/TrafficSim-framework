@@ -1,4 +1,6 @@
 /bin/
+/build/
+/doc/api/
 .classpath
 .project
 
