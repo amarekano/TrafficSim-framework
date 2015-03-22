@@ -27,9 +27,6 @@ public class PolicyPanel extends JPanel {
 		//setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setLayout(new GridLayout(3,1));
 		
-		JLabel clock_label=new JLabel("Clock: ");
-		JLabel clock_time=new JLabel("00");
-		JButton start= new JButton();
 		
 		JSlider interval_slider = new JSlider();
 		interval_slider = new JSlider();
@@ -67,17 +64,32 @@ public class PolicyPanel extends JPanel {
 	    
 	    add(velocity_panel);
 	    
-	    // from 0 to 9, in 1.0 steps start value 5  
-	    SpinnerNumberModel model1 = new SpinnerNumberModel(5, 1, 60, 1); 
-	    JSpinner spinner = new JSpinner(model1);
-	    ((DefaultEditor) spinner.getEditor()).getTextField().setEditable(false);
 	    
-
-	    JLabel clock_interval_label = new JLabel("Clock Interval");
-	    JPanel clock_panel = new JPanel(new GridLayout(2,1));
-	    clock_panel.add(clock_interval_label);
-	    clock_panel.add(spinner);
-	    add(clock_panel);
+	    
+	    JSlider clock_interval_slider = new JSlider();
+	    clock_interval_slider = new JSlider();
+	    clock_interval_slider.setPaintTicks(true);
+	    clock_interval_slider.setPaintLabels(true);
+	    clock_interval_slider.setMaximum(60);
+	    clock_interval_slider.setMinimum(0);
+	    clock_interval_slider.setMajorTickSpacing(10);
+	    clock_interval_slider.setMinorTickSpacing(5);
+	   // add(interval_slider);
+	    
+	    JPanel clock_interval_panel = new JPanel(new GridLayout(2,1));
+	    clock_interval_panel.add(new JLabel("Clock Interval"));
+	    clock_interval_panel.add(clock_interval_slider);
+	    
+	    
+	    add(clock_interval_panel);
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 		
 	}
 
