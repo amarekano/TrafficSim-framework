@@ -3,13 +3,17 @@ package service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import core.endpoints.Destination;
+import core.vehicle.Vehicle;
+import core.vehicle.VehicleException;
 
 public class DemandMatrix {
 
 	private List<Destination> destinations;
 	private HashMap<Destination, HashMap<Destination, Double>> matrix;
+	private Class<?> vehicleType;
 	
 	public DemandMatrix()
 	{
@@ -39,14 +43,21 @@ public class DemandMatrix {
 		{
 			throw new DemandMatrixException("Atleast two destinations are required to initialize the matrix");
 		}
+		
 		for(Destination d1 : destinations)
 		{
-			HashMap<Destination,Double> row = new HashMap<Destination, Double>();
-			for(Destination d2 : destinations)
+			if(!matrix.containsKey(d1))
 			{
-				row.put(d2, 0.0);
+				HashMap<Destination,Double> row = new HashMap<Destination, Double>();
+				for(Destination d2 : destinations)
+				{
+					if(!row.containsKey(d2))
+					{
+						row.put(d2, 0.0);
+					}
+				}
+				matrix.put(d1, row);
 			}
-			matrix.put(d1, row);
 		}
 	}
 	
@@ -92,6 +103,39 @@ public class DemandMatrix {
 		else
 		{
 			throw new DemandMatrixException("Destination from does not exist in the matrix");
+		}
+	}
+
+	public void setVehicleType(Class<?> type)
+	{
+		vehicleType = type;
+	}
+	
+	public Class<?> getVehicleType()
+	{
+		return vehicleType;
+	}
+	
+	public void generateVehicles() throws InstantiationException, IllegalAccessException, VehicleException
+	{
+		for(Destination from : matrix.keySet())
+		{
+			HashMap<Destination, Double> row = matrix.get(from);
+			for(Destination to : row.keySet())
+			{
+				if(from != to)
+				{
+					if(new Random().nextDouble() <= row.get(to))
+					{
+						//AM > Generate vehicle
+						Vehicle v = (Vehicle) vehicleType.newInstance();
+						v.setSource(from);
+						v.setDestination(to);
+						
+						from.addVehicle(v);
+					}
+				}
+			}
 		}
 	}
 }
