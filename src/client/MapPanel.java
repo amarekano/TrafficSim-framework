@@ -2,12 +2,16 @@ package client;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -17,15 +21,24 @@ public class MapPanel extends JPanel {
 	
 	int x = 40, velX = 1;
 	int y = 65, velY = 1; 
+	Image img;
 
 	public MapPanel() {
 		super();
+		img = new ImageIcon("res/bg1.png").getImage();
 	}
+	
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+	    g.drawImage(img, 0,0,this.getWidth(),this.getHeight(),this);
+	  }
 
 	public MapPanel(boolean isDoubleBuffered) {
 		super(isDoubleBuffered);
 	}
-	
+	/*
 	public void paint(Graphics g) {
 	    super.paint(g);
 	    g.setColor(Color.lightGray);
@@ -34,10 +47,6 @@ public class MapPanel extends JPanel {
 	    g.drawLine(30, 245, 455, 245);
 	    g.drawLine(30, 295, 455, 295);
 	   
-	    /**
-	    g.setColor(Color.darkGray);
-	    g.drawRect(230, 60, 52, 406); 
-	    */
 	    
 	    Graphics2D g2d = (Graphics2D) g;
 
@@ -87,9 +96,6 @@ public class MapPanel extends JPanel {
         
         tm.start();
         
-        /*// in Color.RED
-        Color myColor = new Color(123, 111, 222);
-        */
         g.setColor(Color.lightGray);
         
         g2d.setStroke(bs1);
@@ -106,6 +112,6 @@ public class MapPanel extends JPanel {
 
 	}
 	
-	
+	*/
 
 }
