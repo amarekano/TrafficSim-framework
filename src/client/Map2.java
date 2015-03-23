@@ -35,6 +35,7 @@ public class Map2 extends JPanel{
 	private int busWidth = 30;   
 
 	public Map2() {
+
 		super();
 		length = 20;
 		r1 = new Road(2,length);
@@ -66,6 +67,7 @@ public class Map2 extends JPanel{
 		};
 		
 		tm = new Timer(1000, actionListener);
+
 	}
 	
 	@Override

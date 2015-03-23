@@ -30,7 +30,7 @@ public class ReportGenerator {
 		FileWriter fileWriter = null;
 		
 		try {
-			fileWriter = new FileWriter(path,true);
+			fileWriter = new FileWriter(path);
 
 			//Write the CSV file header
 
