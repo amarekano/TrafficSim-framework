@@ -16,10 +16,6 @@ public class Map2 extends JPanel{
 	int y = 65, velY = 1;   
 
 	public Map2() {
-		// TODO Auto-generated constructor stub
-		Junction jun=new Junction();
-		jun.setVisible(true);
-        add(jun);
 	}
 	
 	public void paint(Graphics g) {
