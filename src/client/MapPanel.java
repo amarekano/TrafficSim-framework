@@ -117,7 +117,7 @@ public class MapPanel extends JPanel {
         g2d.drawLine(roadStartX, upperLaneDividerY, roadEndX -1, upperLaneDividerY);
         g2d.drawLine(roadStartX, lowerLaneDividerY, roadEndX -1, lowerLaneDividerY);
         
-        //AM > Draw a center line between lane boundaries
+        //AM > Draw a center line between lane boundaries, debug purposes
         //g.setColor(Color.RED);
         //g.drawLine(roadStartX, upperLaneDividerY - roadHeight/8, roadEndX, upperLaneDividerY - roadHeight/8);
         //g.drawLine(roadStartX, panelHeight/2 - roadHeight/8, roadEndX, panelHeight/2 - roadHeight/8);

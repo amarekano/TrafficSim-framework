@@ -3,13 +3,15 @@ package service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 import core.endpoints.Destination;
 import core.vehicle.Vehicle;
 import core.vehicle.VehicleException;
 
-public class DemandMatrix {
+public class DemandMatrix implements Observer {
 
 	private List<Destination> destinations;
 	private HashMap<Destination, HashMap<Destination, Double>> matrix;
@@ -135,6 +137,20 @@ public class DemandMatrix {
 						from.addVehicle(v);
 					}
 				}
+			}
+		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if(o instanceof SimulationClock)
+		{
+			try {
+				generateVehicles();
+			} catch (InstantiationException | IllegalAccessException
+					| VehicleException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}

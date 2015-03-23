@@ -64,8 +64,6 @@ public class Destination extends EndPoint {
 		
 		if(v != null)
 		{
-			if(clock != null)
-				v.setStartTime(clock.getTime());
 			v.setSource(this);
 			if(!waitingQueue.contains(v))
 			waitingQueue.add(v);
@@ -94,6 +92,8 @@ public class Destination extends EndPoint {
 	{
 		if(v != null)
 		{
+			if(clock != null)
+				v.setStartTime(clock.getTime());
 			waitingQueue.remove(v);
 		}
 	}
