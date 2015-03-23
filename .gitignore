@@ -3,4 +3,5 @@
 /doc/api/
 .classpath
 .project
+.db
 
