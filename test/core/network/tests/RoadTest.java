@@ -4,12 +4,16 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import service.Network;
+import service.SimulationClock;
+import service.TrafficSignalScheduler;
 import core.network.Road;
 import core.network.interfaces.InterfaceException;
 import core.network.junction.Junction;
 import core.network.junction.Junction.JUNCTION;
 import core.network.junction.JunctionException;
 import core.network.junction.JunctionRouter;
+import core.vehicle.Bus;
 import core.vehicle.Vehicle;
 import core.vehicle.Car;
 import core.vehicle.VehicleException;
@@ -233,5 +237,36 @@ public class RoadTest {
 		assertEquals(3, r1.getVehicleNodeIndex(v2));
 		assertEquals(2, r1.getVehicleNodeIndex(v3));
 
+	}
+	
+	@Test
+	public void test_vehicles_on_road() throws InterfaceException, VehicleException, InterruptedException, EndPointException{
+		int number_of_lanes = 1;
+		int lane_length = 7;
+		
+						
+		Road r1 = new Road(number_of_lanes, lane_length);		
+		Vehicle carA = new Car();
+		r1.addVehicle(carA);
+		
+		assertEquals(1, r1.getVehiclesOnRoad().size());
+		r1.moveTraffic();
+		Vehicle busA = new Bus();
+		r1.moveTraffic();
+		r1.addVehicle(busA);
+		r1.moveTraffic();
+		assertEquals(2, r1.getVehiclesOnRoad().size());
+		r1.moveTraffic();
+		Vehicle carB = new Car();
+		r1.addVehicle(carB);
+		r1.moveTraffic();
+		assertEquals(3, r1.getVehiclesOnRoad().size());
+
+		r1.moveTraffic();
+		r1.moveTraffic();
+		r1.moveTraffic();
+		r1.moveTraffic();
+		assertEquals(1, r1.getVehiclesOnRoad().size());
+		
 	}
 }
