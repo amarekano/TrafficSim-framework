@@ -1,8 +1,6 @@
 package service;
 
-import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,9 +38,11 @@ public class ReportGenerator {
 			
 			//Add a new line separator after the header
 			fileWriter.write(System.getProperty("line.separator"));
+			for(Destination d : destinations)
+			{
 			
-			for(int i=0;i<destinations.size();i++){
-				consumed_vehicles=destinations.get(i).getConsumedVehicle();
+				consumed_vehicles.addAll(d.getConsumedVehicles());
+				d.clearConsumedQueue();
 				
 				//Write a new student object list to the CSV file
 				for (Vehicle v : consumed_vehicles) {

@@ -145,9 +145,10 @@ public class ScenarioReports {
 		
 		
 		clock.startClock();
-		
+		System.out.println("Running scenario 1");
 		Thread.sleep(2*60*1000);
 		
+		clock.pauseClock();
 		
 		ReportGenerator report= new ReportGenerator();
 		report.addDestination(A);
@@ -159,6 +160,58 @@ public class ScenarioReports {
 		
 		report.saveReport(path);
 		
+		dm.setDemand(A, B, 0.3);
+		dm.setDemand(A, C, 0.8);
+		dm.setDemand(A, D, 0.3);
+		
+		dm.setDemand(B, A, 0.3);
+		dm.setDemand(B, C, 0.8);
+		dm.setDemand(B, D, 0.3);
+		
+		dm.setDemand(C, B, 0.5);
+		dm.setDemand(C, A, 0.5);
+		dm.setDemand(C, D, 0.5);
+		
+		dm.setDemand(D, B, 0.3);
+		dm.setDemand(D, C, 0.8);
+		dm.setDemand(D, A, 0.3);
+		
+		clock.startClock();
+		System.out.println("Running scenario 2");
+		Thread.sleep(2*60*1000);
+		
+		clock.pauseClock();
+		
+		path="Scenario2_report.txt";
+		
+		report.saveReport(path);
+		
+		dm.setDemand(A, B, 0.5);
+		dm.setDemand(A, C, 0.1);
+		dm.setDemand(A, D, 0.3);
+		
+		dm.setDemand(B, A, 0.3);
+		dm.setDemand(B, C, 0.1);
+		dm.setDemand(B, D, 0.3);
+		
+		dm.setDemand(C, B, 0.3);
+		dm.setDemand(C, A, 0.3);
+		dm.setDemand(C, D, 0.3);
+		
+		dm.setDemand(D, B, 0.5);
+		dm.setDemand(D, C, 0.1);
+		dm.setDemand(D, A, 0.3);
+		
+		clock.startClock();
+		System.out.println("Running scenario 3");
+		Thread.sleep(2*60*1000);
+		
+		clock.pauseClock();
+		
+		path="Scenario3_report.txt";
+		
+		report.saveReport(path);
+		
 		System.out.println("Simulation ended");
 		}
 		catch(Exception e)
@@ -166,5 +219,4 @@ public class ScenarioReports {
 			e.printStackTrace();
 		}
 	}
-	
 }

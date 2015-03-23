@@ -98,7 +98,12 @@ public class Destination extends EndPoint {
 		}
 	}
 	
-	public List<Vehicle> getConsumedVehicle(){
+	public void clearConsumedQueue()
+	{
+		consumedQueue.clear();
+	}
+	
+	public List<Vehicle> getConsumedVehicles(){
 		return consumedQueue;
 	}
 
