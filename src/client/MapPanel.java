@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -56,6 +57,9 @@ public class MapPanel extends JPanel {
 				
 				try {
 					r1.moveTraffic();
+					Vehicle v = new Car(1,2,5);
+					vehicleList.add(v);
+					r1.addVehicle(v);
 					repaint();
 				} catch (EndPointException e) {
 					e.printStackTrace();
@@ -113,20 +117,29 @@ public class MapPanel extends JPanel {
         g2d.drawLine(roadStartX, upperLaneDividerY, roadEndX -1, upperLaneDividerY);
         g2d.drawLine(roadStartX, lowerLaneDividerY, roadEndX -1, lowerLaneDividerY);
         
+        //AM > Draw a center line between lane boundaries
+        //g.setColor(Color.RED);
+        //g.drawLine(roadStartX, upperLaneDividerY - roadHeight/8, roadEndX, upperLaneDividerY - roadHeight/8);
+        //g.drawLine(roadStartX, panelHeight/2 - roadHeight/8, roadEndX, panelHeight/2 - roadHeight/8);
+        
         //AM > Draw car on the network
         int blockWidth = (int)roadWidth/length;
-        //AM > Distance in px between lane divider and vehicle y co-ordinate
-        int laneOffset =  25;
         
         //For each vehicle on the road get its co-ordinates
         for(Vehicle v : vehicleList)
         {
-        	g.setColor(Color.MAGENTA);
+        	Random r = new Random();
+        	g.setColor(new Color(r.nextFloat(), r.nextFloat(), r.nextFloat()));
         	//For each vehicle calculate its X and Y co-ordinates
-            int carX = roadStartX + blockWidth*r1.getVehicleNodeIndex(v);
-            int carY =  upperLaneDividerY - r1.getVehicleLaneIndex(v)*laneOffset;
+            int carX = 0;
+            int carY = 0;
             if(r1.getVehicleNodeIndex(v) != -1)
             {
+            	carX = roadStartX + blockWidth*r1.getVehicleNodeIndex(v);
+            	if(r1.getVehicleLaneIndex(v) == 0)
+            		carY =  upperLaneDividerY - roadHeight/8 - carHeight/2;
+            	else
+            		carY =  (panelHeight/2 - roadHeight/8) - carHeight/2;
             	g.fillRect(carX,carY,carWidth, carHeight);
             }   
         }
