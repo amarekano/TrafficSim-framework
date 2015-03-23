@@ -12,8 +12,10 @@ import service.ReportGenerator;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -40,8 +42,16 @@ public class Simulator extends JFrame implements ActionListener
 	public Simulator() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new GridLayout(2,1));
-		setBounds(100, 100, 800, 600);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width =(int) screenSize.getWidth();
+		int height =(int) screenSize.getHeight();
+		
+		setBounds(80, 20, (int)(width*0.5),(int) (height*0.5));
 		mapPanel = new Map1();
+		
+		//mapPanel.setBounds(100, 100, this.getWidth(), (int)(this.getHeight()*0.6));
+		mapPanel.setPreferredSize(new Dimension(this.getWidth(), (int)(this.getHeight()*0.8)));
 		controlPanel = new ControlPanel();
 		//setContentPane(mapPanel);
 		mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
