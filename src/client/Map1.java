@@ -41,7 +41,7 @@ public class Map1 extends JPanel {
 		
 		//AM > Create a road
 		length = 20;
-		 r1 = new Road(2,length);
+		r1 = new Road(2,length);
 
 		vehicleList = new ArrayList<Vehicle>();
 		
