@@ -16,13 +16,14 @@ import javax.swing.Timer;
 
 import core.endpoints.EndPointException;
 import core.network.Road;
+import core.vehicle.Bus;
 import core.vehicle.Car;
 import core.vehicle.Vehicle;
 
 /*
  * AM > This is the network for a straight road
  */
-public class MapPanel extends JPanel {
+public class Map1 extends JPanel {
 
 	private static final long serialVersionUID = -5133592834815202789L;
 	private Timer tm;
@@ -30,24 +31,20 @@ public class MapPanel extends JPanel {
 	private Road r1;
 	private List<Vehicle> vehicleList;
 	private int length;
-	private final int carWidth = 20;
-	private final int carHeight = 10;
+	private int carWidth = 20;
+	private int vehicleHeight = 10;
+	private int busWidth = 30;
 	
-	public MapPanel() {
+	
+	public Map1() {
 		super();
 		
 		//AM > Create a road
 		length = 20;
 		 r1 = new Road(2,length);
-		 Vehicle c1 = new Car();
-		 Vehicle c2 =new Car(2,0,2);		 
 
-		r1.addVehicle(c2,2);
-		r1.addVehicle(c1,1);
-		
 		vehicleList = new ArrayList<Vehicle>();
-		vehicleList.add(c1);
-		vehicleList.add(c2);
+		
 
 		//AM > Every time the clock ticks move cars
 		actionListener = new ActionListener(){
@@ -57,9 +54,14 @@ public class MapPanel extends JPanel {
 				
 				try {
 					r1.moveTraffic();
-					Vehicle v = new Car(1,2,5);
+					Vehicle v = new Car();
 					vehicleList.add(v);
 					r1.addVehicle(v);
+					repaint();
+					
+					Vehicle b = new Bus();
+					vehicleList.add(b);
+					r1.addVehicle(b);
 					repaint();
 				} catch (EndPointException e) {
 					e.printStackTrace();
@@ -128,8 +130,14 @@ public class MapPanel extends JPanel {
         //For each vehicle on the road get its co-ordinates
         for(Vehicle v : vehicleList)
         {
-        	Random r = new Random();
-        	g.setColor(new Color(r.nextFloat(), r.nextFloat(), r.nextFloat()));
+        	//Random r = new Random();
+        	//g.setColor(new Color(r.nextFloat(), r.nextFloat(), r.nextFloat()));
+        	if(v instanceof Car){
+        		g.setColor(Color.RED);
+        	}
+        	else if(v instanceof Bus){
+        		g.setColor(Color.YELLOW);
+        	}
         	//For each vehicle calculate its X and Y co-ordinates
             int carX = 0;
             int carY = 0;
@@ -137,10 +145,17 @@ public class MapPanel extends JPanel {
             {
             	carX = roadStartX + blockWidth*r1.getVehicleNodeIndex(v);
             	if(r1.getVehicleLaneIndex(v) == 0)
-            		carY =  upperLaneDividerY - roadHeight/8 - carHeight/2;
+            		carY =  upperLaneDividerY - roadHeight/8 - vehicleHeight/2;
             	else
-            		carY =  (panelHeight/2 - roadHeight/8) - carHeight/2;
-            	g.fillRect(carX,carY,carWidth, carHeight);
+            		carY =  (panelHeight/2 - roadHeight/8) - vehicleHeight/2;
+            	carWidth =  (int) (blockWidth*0.5);
+            	busWidth = (int)(blockWidth*0.75);
+            	if(v instanceof Car){
+            		g.fillRect(carX,carY,carWidth, vehicleHeight);
+            	}
+            	else if(v instanceof Bus){
+            		g.fillRect(carX,carY,busWidth, vehicleHeight);
+            	}
             }   
         }
         tm.start();
