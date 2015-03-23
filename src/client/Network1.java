@@ -30,7 +30,7 @@ public class Network1 extends JPanel {
 	private ActionListener actionListener;
 	private Road r1;
 	private List<Vehicle> vehicleList;
-	private int length;
+	private int roadLength = 40; 
 	private int carWidth = 20;
 	private int vehicleHeight = 10;
 	private int busWidth = 30;
@@ -40,8 +40,7 @@ public class Network1 extends JPanel {
 		super();
 		
 		//AM > Create a road
-		length = 20;
-		r1 = new Road(2,length);
+		r1 = new Road(2,roadLength);
 
 		vehicleList = new ArrayList<Vehicle>();
 		
@@ -125,7 +124,7 @@ public class Network1 extends JPanel {
         //g.drawLine(roadStartX, panelHeight/2 - roadHeight/8, roadEndX, panelHeight/2 - roadHeight/8);
         
         //AM > Draw car on the network
-        int blockWidth = (int)roadWidth/length;
+        int blockWidth = (int)roadWidth/roadLength;
         
         //For each vehicle on the road get its co-ordinates
         for(Vehicle v : vehicleList)

@@ -24,17 +24,15 @@ import java.io.File;
 
 public class Simulator extends JFrame implements ActionListener
 {
-	   
-
 	private static final long serialVersionUID = 1L;
 	private JPanel controlPanel;
 	private JPanel mapPanel;
 	
-	final static String MAP1PANEL = "MAP1PANEL";
-	final static String MAP2PANEL = "MAP2PANEL";
+	private final String MAP1PANEL = "MAP1PANEL";
+	private final String MAP2PANEL = "MAP2PANEL";
 	
-	Network1 network1 = new Network1();
-	Network2 network2 = new Network2();
+	private Network1 network1 = new Network1();
+	private Network2 network2 = new Network2();
 	
 	
 	public Simulator() {
@@ -50,8 +48,8 @@ public class Simulator extends JFrame implements ActionListener
 		controlPanel = new ControlPanel();
 		//Create the panel that contains the "cards".
         mapPanel = new JPanel(new CardLayout());
-        mapPanel.add(network1, MAP1PANEL);
         mapPanel.add(network2, MAP2PANEL);
+        mapPanel.add(network1, MAP1PANEL);
         mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		add(mapPanel);
