@@ -27,15 +27,13 @@ public class Simulator extends JFrame implements ActionListener
 	   
 
 	private static final long serialVersionUID = 1L;
-	private JPanel mapPanel;
 	private JPanel controlPanel;
+	private JPanel cards;
 	
-	JPanel cards;
 	final static String MAP1PANEL = "MAP1PANEL";
 	final static String MAP2PANEL = "MAP2PANEL";
 	
 	Map1 card1 = new Map1();
-	
 	Map2 card2 = new Map2();
 	
 	
@@ -46,15 +44,13 @@ public class Simulator extends JFrame implements ActionListener
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width =(int) screenSize.getWidth();
 		int height =(int) screenSize.getHeight();
-		
 		setBounds(80, 20, (int)(width*0.5),(int) (height*0.5));
-		mapPanel = new Map1();
 		
-		//mapPanel.setBounds(100, 100, this.getWidth(), (int)(this.getHeight()*0.6));
-		mapPanel.setPreferredSize(new Dimension(this.getWidth(), (int)(this.getHeight()*0.8)));
+		//mapPanel = new Map1();
+		//mapPanel.setPreferredSize(new Dimension(this.getWidth(), (int)(this.getHeight()*0.8)));
+		//mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	
 		controlPanel = new ControlPanel();
-		//setContentPane(mapPanel);
-		mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		//Create the panel that contains the "cards".
         cards = new JPanel(new CardLayout());
         cards.add(card1, MAP1PANEL);
@@ -62,7 +58,6 @@ public class Simulator extends JFrame implements ActionListener
         cards.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		add(cards);
-		//mapPanel.setLayout(null);
 		add(controlPanel);
 		
 		
@@ -72,7 +67,7 @@ public class Simulator extends JFrame implements ActionListener
         // Add the menubar to the frame
         setJMenuBar(menuBar);
         
-     // Define and add two drop down menu to the menubar
+        //Define and add two drop down menu to the menubar
         JMenu mapsMenu = new JMenu("Maps");
         
         menuBar.add(mapsMenu);
@@ -85,9 +80,6 @@ public class Simulator extends JFrame implements ActionListener
         mapsMenu.add(network2);
         network2.addActionListener(this);
         
-        JMenuItem network3 = new JMenuItem("Network 3");
-        mapsMenu.add(network3);
-        network3.addActionListener(this);
         
         JMenu reportMenu = new JMenu("Report");
         
@@ -97,8 +89,6 @@ public class Simulator extends JFrame implements ActionListener
         reportMenu.add(save_report);
         save_report.addActionListener(this);
 		
-      
-       
         setTitle("Traffic Simulator");
         setVisible(true);
 	}
@@ -126,9 +116,6 @@ public class Simulator extends JFrame implements ActionListener
 		}
 		else if(e.getActionCommand()=="Network 2"){
 			cl.show(cards, MAP2PANEL);
-		}
-		else if(e.getActionCommand()=="Network 3"){
-			
 		}
 		else if(e.getActionCommand()=="Save report"){
 			//Create a file chooser
