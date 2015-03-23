@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -25,22 +27,26 @@ public class MapPanel extends JPanel {
 	private Timer tm;
 	private ActionListener actionListener;
 	private Road r1;
-	private Vehicle c1;
+	private List<Vehicle> vehicleList;
 	private int length;
 	private final int carWidth = 20;
 	private final int carHeight = 10;
-	private int carX;
-	private int carY;
 	
 	public MapPanel() {
 		super();
 		
 		//AM > Create a road
 		length = 20;
-		 r1 = new Road(1,length);
-		 c1 = new Car();
+		 r1 = new Road(2,length);
+		 Vehicle c1 = new Car();
+		 Vehicle c2 =new Car(2,0,2);		 
 
-		r1.addVehicle(c1);
+		r1.addVehicle(c2,2);
+		r1.addVehicle(c1,1);
+		
+		vehicleList = new ArrayList<Vehicle>();
+		vehicleList.add(c1);
+		vehicleList.add(c2);
 
 		//AM > Every time the clock ticks move cars
 		actionListener = new ActionListener(){
@@ -102,18 +108,27 @@ public class MapPanel extends JPanel {
 		Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
         g2d.setStroke(dashed);
         g2d.setColor(Color.WHITE);
-        g2d.drawLine(roadStartX, panelHeight/2 - roadHeight/4, roadEndX -1, panelHeight/2 - roadHeight/4);
-        g2d.drawLine(roadStartX, panelHeight/2 + roadHeight/4, roadEndX -1, panelHeight/2 + roadHeight/4);
+        int upperLaneDividerY = panelHeight/2 - roadHeight/4;
+        int lowerLaneDividerY = panelHeight/2 + roadHeight/4;
+        g2d.drawLine(roadStartX, upperLaneDividerY, roadEndX -1, upperLaneDividerY);
+        g2d.drawLine(roadStartX, lowerLaneDividerY, roadEndX -1, lowerLaneDividerY);
         
         //AM > Draw car on the network
         int blockWidth = (int)roadWidth/length;
+        //AM > Distance in px between lane divider and vehicle y co-ordinate
+        int laneOffset =  25;
         
-        g.setColor(Color.MAGENTA);
-        carX = roadStartX + blockWidth*r1.getVehicleNodeIndex(c1);
-        carY = (panelHeight/2 - roadHeight/4)/2;
-        if(r1.getVehicleNodeIndex(c1) != -1)
+        //For each vehicle on the road get its co-ordinates
+        for(Vehicle v : vehicleList)
         {
-        g.fillRect(carX,carY,carWidth, carHeight);
+        	g.setColor(Color.MAGENTA);
+        	//For each vehicle calculate its X and Y co-ordinates
+            int carX = roadStartX + blockWidth*r1.getVehicleNodeIndex(v);
+            int carY =  upperLaneDividerY - r1.getVehicleLaneIndex(v)*laneOffset;
+            if(r1.getVehicleNodeIndex(v) != -1)
+            {
+            	g.fillRect(carX,carY,carWidth, carHeight);
+            }   
         }
         tm.start();
 	  }
