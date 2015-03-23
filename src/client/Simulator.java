@@ -28,7 +28,7 @@ public class Simulator extends JFrame implements ActionListener
 
 	private static final long serialVersionUID = 1L;
 	private JPanel controlPanel;
-	private JPanel cards;
+	private JPanel mapPanel;
 	
 	final static String MAP1PANEL = "MAP1PANEL";
 	final static String MAP2PANEL = "MAP2PANEL";
@@ -44,20 +44,17 @@ public class Simulator extends JFrame implements ActionListener
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width =(int) screenSize.getWidth();
 		int height =(int) screenSize.getHeight();
-		setBounds(80, 20, (int)(width*0.5),(int) (height*0.5));
+		setBounds(20, 20, (int)(width*0.6),(int)(height*0.75));
 		
-		//mapPanel = new Map1();
-		//mapPanel.setPreferredSize(new Dimension(this.getWidth(), (int)(this.getHeight()*0.8)));
-		//mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	
 		controlPanel = new ControlPanel();
 		//Create the panel that contains the "cards".
-        cards = new JPanel(new CardLayout());
-        cards.add(card1, MAP1PANEL);
-        cards.add(card2, MAP2PANEL);
-        cards.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        mapPanel = new JPanel(new CardLayout());
+        mapPanel.add(card1, MAP1PANEL);
+        mapPanel.add(card2, MAP2PANEL);
+        mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		add(cards);
+		add(mapPanel);
 		add(controlPanel);
 		
 		
@@ -109,13 +106,13 @@ public class Simulator extends JFrame implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		CardLayout cl = (CardLayout)(cards.getLayout());
+		CardLayout cl = (CardLayout)(mapPanel.getLayout());
 		
 		if(e.getActionCommand()=="Network 1"){
-			cl.show(cards,MAP1PANEL);
+			cl.show(mapPanel,MAP1PANEL);
 		}
 		else if(e.getActionCommand()=="Network 2"){
-			cl.show(cards, MAP2PANEL);
+			cl.show(mapPanel, MAP2PANEL);
 		}
 		else if(e.getActionCommand()=="Save report"){
 			//Create a file chooser
