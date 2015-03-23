@@ -33,8 +33,8 @@ public class Simulator extends JFrame implements ActionListener
 	final static String MAP1PANEL = "MAP1PANEL";
 	final static String MAP2PANEL = "MAP2PANEL";
 	
-	Map1 card1 = new Map1();
-	Map2 card2 = new Map2();
+	Network1 network1 = new Network1();
+	Network2 network2 = new Network2();
 	
 	
 	public Simulator() {
@@ -50,8 +50,8 @@ public class Simulator extends JFrame implements ActionListener
 		controlPanel = new ControlPanel();
 		//Create the panel that contains the "cards".
         mapPanel = new JPanel(new CardLayout());
-        mapPanel.add(card1, MAP1PANEL);
-        mapPanel.add(card2, MAP2PANEL);
+        mapPanel.add(network1, MAP1PANEL);
+        mapPanel.add(network2, MAP2PANEL);
         mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		add(mapPanel);
