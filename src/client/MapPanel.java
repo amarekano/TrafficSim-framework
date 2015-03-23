@@ -5,8 +5,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
+
+import core.endpoints.EndPointException;
+import core.network.Road;
+import core.vehicle.Car;
+import core.vehicle.Vehicle;
 
 /*
  * AM > This is the network for a straight road
@@ -14,10 +22,42 @@ import javax.swing.JPanel;
 public class MapPanel extends JPanel {
 
 	private static final long serialVersionUID = -5133592834815202789L;
+	private Timer tm;
+	private ActionListener actionListener;
+	private Road r1;
+	private Vehicle c1;
+	private int length;
+	private final int carWidth = 20;
+	private final int carHeight = 10;
+	private int carX;
+	private int carY;
 	
-
 	public MapPanel() {
 		super();
+		
+		//AM > Create a road
+		length = 20;
+		 r1 = new Road(1,length);
+		 c1 = new Car();
+
+		r1.addVehicle(c1);
+
+		//AM > Every time the clock ticks move cars
+		actionListener = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					r1.moveTraffic();
+					repaint();
+				} catch (EndPointException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		
+		tm = new Timer(1000, actionListener);
 	}
 	
 	
@@ -64,5 +104,17 @@ public class MapPanel extends JPanel {
         g2d.setColor(Color.WHITE);
         g2d.drawLine(roadStartX, panelHeight/2 - roadHeight/4, roadEndX -1, panelHeight/2 - roadHeight/4);
         g2d.drawLine(roadStartX, panelHeight/2 + roadHeight/4, roadEndX -1, panelHeight/2 + roadHeight/4);
+        
+        //AM > Draw car on the network
+        int blockWidth = (int)roadWidth/length;
+        
+        g.setColor(Color.MAGENTA);
+        carX = roadStartX + blockWidth*r1.getVehicleNodeIndex(c1);
+        carY = (panelHeight/2 - roadHeight/4)/2;
+        if(r1.getVehicleNodeIndex(c1) != -1)
+        {
+        g.fillRect(carX,carY,carWidth, carHeight);
+        }
+        tm.start();
 	  }
 }
