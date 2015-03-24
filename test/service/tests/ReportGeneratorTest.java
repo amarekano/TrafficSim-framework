@@ -22,7 +22,7 @@ import core.vehicle.Bus;
 import core.vehicle.Car;
 import core.vehicle.Vehicle;
 import core.vehicle.VehicleException;
-import service.Network;
+import service.RoadNetwork;
 import service.ReportGenerator;
 import service.SimulationClock;
 import service.TrafficSignalScheduler;

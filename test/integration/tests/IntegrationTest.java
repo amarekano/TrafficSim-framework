@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import service.Network;
+import service.RoadNetwork;
 import service.ReportGenerator;
 import service.SimulationClock;
 import service.TrafficSignalScheduler;
@@ -250,7 +250,7 @@ public class IntegrationTest {
 		A.setClock(clock);
 		B.setClock(clock);
 		
-		Network network = new Network();
+		RoadNetwork network = new RoadNetwork();
 		network.addRoad(r1);
 		network.addRoad(r2);
 		clock.addObserver(network);
@@ -327,7 +327,7 @@ public class IntegrationTest {
 		A.addVehicle(v2);
 		A.addVehicle(v3);
 		
-		Network network = new Network();
+		RoadNetwork network = new RoadNetwork();
 		network.addRoad(r1);
 		network.addRoad(r2);
 		network.addRoad(r3);
@@ -373,7 +373,7 @@ public class IntegrationTest {
 		D.setClock(clock);
 		
 		Junction junc = new Junction();
-		Network network = new Network();
+		RoadNetwork network = new RoadNetwork();
 						
 		
 		 /* AM > Road-junction wiring
@@ -520,7 +520,7 @@ public class IntegrationTest {
 		D.setClock(clock);
 		
 		Junction junc = new Junction();
-		Network network = new Network();
+		RoadNetwork network = new RoadNetwork();
 						
 		/*
 		 * AM > Road-junction wiring
