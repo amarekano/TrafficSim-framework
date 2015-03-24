@@ -60,7 +60,10 @@ public class Network1 extends Network {
 		B = new Destination("B");
 		
 		ra_b.setSource(A);
-		rb_a.setSink(B);
+		ra_b.setSink(B);
+		
+		rb_a.setSource(B);
+		rb_a.setSink(A);
 		
 		roadNetwork = new RoadNetwork();
 		roadNetwork.addRoad(ra_b);
@@ -191,6 +194,37 @@ public class Network1 extends Network {
 		            		carY =  upperLaneDividerY - roadHeight/8 - vehicleHeight/2;
 		            	else
 		            		carY =  (panelHeight/2 - roadHeight/8) - vehicleHeight/2;
+		            	carWidth =  (int) (blockWidth*0.5);
+		            	busWidth = (int)(blockWidth*0.75);
+		            	if(v instanceof Car){
+		            		g.fillRect(carX,carY,carWidth, vehicleHeight);
+		            	}
+		            	else if(v instanceof Bus){
+		            		g.fillRect(carX,carY,busWidth, vehicleHeight);
+		            	}
+		            	
+		            }
+		        }
+		        
+		        List<Vehicle>vehicleListRb_a = rb_a.getVehiclesOnRoad();
+		        for(Vehicle v : vehicleListRb_a)
+		        {
+		        	if(v instanceof Car){
+		        		g.setColor(Color.RED);
+		        	}
+		        	else if(v instanceof Bus){
+		        		g.setColor(Color.YELLOW);
+		        	}
+		        	//For each vehicle calculate its X and Y co-ordinates
+		            int carX = 0;
+		            int carY = 0;
+		            if(rb_a.getVehicleNodeIndex(v) != -1)
+		            {	
+		            	carX = roadEndX - blockWidth*rb_a.getVehicleNodeIndex(v) - carWidth;
+		            	if(rb_a.getVehicleLaneIndex(v) == 0)
+		            		carY =  upperLaneDividerY - roadHeight/8 - vehicleHeight/2+ roadHeight/2;
+		            	else
+		            		carY =  (panelHeight/2 - roadHeight/8) - vehicleHeight/2+ roadHeight/2;
 		            	carWidth =  (int) (blockWidth*0.5);
 		            	busWidth = (int)(blockWidth*0.75);
 		            	if(v instanceof Car){
