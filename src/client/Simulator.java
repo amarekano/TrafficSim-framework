@@ -8,7 +8,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import client.network1.Network1;
 import service.ReportGenerator;
 
 import java.awt.CardLayout;

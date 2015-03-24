@@ -1,4 +1,4 @@
-package client.network1;
+package client;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -13,8 +13,6 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import client.ControlPanel;
-import client.Network;
 import core.endpoints.EndPointException;
 import core.network.Road;
 import core.vehicle.Bus;
