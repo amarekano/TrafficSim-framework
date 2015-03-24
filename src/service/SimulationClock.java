@@ -1,14 +1,11 @@
-import java.util.Observable;
-
-public class SimulationClock extends Observable {
-    private long startTime;         /* Time Clock Started. */
-    private long delayTime;         /* Tracks total time clock has paused for. */
+@@ -6,19 +6,25 @@ public class SimulationClock extends Observable {
     private long delayCurrent;      /* Current pause tracker. */
     private long tickRate;          /* Number of ticks per second. */
 
     private static final SimulationClock instance = new SimulationClock();
 
     /* Wagwan. */
+    public SimulationClock() {
     private SimulationClock() {
         this.delayTime = 0;
         this.tickRate  = 1;
@@ -16,6 +13,7 @@ public class SimulationClock extends Observable {
     }
 
     /* Constructor for custom tickrate. */
+    public SimulationClock(long tickRate) {
     private SimulationClock(long tickRate) {
         this();
         this.tickRate = tickRate;
@@ -28,24 +26,10 @@ public class SimulationClock extends Observable {
     public void resetClock() {
         this.startTime = System.currentTimeMillis();
         this.delayTime = 0;
-    }
-
-    public void pauseClock() {
-        this.delayCurrent = System.currentTimeMillis();
-    }
-
-    public void startClock() {
-        this.delayTime += System.currentTimeMillis() - this.delayCurrent;
-    }
+@@ -34,6 +40,7 @@ public class SimulationClock extends Observable {
 
     public void incrementClock() {
         this.startTime -= (1000 / this.tickRate);
         setChanged();
         notifyObservers();
     }
-
-    public long getTime() {
-        long currentTick = System.currentTimeMillis() - this.startTime - this.delayTime;
-        return (currentTick / (1000 / this.tickRate));
-    }
-}
