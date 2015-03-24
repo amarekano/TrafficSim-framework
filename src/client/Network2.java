@@ -8,28 +8,39 @@ import java.awt.Image;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import core.endpoints.EndPointException;
-import core.network.Road;
-import core.vehicle.Bus;
-import core.vehicle.Car;
-import core.vehicle.Vehicle;
-
 public class Network2 extends Network
 {
+
+	int counter;
+	Timer mytimer;
+	
 	private JPanel view;
 	private JPanel controls;
 	
 	public Network2() {
 
 		super();
+		counter=0;
+		ActionListener actionListener = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(counter==3){
+					counter=-1;
+				}
+				counter++;
+				view.repaint();
+			}
+		};
+		
+		mytimer = new Timer(1000, actionListener);
+		
 		controls = new ControlPanel();
 		view = new JPanel()
 		{
@@ -128,15 +139,26 @@ public class Network2 extends Network
 		        //AM > Draw junction box
 		        //g.setColor(Color.GRAY);
 		        //g.fillRect(panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2,vroadWidth, hroadHeight);
-		        
-		        Image img = new ImageIcon("res/cycle1.png").getImage();
-		        g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
-		        
-			  }			
+		        if(counter==0){
+		        	Image img = new ImageIcon("res/cycle0.png").getImage();
+		        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
+		        }
+		        if(counter==1){
+		        	Image img = new ImageIcon("res/cycle1.png").getImage();
+		        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
+		        }
+		        if(counter==2){
+		        	Image img = new ImageIcon("res/cycle2.png").getImage();
+		        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
+		        }
+		        if(counter==3){
+		        	Image img = new ImageIcon("res/cycle3.png").getImage();
+		        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
+		        }
+		        mytimer.start();
+			  }
 		};
-
 	}
-	
 	
 	@Override
 	public JPanel getView() {
@@ -149,5 +171,4 @@ public class Network2 extends Network
 		// TODO Auto-generated method stub
 		return controls;
 	}
-	
 }

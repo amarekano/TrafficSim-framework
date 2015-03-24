@@ -111,7 +111,7 @@ public class ScenarioReports {
 		//AM > Setup signal scheduler
 		junc.setSignalController();
 		TrafficSignalScheduler scheduler = new TrafficSignalScheduler();
-		scheduler.setSignalInterval(5);
+		scheduler.setSignalInterval(10);
 		scheduler.addSignalController(junc.getSignalController());
 		
 		DemandMatrix dm = new DemandMatrix();
