@@ -8,6 +8,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import client.network1.Network1;
 import service.ReportGenerator;
 
 import java.awt.CardLayout;
@@ -31,8 +32,8 @@ public class Simulator extends JFrame implements ActionListener
 	private final String MAP1PANEL = "MAP1PANEL";
 	private final String MAP2PANEL = "MAP2PANEL";
 	
-	private Network1 network1 = new Network1();
-	private Network2 network2 = new Network2();
+	private Network network1 = new Network1();
+	private Network network2 = new Network2();
 	
 	
 	public Simulator() {
@@ -45,16 +46,20 @@ public class Simulator extends JFrame implements ActionListener
 		setBounds(20, 20, (int)(width*0.6),(int)(height*0.75));
 		
 	
-		controlPanel = new ControlPanel();
+		//controlPanel = new ControlPanel();
 		//Create the panel that contains the "cards".
         mapPanel = new JPanel(new CardLayout());
-        mapPanel.add(network2, MAP2PANEL);
-        mapPanel.add(network1, MAP1PANEL);
+        mapPanel.add(network2.getView(), MAP2PANEL);
+        mapPanel.add(network1.getView(), MAP1PANEL);
         mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
+        //Create the panel that contains 'cards' for map controls
+        controlPanel = new JPanel(new CardLayout());
+        controlPanel.add(network2.getControls(), MAP2PANEL);
+        controlPanel.add(network2.getControls(), MAP1PANEL);
+        
 		add(mapPanel);
 		add(controlPanel);
-		
 		
 		// Creates a menubar for a JFrame
         JMenuBar menuBar = new JMenuBar();
@@ -104,13 +109,17 @@ public class Simulator extends JFrame implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		CardLayout cl = (CardLayout)(mapPanel.getLayout());
-		
+		CardLayout view_cl = (CardLayout)(mapPanel.getLayout());
+		CardLayout control_cl = (CardLayout)(controlPanel.getLayout());
 		if(e.getActionCommand()=="Network 1"){
-			cl.show(mapPanel,MAP1PANEL);
+			view_cl.show(mapPanel,MAP1PANEL);
+			//AM > Set controls for network1
+			control_cl.show(controlPanel, MAP1PANEL);
 		}
 		else if(e.getActionCommand()=="Network 2"){
-			cl.show(mapPanel, MAP2PANEL);
+			view_cl.show(mapPanel, MAP2PANEL);
+			//AM > Set controls for network2
+			control_cl.show(controlPanel, MAP2PANEL);
 		}
 		else if(e.getActionCommand()=="Save report"){
 			//Create a file chooser
