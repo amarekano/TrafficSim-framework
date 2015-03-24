@@ -1,7 +1,7 @@
 package client.tools;
 
 import service.DemandMatrix;
-import service.Network;
+import service.RoadNetwork;
 import service.ReportGenerator;
 import service.SimulationClock;
 import service.TrafficSignalScheduler;
@@ -40,7 +40,7 @@ public class ScenarioReports {
 		D.setClock(clock);
 		
 		Junction junc = new Junction();
-		Network network = new Network();
+		RoadNetwork network = new RoadNetwork();
 						
 		/*
 		 * AM > Road-junction wiring

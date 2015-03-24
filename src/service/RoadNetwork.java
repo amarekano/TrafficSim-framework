@@ -8,11 +8,11 @@ import java.util.Observer;
 import core.endpoints.EndPointException;
 import core.network.Road;
 
-public class Network implements Observer {
+public class RoadNetwork implements Observer {
 	
 	private List<Road> roads;
 	
-	public Network() {
+	public RoadNetwork() {
 		this.roads = new ArrayList<Road>();
 	}
 	

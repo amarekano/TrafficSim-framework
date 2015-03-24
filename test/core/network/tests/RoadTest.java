@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import service.Network;
+import service.RoadNetwork;
 import service.SimulationClock;
 import service.TrafficSignalScheduler;
 import core.network.Road;
