@@ -131,6 +131,8 @@ public class DemandMatrix implements Observer {
 					{
 						//AM > Generate vehicle
 						Vehicle v = (Vehicle) vehicleType.newInstance();
+						v.setAcceleration(1);
+						v.setMax_velocity(10);
 						v.setSource(from);
 						v.setDestination(to);
 						

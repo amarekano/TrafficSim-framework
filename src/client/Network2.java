@@ -25,10 +25,28 @@ import core.vehicle.Vehicle;
 public class Network2 extends JPanel
 {
 	private static final long serialVersionUID = 7045702594780848905L;
+	private Timer mytimer;
+	private ActionListener actionListener;
+	int counter;
 
 	public Network2() {
 
 		super();
+		counter=0;
+		actionListener = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(counter==3){
+					counter=-1;
+				}
+				counter++;
+				repaint();
+			}
+		};
+		
+		mytimer = new Timer(1000, actionListener);
 
 	}
 	
@@ -122,9 +140,24 @@ public class Network2 extends JPanel
         //AM > Draw junction box
         //g.setColor(Color.GRAY);
         //g.fillRect(panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2,vroadWidth, hroadHeight);
+        if(counter==0){
+        	Image img = new ImageIcon("res/cycle0.png").getImage();
+        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
+        }
+        if(counter==1){
+        	Image img = new ImageIcon("res/cycle1.png").getImage();
+        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
+        }
+        if(counter==2){
+        	Image img = new ImageIcon("res/cycle2.png").getImage();
+        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
+        }
+        if(counter==3){
+        	Image img = new ImageIcon("res/cycle3.png").getImage();
+        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
+        }
+        mytimer.start();
         
-        Image img = new ImageIcon("res/cycle1.png").getImage();
-        g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
         
 	  }
 	
