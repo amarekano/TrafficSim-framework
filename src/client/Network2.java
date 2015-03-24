@@ -8,19 +8,37 @@ import java.awt.Image;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import core.endpoints.EndPointException;
+import core.network.Road;
+import core.vehicle.Bus;
+import core.vehicle.Car;
+import core.vehicle.Vehicle;
+
 public class Network2 extends Network
 {
 
 	int counter;
-	Timer mytimer;
+	Timer timer_change_lights;
+	Timer timer_move_cars;
 	
 	private JPanel view;
 	private JPanel controls;
+	
+	
+	private ActionListener actionListener_move_cars;
+	private Road r1;
+	private List<Vehicle> vehicleList;
+	private int roadLength = 40; 
+	private int carWidth = 20;
+	private int vehicleHeight = 10;
+	private int busWidth = 30;
 	
 	public Network2() {
 
@@ -39,7 +57,38 @@ public class Network2 extends Network
 			}
 		};
 		
-		mytimer = new Timer(1000, actionListener);
+		timer_change_lights = new Timer(1000, actionListener);
+		
+		
+		r1 = new Road(2,roadLength);
+
+		vehicleList = new ArrayList<Vehicle>();
+		
+
+		//AM > Every time the clock ticks move cars
+		actionListener_move_cars = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					r1.moveTraffic();
+					Vehicle v = new Car();
+					vehicleList.add(v);
+					r1.addVehicle(v);
+					view.repaint();
+					
+					Vehicle b = new Bus();
+					vehicleList.add(b);
+					r1.addVehicle(b);
+					view.repaint();
+				} catch (EndPointException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		
+		timer_move_cars = new Timer(1000, actionListener_move_cars);
 		
 		controls = new ControlPanel();
 		view = new JPanel()
@@ -136,6 +185,56 @@ public class Network2 extends Network
 		        g2d.drawLine(leftLaneDividerX, vroadStartY+vdestinationHeight, leftLaneDividerX, vroadEndY);
 		        g2d.drawLine(rightLaneDividerX, vroadStartY+vdestinationHeight, rightLaneDividerX, vroadEndY);
 		        
+		        
+		        int blockWidth = (int)roadWidth/roadLength;
+		      //For each vehicle on the road get its co-ordinates
+		        for(Vehicle v : vehicleList)
+		        {
+		        	//Random r = new Random();
+		        	//g.setColor(new Color(r.nextFloat(), r.nextFloat(), r.nextFloat()));
+		        	if(v instanceof Car){
+		        		g.setColor(Color.RED);
+		        	}
+		        	else if(v instanceof Bus){
+		        		g.setColor(Color.YELLOW);
+		        	}
+		        	//For each vehicle calculate its X and Y co-ordinates
+		            int carX = 0;
+		            int carY = 0;
+		            if(r1.getVehicleNodeIndex(v) != -1)
+		            {
+		            	carX = hroadStartX + blockWidth*r1.getVehicleNodeIndex(v);
+		            	if(r1.getVehicleLaneIndex(v) == 0)
+		            		carY =  upperLaneDividerY - hroadHeight/8 - vehicleHeight/2;
+		            	else
+		            		carY =  (panelHeight/2 - hroadHeight/8) - vehicleHeight/2;
+		            	carWidth =  (int) (blockWidth*0.5);
+		            	busWidth = (int)(blockWidth*0.75);
+		            	if(v instanceof Car){
+		            		g.fillRect(carX,carY,carWidth, vehicleHeight);
+		            	}
+		            	else if(v instanceof Bus){
+		            		g.fillRect(carX,carY,busWidth, vehicleHeight);
+		            	}
+		            	
+		            	
+		            	carX = roadEndX - blockWidth*r1.getVehicleNodeIndex(v)-carWidth;
+		            	if(r1.getVehicleLaneIndex(v) == 0)
+		            		carY =  upperLaneDividerY - hroadHeight/8 - vehicleHeight/2+ hroadHeight/2;
+		            	else
+		            		carY =  (panelHeight/2 - hroadHeight/8) - vehicleHeight/2+ hroadHeight/2;
+		            	carWidth =  (int) (blockWidth*0.5);
+		            	busWidth = (int)(blockWidth*0.75);
+		            	if(v instanceof Car){
+		            		g.fillRect(carX,carY,carWidth, vehicleHeight);
+		            	}
+		            	else if(v instanceof Bus){
+		            		g.fillRect(carX,carY,busWidth, vehicleHeight);
+		            	}
+		            }   
+		        }
+		        
+		        
 		        //AM > Draw junction box
 		        //g.setColor(Color.GRAY);
 		        //g.fillRect(panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2,vroadWidth, hroadHeight);
@@ -155,7 +254,9 @@ public class Network2 extends Network
 		        	Image img = new ImageIcon("res/cycle3.png").getImage();
 		        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
 		        }
-		        mytimer.start();
+		        
+		        timer_move_cars.start();
+		        timer_change_lights.start();
 			  }
 		};
 	}

@@ -156,6 +156,21 @@ public class Network1 extends Network {
 		            	else if(v instanceof Bus){
 		            		g.fillRect(carX,carY,busWidth, vehicleHeight);
 		            	}
+		            	
+		            	
+		            	carX = roadEndX - blockWidth*r1.getVehicleNodeIndex(v)-carWidth;
+		            	if(r1.getVehicleLaneIndex(v) == 0)
+		            		carY =  upperLaneDividerY - roadHeight/8 - vehicleHeight/2+ roadHeight/2;
+		            	else
+		            		carY =  (panelHeight/2 - roadHeight/8) - vehicleHeight/2+ roadHeight/2;
+		            	carWidth =  (int) (blockWidth*0.5);
+		            	busWidth = (int)(blockWidth*0.75);
+		            	if(v instanceof Car){
+		            		g.fillRect(carX,carY,carWidth, vehicleHeight);
+		            	}
+		            	else if(v instanceof Bus){
+		            		g.fillRect(carX,carY,busWidth, vehicleHeight);
+		            	}
 		            }   
 		        }
 		        tm.start();
