@@ -93,11 +93,11 @@ public class Network2 extends Network
 		try {
 			dm_cars.initializeMatrix();
 			dm_cars.setVehicleType(Car.class);
-			dm_cars.setDemand(A, B, 0.4);
+			dm_cars.setDemand(A, B, 0.5);
 			
-			dm_cars.setDemand(D, B, 2);
+			//dm_cars.setDemand(D, B, 2);
 			
-			dm_cars.setDemand(A, D, 0.1);
+			//dm_cars.setDemand(A, D, 0.1);
 			
 		} catch (DemandMatrixException e) {
 			e.printStackTrace();
@@ -113,9 +113,9 @@ public class Network2 extends Network
 			dm_buses.setVehicleType(Bus.class);
 			dm_buses.setDemand(A, B, 1.0);
 			
-			dm_buses.setDemand(C, B, 2);
-			
-			dm_buses.setDemand(B, D, 0.1);
+//			dm_buses.setDemand(C, B, 2);
+//			
+//			dm_buses.setDemand(B, D, 0.1);
 			
 		} catch (DemandMatrixException e) {
 			e.printStackTrace();
@@ -132,12 +132,12 @@ public class Network2 extends Network
 			
 			rb_j = new Road(number_of_lanes, lane_length);
 			rb_j.setSource(B);
-			rb_j.setSink(junc, JUNCTION.NORTH);
+			rb_j.setSink(junc, JUNCTION.EAST);
 			roadNetwork.addRoad(rb_j);
 			
 			rc_j = new Road(number_of_lanes, lane_length);
 			rc_j.setSource(C);
-			rc_j.setSink(junc, JUNCTION.EAST);
+			rc_j.setSink(junc, JUNCTION.NORTH);
 			roadNetwork.addRoad(rc_j);
 			
 			rd_j = new Road(number_of_lanes, lane_length);
@@ -152,12 +152,12 @@ public class Network2 extends Network
 			
 			rj_b = new Road(number_of_lanes, lane_length);
 			rj_b.setSink(B);
-			rj_b.setSource(junc, JUNCTION.NORTH);
+			rj_b.setSource(junc, JUNCTION.EAST);
 			roadNetwork.addRoad(rj_b);
 			
 			rj_c = new Road(number_of_lanes, lane_length);
 			rj_c.setSink(C);
-			rj_c.setSource(junc, JUNCTION.EAST);
+			rj_c.setSource(junc, JUNCTION.NORTH);
 			roadNetwork.addRoad(rj_c);
 			
 			rj_d = new Road(number_of_lanes, lane_length);
@@ -167,8 +167,8 @@ public class Network2 extends Network
 			
 			juncRouter = new JunctionRouter();
 			juncRouter.add(A, junc.getInterface(JUNCTION.WEST));
-			juncRouter.add(B, junc.getInterface(JUNCTION.NORTH));
-			juncRouter.add(C, junc.getInterface(JUNCTION.EAST));
+			juncRouter.add(C, junc.getInterface(JUNCTION.NORTH));
+			juncRouter.add(B, junc.getInterface(JUNCTION.EAST));
 			juncRouter.add(D,  junc.getInterface(JUNCTION.SOUTH));
 			junc.setRoutingTable(juncRouter);
 			
@@ -203,8 +203,7 @@ public class Network2 extends Network
 		};
 		
 		timer = new Timer(1000, actionListener);
-
-		
+	
 		view = new JPanel()
 		{
 			private static final long serialVersionUID = 1L;
@@ -227,10 +226,6 @@ public class Network2 extends Network
 				int hra_jEndX = hra_jStartX+hra_jWidth;
 				int hra_jEndY = hra_jStartY;
 				g.fillRect(hra_jStartX, hra_jStartY, hra_jWidth, hroadHeight);
-		 		
-				//AM > Draw a horizontal road from junction to B
-				g.setColor(Color.BLACK);
-				int hrj_bStartX = panelWidth/2;
 				
 		 		//AM > Draw a vertical road
 		 		g.setColor(Color.BLACK);
@@ -242,6 +237,15 @@ public class Network2 extends Network
 				int vroadEndX = vroadStartX;
 		 		g.fillRect(vroadStartX, vroadStartY, vroadWidth, vroadHeight);
 				
+		 		//AM > Draw a horizontal road from junction to B
+				g.setColor(Color.BLACK);
+				int hrj_bStartX = panelWidth/2 + vroadWidth/2;
+				int hrj_bStartY = panelHeight/2 - hroadHeight/2;
+				int hrj_bWidth = panelWidth/2 - hdestinationWidth - vroadWidth/2;
+				int hrj_bEndX = hrj_bStartX+hrj_bWidth;
+				int hrj_bEndY = hrj_bStartY;
+				g.fillRect(hrj_bStartX, hrj_bStartY, hrj_bWidth, hroadHeight);
+		 		
 				//AM > Draw destination A
 		 		int textOffsetX = 5;
 				int textOffsetY = 5;
@@ -252,9 +256,9 @@ public class Network2 extends Network
 				
 				//AM > Draw destination B
 				g.setColor(Color.GRAY);
-				g.fillRect(hra_jEndX, hra_jEndY, hdestinationWidth, hroadHeight);
+				g.fillRect(hrj_bEndX, hrj_bEndY, hdestinationWidth, hroadHeight);
 				g.setColor(Color.BLACK);
-				g.drawString("B", hra_jEndX +hdestinationWidth/2 - textOffsetX, hra_jStartY + hroadHeight/2 + textOffsetY);
+				g.drawString("B", hrj_bEndX +hdestinationWidth/2 - textOffsetX, hrj_bStartY + hroadHeight/2 + textOffsetY);
 				
 				//AM > Draw destination C
 				g.setColor(Color.GRAY);
@@ -271,11 +275,13 @@ public class Network2 extends Network
 				textOffsetY = 5;
 				g.drawString("D", vroadEndX +vroadWidth/2 - textOffsetX, vroadEndY + vdestinationHeight/2 + textOffsetY);
 				
-				//AM > Draw road divider
+				//AM > Draw road divider from A to junction
 				g.setColor(Color.WHITE);
 				g.drawLine(hra_jStartX , panelHeight/2, hra_jEndX -1, panelHeight/2);
+				//AM > Draw road divider from junction to B
+				g.drawLine(hrj_bStartX , panelHeight/2, hrj_bEndX -1, panelHeight/2);
 				
-				//AM > Draw horizontal lane separators
+				//AM > Draw horizontal lane separators form A to junction
 				Graphics2D g2d = (Graphics2D) g.create();
 				Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
 		        g2d.setStroke(dashed);
@@ -284,6 +290,14 @@ public class Network2 extends Network
 		        int lowerLaneDividerY = panelHeight/2 + hroadHeight/4;
 		        g2d.drawLine(hra_jStartX, upperLaneDividerY, hra_jEndX -1, upperLaneDividerY);
 		        g2d.drawLine(hra_jStartX, lowerLaneDividerY, hra_jEndX -1, lowerLaneDividerY);
+		        
+		        //AM > Draw horizontal lane separators form junction to B
+		        g2d.setColor(Color.WHITE);
+		        upperLaneDividerY = panelHeight/2 - hroadHeight/4;
+		        lowerLaneDividerY = panelHeight/2 + hroadHeight/4;
+		        g2d.drawLine(hrj_bStartX, upperLaneDividerY, hrj_bEndX -1, upperLaneDividerY);
+		        g2d.drawLine(hrj_bStartX, lowerLaneDividerY, hrj_bEndX -1, lowerLaneDividerY);
+		        
 		        
 		        //AM > Draw a center line between lane boundaries
 		        //g.setColor(Color.RED);
@@ -300,19 +314,18 @@ public class Network2 extends Network
 		        g2d.drawLine(leftLaneDividerX, vroadStartY+vdestinationHeight, leftLaneDividerX, vroadEndY);
 		        g2d.drawLine(rightLaneDividerX, vroadStartY+vdestinationHeight, rightLaneDividerX, vroadEndY);
 		        
-		        
 		        int blockWidth= (int)(hra_jWidth/lane_length);
 		        vehicleList = ra_j.getVehiclesOnRoad();
-		      
+		        
 		        //AM > Draw junction box
 		        Image img = new ImageIcon("res/cycle"+scheduler.getCycle()+".png").getImage();
 		        g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
 		      
 		        //AM > Debug: Draw block width
-		        g.setColor(Color.CYAN);
-		        g.drawRect(hra_jStartX, hra_jStartY, blockWidth, hra_jWidth/16);
+		        //g.setColor(Color.CYAN);
+		        //g.drawRect(hra_jStartX, hra_jStartY, blockWidth, hra_jWidth/16);
 		        
-		        //For each vehicle on the road get its co-ordinates
+		        //AM > Draw vehicles going from A to Junction
 		        for(Vehicle v : vehicleList)
 		        {
 		        	//Random r = new Random();
@@ -343,7 +356,42 @@ public class Network2 extends Network
 		            	}
 		            }   
 		        }
-			  }
+		        
+		        //AM > Drawing vehicles between Junction and B
+				blockWidth= (int)(hrj_bWidth/lane_length);
+		        vehicleList = rj_b.getVehiclesOnRoad();
+		        for(Vehicle v : vehicleList)
+		        {
+		        	//Random r = new Random();
+		        	//g.setColor(new Color(r.nextFloat(), r.nextFloat(), r.nextFloat()));
+		        	if(v instanceof Car){
+		        		g.setColor(Color.RED);
+		        	}
+		        	else if(v instanceof Bus){
+		        		g.setColor(Color.YELLOW);
+		        	}
+		        	//For each vehicle calculate its X and Y co-ordinates
+		            int carX = 0;
+		            int carY = 0;
+		            if(rj_b.getVehicleNodeIndex(v) != -1)
+		            {
+		            	carX = hrj_bStartX + blockWidth*rj_b.getVehicleNodeIndex(v);
+		            	if(rj_b.getVehicleLaneIndex(v) == 0)
+		            		carY =  upperLaneDividerY - hroadHeight/8 - hvehicleHeight/2;
+		            	else
+		            		carY =  (panelHeight/2 - hroadHeight/8) - hvehicleHeight/2;
+		            	hcarWidth =  (int) (blockWidth*0.25);
+		            	hbusWidth = (int)(blockWidth*0.41);
+		            	if(v instanceof Car){
+		            		g.fillRect(carX,carY,hcarWidth, hvehicleHeight);
+		            	}
+		            	else if(v instanceof Bus){
+		            		g.fillRect(carX,carY,hbusWidth, hvehicleHeight);
+		            	}
+		            }   
+		        }
+		        
+			}
 		};
 		timer.start();
 	}

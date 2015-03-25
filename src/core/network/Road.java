@@ -29,7 +29,6 @@ public class Road implements Observer{
 	private Junction sinkJunction;
 	private JUNCTION face;
 	
-	private List<Vehicle> vehicles_on_road;
 
 	//AM > Create lane(s) and set their length
 	public Road(int number_of_lanes, int lane_length)
@@ -38,7 +37,6 @@ public class Road implements Observer{
 		this.number_of_lanes = number_of_lanes < 1 ? 1 : number_of_lanes;
 
 		lanes = new ArrayList<Lane>();
-		vehicles_on_road=new ArrayList<Vehicle>();
 		for(int i = 0; i < this.number_of_lanes; i++)
 		{
 			Lane lane = new Lane(lane_length);
@@ -113,9 +111,6 @@ public class Road implements Observer{
 
 		if(chosenLane.addVehicle(v))
 		{
-			if(!vehicles_on_road.contains(v)){
-				vehicles_on_road.add(v);
-			}
 			return true;
 		}
 		else
@@ -127,9 +122,6 @@ public class Road implements Observer{
 				{
 					if(l.addVehicle(v))
 					{
-						if(!vehicles_on_road.contains(v)){
-							vehicles_on_road.add(v);
-						}
 						return true;
 					}
 						
@@ -152,9 +144,6 @@ public class Road implements Observer{
 
 		if(chosenLane.addVehicle(v))
 		{
-			if(!vehicles_on_road.contains(v)){
-				vehicles_on_road.add(v);
-			}
 			return true;
 		}
 		return false;
@@ -227,23 +216,14 @@ public class Road implements Observer{
 			for(Vehicle v : exitingVehicles)
 			{
 				dest.consumeVehicle(v);
-				if(vehicles_on_road.contains(v)){
-					vehicles_on_road.remove(v);
-				}
 			}
 		}
 		else
 		{
-			List<Vehicle> exitingVehicles = new ArrayList<Vehicle>();
 			for(Lane l : lanes)
 			{	
-				exitingVehicles.addAll(l.moveVehicles());
-				for(Vehicle v : exitingVehicles)
-				{
-					if(vehicles_on_road.contains(v)){
-						vehicles_on_road.remove(v);
-					}
-				}
+				l.moveVehicles();
+				
 			}
 		}
 	}
@@ -298,6 +278,11 @@ public class Road implements Observer{
 	}
 	
 	public List<Vehicle> getVehiclesOnRoad(){
-		return vehicles_on_road;
+		List<Vehicle> vehiclesOnRoad = new ArrayList<Vehicle>();
+		for(Lane l : lanes)
+		{
+			vehiclesOnRoad.addAll(l.getVehicles());
+		}
+		return vehiclesOnRoad;
 	}
 }

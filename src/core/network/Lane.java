@@ -240,5 +240,22 @@ public class Lane extends Observable{
 			return false;
 		}
 	}
+
+	public List<Vehicle> getVehicles()
+	{
+		List<Vehicle> vehicles = new ArrayList<Vehicle>();
+		for(Node n : nodes)
+		{
+			if(n.isOccupied())
+			{
+				Vehicle v = n.getVehicle();
+				if(!vehicles.contains(v))
+				{
+					vehicles.add(v);
+				}
+			}
+		}
+		return vehicles;
+	}
 }
 
