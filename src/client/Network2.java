@@ -95,7 +95,7 @@ public class Network2 extends Network
 			dm_cars.setVehicleType(Car.class);
 			dm_cars.setDemand(A, B, 0.5);
 			
-			//dm_cars.setDemand(D, B, 2);
+			dm_cars.setDemand(B, A, 1);
 			
 			//dm_cars.setDemand(A, D, 0.1);
 			
@@ -113,7 +113,7 @@ public class Network2 extends Network
 			dm_buses.setVehicleType(Bus.class);
 			dm_buses.setDemand(A, B, 1.0);
 			
-//			dm_buses.setDemand(C, B, 2);
+			dm_buses.setDemand(B, A, 0.9);
 //			
 //			dm_buses.setDemand(B, D, 0.1);
 			
@@ -389,6 +389,68 @@ public class Network2 extends Network
 		            		g.fillRect(carX,carY,hbusWidth, hvehicleHeight);
 		            	}
 		            }   
+		        }
+		        
+		        //AM > Draw vehicles from B to junction
+		        vehicleList = rb_j.getVehiclesOnRoad();
+		        for(Vehicle v : vehicleList)
+		        {
+		        	if(v instanceof Car){
+		        		g.setColor(Color.RED);
+		        	}
+		        	else if(v instanceof Bus){
+		        		g.setColor(Color.YELLOW);
+		        	}
+		        	//For each vehicle calculate its X and Y co-ordinates
+		            int carX = 0;
+		            int carY = 0;
+		            if(rb_j.getVehicleNodeIndex(v) != -1)
+		            {	
+		            	carX = hrj_bEndX - blockWidth*rb_j.getVehicleNodeIndex(v) - hcarWidth;
+		            	if(rb_j.getVehicleLaneIndex(v) == 0)
+		            		carY =  upperLaneDividerY - hroadHeight/8 - hvehicleHeight/2+ hroadHeight/2;
+		            	else
+		            		carY =  (panelHeight/2 - hroadHeight/8) - hvehicleHeight/2+ hroadHeight/2;
+		            	hcarWidth =  (int) (blockWidth*0.25);
+		            	hbusWidth = (int)(blockWidth*0.41);
+		            	if(v instanceof Car){
+		            		g.fillRect(carX,carY,hcarWidth, hvehicleHeight);
+		            	}
+		            	else if(v instanceof Bus){
+		            		g.fillRect(carX,carY,hbusWidth, hvehicleHeight);
+		            	}
+		            }   
+		        }
+		        
+		        //AM > Draw vehicles from Junction to A
+		        vehicleList = rj_a.getVehiclesOnRoad();
+		        for(Vehicle v : vehicleList)
+		        {
+		        	if(v instanceof Car){
+		        		g.setColor(Color.RED);
+		        	}
+		        	else if(v instanceof Bus){
+		        		g.setColor(Color.YELLOW);
+		        	}
+		        	//For each vehicle calculate its X and Y co-ordinates
+		            int carX = 0;
+		            int carY = 0;
+		            if(rj_a.getVehicleNodeIndex(v) != -1)
+		            {
+		            	carX = hra_jEndX - blockWidth*rj_a.getVehicleNodeIndex(v) - hcarWidth;
+		            	if(rj_a.getVehicleLaneIndex(v) == 0)
+		            		carY =  upperLaneDividerY - hroadHeight/8 - hvehicleHeight/2+ hroadHeight/2;
+		            	else
+		            		carY =  (panelHeight/2 - hroadHeight/8) - hvehicleHeight/2+ hroadHeight/2;
+		            	hcarWidth =  (int) (blockWidth*0.25);
+		            	hbusWidth = (int)(blockWidth*0.41);
+		            	if(v instanceof Car){
+		            		g.fillRect(carX,carY,hcarWidth, hvehicleHeight);
+		            	}
+		            	else if(v instanceof Bus){
+		            		g.fillRect(carX,carY,hbusWidth, hvehicleHeight);
+		            	}
+		            }
 		        }
 		        
 			}
