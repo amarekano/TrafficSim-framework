@@ -94,7 +94,6 @@ public class Network1 extends Network {
 			e.printStackTrace();
 		}
 		
-		
 		clock = SimulationClock.getInstance();
 		clock.addObserver(roadNetwork);
 		clock.addObserver(dm_cars);
