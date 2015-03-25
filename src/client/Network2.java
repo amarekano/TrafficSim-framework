@@ -38,7 +38,7 @@ public class Network2 extends Network
 	Timer timer;
 	
 	private JPanel view;
-	private JPanel controls;
+	private ControlPanel controls;
 	private ActionListener actionListener_move_cars;
 	
 	private Destination A;
@@ -98,6 +98,10 @@ public class Network2 extends Network
 			dm_cars.setVehicleType(Car.class);
 			dm_cars.setDemand(A, B, 0.4);
 			
+			dm_cars.setDemand(D, B, 2);
+			
+			dm_cars.setDemand(A, D, 0.1);
+			
 		} catch (DemandMatrixException e) {
 			e.printStackTrace();
 		}
@@ -111,6 +115,10 @@ public class Network2 extends Network
 			dm_buses.initializeMatrix();
 			dm_buses.setVehicleType(Bus.class);
 			dm_buses.setDemand(A, B, 1.0);
+			
+			dm_buses.setDemand(C, B, 2);
+			
+			dm_buses.setDemand(B, D, 0.1);
 			
 		} catch (DemandMatrixException e) {
 			e.printStackTrace();
@@ -182,6 +190,10 @@ public class Network2 extends Network
 		clock.addObserver(dm_cars);
 		clock.addObserver(dm_buses);
 		
+		controls = new ControlPanel();
+		controls.setDemandMatrixCars(dm_cars);
+		controls.setDemandMatrixBuses(dm_buses);
+		
 		vehicleList = new ArrayList<Vehicle>();
 		
 		ActionListener actionListener = new ActionListener(){
@@ -195,7 +207,7 @@ public class Network2 extends Network
 		
 		timer = new Timer(1000, actionListener);
 
-		controls = new ControlPanel();
+		
 		view = new JPanel()
 		{
 			private static final long serialVersionUID = 1L;

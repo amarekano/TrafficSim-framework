@@ -201,6 +201,46 @@ public class DemandMatrixPanel extends JPanel{
 	
 	public void setDemandMatrixBuses(DemandMatrix dm){
 		this.dm_buses=dm;
+		DefaultTableModel dtm = (DefaultTableModel) table_buses.getModel();		
+		List <Destination>destinations=dm_buses.getDestinations();
+
+		String[] test2=new String[destinations.size()];
+		for(int i=0;i<destinations.size();i++){
+			test2[i]=destinations.get(i).getLabel();
+		}
+		ListModel model = new AbstractListModel() {
+			
+		      String headers[] = test2;
+
+		      public int getSize() {
+		        return headers.length;
+		      }
+
+		      public Object getElementAt(int index) {
+		        return headers[index];
+		      }
+		    };
+	    rowHeader2.setModel(model);
+		
+		for(int j=0;j<destinations.size();j++){
+			dtm.addColumn(destinations.get(j).getLabel());
+		}
+		
+		for(int j=0;j<destinations.size();j++)
+	    {
+			Object [] test_array=new Object[destinations.size()];
+			for(int i=0;i<destinations.size();i++){
+				try {
+					double prob=dm_buses.getDemand(destinations.get(j), destinations.get(i));
+					test_array[i]=""+prob;
+				    
+				} catch (DemandMatrixException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    } 
+			dtm.addRow(test_array);
+			}	
 	}
 	
 	class RowHeaderRenderer extends JLabel implements ListCellRenderer {
