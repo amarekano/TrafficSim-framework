@@ -29,7 +29,7 @@ import core.vehicle.Vehicle;
  */
 public class Network1 extends Network {
 	private JPanel view;
-	private JPanel controls;
+	private ControlPanel controls;
 	private Timer tm;
 	private ActionListener actionListener;
 	private RoadNetwork roadNetwork;
@@ -99,6 +99,9 @@ public class Network1 extends Network {
 		clock.addObserver(roadNetwork);
 		clock.addObserver(dm_cars);
 		clock.addObserver(dm_buses);
+		
+		controls.setDemandMatrixCars(dm_cars);
+		controls.setDemandMatrixBuses(dm_buses);
 		
 		vehicleList = new ArrayList<Vehicle>();
 		
