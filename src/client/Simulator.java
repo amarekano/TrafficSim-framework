@@ -48,16 +48,16 @@ public class Simulator extends JFrame implements ActionListener
 		//controlPanel = new ControlPanel();
 		//Create the panel that contains the "cards".
         mapPanel = new JPanel(new CardLayout());
-        mapPanel.add(network1.getView(), MAP1PANEL);
         mapPanel.add(network2.getView(), MAP2PANEL);
+        mapPanel.add(network1.getView(), MAP1PANEL);
+        
         
         mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
         //Create the panel that contains 'cards' for map controls
         controlPanel = new JPanel(new CardLayout());
-        controlPanel.add(network1.getControls(), MAP1PANEL);
         controlPanel.add(network2.getControls(), MAP2PANEL);
-        
+        controlPanel.add(network1.getControls(), MAP1PANEL);
         
 		add(mapPanel);
 		add(controlPanel);

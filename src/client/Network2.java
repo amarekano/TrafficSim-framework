@@ -39,7 +39,6 @@ public class Network2 extends Network
 	
 	private JPanel view;
 	private ControlPanel controls;
-	private ActionListener actionListener_move_cars;
 	
 	private Destination A;
 	private Destination B;
@@ -66,10 +65,11 @@ public class Network2 extends Network
 	DemandMatrix dm_buses;
 	
 	private List<Vehicle> vehicleList;
-	private int roadLength = 40; 
-	private int hcarWidth = 20;
+	private int hcarWidth = 10;
 	private int hvehicleHeight = 10;
-	private int hbusWidth = 30;
+	private int hbusWidth = 15;
+	int number_of_lanes = 2;
+	int lane_length = 10;
 	
 	private int vcarHeight;
 	private int vbusHeight;
@@ -78,9 +78,6 @@ public class Network2 extends Network
 	public Network2() {
 		super();
 		counter=0;
-		
-		int number_of_lanes = 2;
-		int lane_length = 10;
 		
 		//AM > Setup the destinations
 		A = new Destination("A");
@@ -222,15 +219,19 @@ public class Network2 extends Network
 				int hdestinationWidth = 20;
 				int vdestinationHeight = 20;
 				
-				//AM > Draw a horizontal road
+				//AM > Draw a horizontal road from A to junction
 				g.setColor(Color.BLACK);
-				int hroadStartX = 0 + hdestinationWidth;
-				int roadStartY = panelHeight/2 - hroadHeight/2;
-				int roadWidth = panelWidth - hdestinationWidth*2;
-				int roadEndX = hroadStartX+roadWidth;
-				int roadEndY = roadStartY;
-		 		g.fillRect(hroadStartX, roadStartY, roadWidth, hroadHeight);
+				int hra_jStartX = 0 + hdestinationWidth;
+				int hra_jStartY = panelHeight/2 - hroadHeight/2;
+				int hra_jWidth = panelWidth/2 - hdestinationWidth;
+				int hra_jEndX = hra_jStartX+hra_jWidth;
+				int hra_jEndY = hra_jStartY;
+				g.fillRect(hra_jStartX, hra_jStartY, hra_jWidth, hroadHeight);
 		 		
+				//AM > Draw a horizontal road from junction to B
+				g.setColor(Color.BLACK);
+				int hrj_bStartX = panelWidth/2;
+				
 		 		//AM > Draw a vertical road
 		 		g.setColor(Color.BLACK);
 				int vroadStartY = 0;
@@ -245,15 +246,15 @@ public class Network2 extends Network
 		 		int textOffsetX = 5;
 				int textOffsetY = 5;
 				g.setColor(Color.GRAY);
-				g.fillRect(0,roadStartY, hdestinationWidth,hroadHeight);
+				g.fillRect(0,hra_jStartY, hdestinationWidth,hroadHeight);
 				g.setColor(Color.BLACK);
-				g.drawString("A", hdestinationWidth/2 - textOffsetX, roadStartY + hroadHeight/2 + textOffsetY);
+				g.drawString("A", hdestinationWidth/2 - textOffsetX, hra_jStartY + hroadHeight/2 + textOffsetY);
 				
 				//AM > Draw destination B
 				g.setColor(Color.GRAY);
-				g.fillRect(roadEndX, roadEndY, hdestinationWidth, hroadHeight);
+				g.fillRect(hra_jEndX, hra_jEndY, hdestinationWidth, hroadHeight);
 				g.setColor(Color.BLACK);
-				g.drawString("B", roadEndX +hdestinationWidth/2 - textOffsetX, roadStartY + hroadHeight/2 + textOffsetY);
+				g.drawString("B", hra_jEndX +hdestinationWidth/2 - textOffsetX, hra_jStartY + hroadHeight/2 + textOffsetY);
 				
 				//AM > Draw destination C
 				g.setColor(Color.GRAY);
@@ -272,7 +273,7 @@ public class Network2 extends Network
 				
 				//AM > Draw road divider
 				g.setColor(Color.WHITE);
-				g.drawLine(hroadStartX , panelHeight/2, roadEndX -1, panelHeight/2);
+				g.drawLine(hra_jStartX , panelHeight/2, hra_jEndX -1, panelHeight/2);
 				
 				//AM > Draw horizontal lane separators
 				Graphics2D g2d = (Graphics2D) g.create();
@@ -281,8 +282,8 @@ public class Network2 extends Network
 		        g2d.setColor(Color.WHITE);
 		        int upperLaneDividerY = panelHeight/2 - hroadHeight/4;
 		        int lowerLaneDividerY = panelHeight/2 + hroadHeight/4;
-		        g2d.drawLine(hroadStartX, upperLaneDividerY, roadEndX -1, upperLaneDividerY);
-		        g2d.drawLine(hroadStartX, lowerLaneDividerY, roadEndX -1, lowerLaneDividerY);
+		        g2d.drawLine(hra_jStartX, upperLaneDividerY, hra_jEndX -1, upperLaneDividerY);
+		        g2d.drawLine(hra_jStartX, lowerLaneDividerY, hra_jEndX -1, lowerLaneDividerY);
 		        
 		        //AM > Draw a center line between lane boundaries
 		        //g.setColor(Color.RED);
@@ -300,13 +301,17 @@ public class Network2 extends Network
 		        g2d.drawLine(rightLaneDividerX, vroadStartY+vdestinationHeight, rightLaneDividerX, vroadEndY);
 		        
 		        
-		        int blockWidth = (int)roadWidth/roadLength;
+		        int blockWidth= (int)(hra_jWidth/lane_length);
 		        vehicleList = ra_j.getVehiclesOnRoad();
 		      
 		        //AM > Draw junction box
 		        Image img = new ImageIcon("res/cycle"+scheduler.getCycle()+".png").getImage();
 		        g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
 		      
+		        //AM > Debug: Draw block width
+		        g.setColor(Color.CYAN);
+		        g.drawRect(hra_jStartX, hra_jStartY, blockWidth, hra_jWidth/16);
+		        
 		        //For each vehicle on the road get its co-ordinates
 		        for(Vehicle v : vehicleList)
 		        {
@@ -323,13 +328,13 @@ public class Network2 extends Network
 		            int carY = 0;
 		            if(ra_j.getVehicleNodeIndex(v) != -1)
 		            {
-		            	carX = hroadStartX + blockWidth*ra_j.getVehicleNodeIndex(v);
+		            	carX = hra_jStartX + blockWidth*ra_j.getVehicleNodeIndex(v);
 		            	if(ra_j.getVehicleLaneIndex(v) == 0)
 		            		carY =  upperLaneDividerY - hroadHeight/8 - hvehicleHeight/2;
 		            	else
 		            		carY =  (panelHeight/2 - hroadHeight/8) - hvehicleHeight/2;
-		            	hcarWidth =  (int) (blockWidth*0.5);
-		            	hbusWidth = (int)(blockWidth*0.75);
+		            	hcarWidth =  (int) (blockWidth*0.25);
+		            	hbusWidth = (int)(blockWidth*0.41);
 		            	if(v instanceof Car){
 		            		g.fillRect(carX,carY,hcarWidth, hvehicleHeight);
 		            	}
