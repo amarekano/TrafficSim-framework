@@ -17,7 +17,6 @@ public class ReportGenerator {
 	private List<Vehicle> consumed_vehicles;
 	
 	private static final String FILE_HEADER = "Start Time;End Time;Source;Destination;Type";
-	private static final String SEMICOLON_DELIMETER = ";";
 	
 	public ReportGenerator(){
 		destinations=new ArrayList<Destination>();
@@ -43,26 +42,20 @@ public class ReportGenerator {
 			
 				consumed_vehicles.addAll(d.getConsumedVehicles());
 				d.clearConsumedQueue();
-				
+			}
 				//Write a new student object list to the CSV file
 				for (Vehicle v : consumed_vehicles) {
-					fileWriter.append(String.valueOf(v.getStartTime()));
-					fileWriter.append(SEMICOLON_DELIMETER);
-					fileWriter.append(String.valueOf(v.getEndTime()));
-					fileWriter.append(SEMICOLON_DELIMETER);
-					fileWriter.append(String.valueOf(v.getSource().getLabel()));
-					fileWriter.append(SEMICOLON_DELIMETER);
-					fileWriter.append(String.valueOf(v.getDestination().getLabel()));
-					fileWriter.append(SEMICOLON_DELIMETER);
+					String line = "";
 					if(v instanceof Car){
-						fileWriter.append("Car");
+					//	fileWriter.append("Car");
+						line =  String.format("%s;%s;%s;%s;%s\n",v.getStartTime(),v.getEndTime(),v.getSource().getLabel(),v.getDestination().getLabel(),"Car");
 					}
 					else if(v instanceof Bus){
-						fileWriter.append("Bus");
+						//fileWriter.append("Bus");
+						line =  String.format("%s;%s;%s;%s;%s\n",v.getStartTime(),v.getEndTime(),v.getSource().getLabel(),v.getDestination().getLabel(),"Bus");
 					}
-					fileWriter.write(System.getProperty("line.separator"));
+					fileWriter.write(line);
 				}
-			}
 			fileWriter.flush();
 			fileWriter.close();
 		} catch (Exception e) {

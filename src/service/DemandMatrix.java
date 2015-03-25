@@ -135,7 +135,6 @@ public class DemandMatrix implements Observer {
 						//v.setMax_velocity(10);
 						v.setSource(from);
 						v.setDestination(to);
-						
 						from.addVehicle(v);
 					}
 				}
