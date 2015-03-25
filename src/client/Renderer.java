@@ -53,6 +53,11 @@ public class Renderer
 		g.setColor(Color.GRAY);
 		g.fillRect(x, y, offsetX, offsetY);
 		
+		/* Render White. */
+		g.setColor(Color.WHITE);
+		g.fillRect(x, y, offsetX, offsetY);
+		g.drawLine(x + 30, y + 30, offsetX, offsetY);
+		
 		g.setColor(old);
 	}
 }
