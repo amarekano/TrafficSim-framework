@@ -31,9 +31,17 @@ public static void main(String[] args) {
 		Destination D = new Destination("Delfoi");
 		
 		A.setClock(clock);
+		A.setVehicleAccelerationProfile(3, 1, 0.4);
+		A.setVehicleVelocityProfile(6, 1, 0.4);
 		B.setClock(clock);
+		B.setVehicleAccelerationProfile(3, 1, 0.4);
+		B.setVehicleVelocityProfile(6, 1, 0.4);
 		C.setClock(clock);
+		C.setVehicleAccelerationProfile(3, 1, 0.4);
+		C.setVehicleVelocityProfile(6, 1, 0.4);
 		D.setClock(clock);
+		D.setVehicleAccelerationProfile(3, 1, 0.4);
+		D.setVehicleVelocityProfile(6, 1, 0.4);
 		
 		Junction junc = new Junction();
 		RoadNetwork network = new RoadNetwork();
