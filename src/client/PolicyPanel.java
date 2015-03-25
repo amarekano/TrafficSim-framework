@@ -16,8 +16,10 @@ import javax.swing.JSpinner;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-public class PolicyPanel extends JPanel {
+public class PolicyPanel extends JPanel implements ChangeListener {
 
 	private static final long serialVersionUID = 6241308576167461723L;
 
@@ -37,6 +39,8 @@ public class PolicyPanel extends JPanel {
 	    interval_slider.setMajorTickSpacing(10);
 	    interval_slider.setMinorTickSpacing(5);
 	    interval_slider.setPreferredSize(new Dimension(7,5));
+	    interval_slider.addChangeListener(this);
+	    interval_slider.setName("funky 1");
 	   // add(interval_slider);
 	    
 	    JPanel interval_panel = new JPanel(new GridLayout(2,1));
@@ -55,6 +59,8 @@ public class PolicyPanel extends JPanel {
 	    velocity_slider.setMinimum(0);
 	    velocity_slider.setMajorTickSpacing(10);
 	    velocity_slider.setMinorTickSpacing(5);
+	    velocity_slider.addChangeListener(this);
+	    velocity_slider.setName("funky 2");
 	   // add(interval_slider);
 	    
 	    JPanel velocity_panel = new JPanel(new GridLayout(2,1));
@@ -74,6 +80,8 @@ public class PolicyPanel extends JPanel {
 	    clock_interval_slider.setMinimum(0);
 	    clock_interval_slider.setMajorTickSpacing(10);
 	    clock_interval_slider.setMinorTickSpacing(5);
+	    clock_interval_slider.addChangeListener(this);
+	    clock_interval_slider.setName("funky 3");
 	   // add(interval_slider);
 	    
 	    JPanel clock_interval_panel = new JPanel(new GridLayout(2,1));
@@ -90,6 +98,17 @@ public class PolicyPanel extends JPanel {
 	    
 	    
 	    
+		
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		// TODO Auto-generated method stub
+		// update text field when the slider value changes
+        JSlider source = (JSlider) e.getSource();
+        System.out.println("" + source.getValue());
+        System.out.println("name" + source.getName());
+        //textField.setText();
 		
 	}
 

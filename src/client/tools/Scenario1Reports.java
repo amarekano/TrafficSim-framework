@@ -1,7 +1,7 @@
 package client.tools;
 
 import service.DemandMatrix;
-import service.Network;
+import service.RoadNetwork;
 import service.ReportGenerator;
 import service.SimulationClock;
 import service.TrafficSignalScheduler;
@@ -12,7 +12,7 @@ import core.network.junction.JunctionRouter;
 import core.network.junction.Junction.JUNCTION;
 import core.vehicle.Car;
 
-public class ScenarioReports {
+public class Scenario1Reports {
 
 	/*
 	 * AM > This program generates the reports for
@@ -35,12 +35,20 @@ public class ScenarioReports {
 		Destination D = new Destination("Delfoi");
 		
 		A.setClock(clock);
+		A.setVehicleAccelerationProfile(3, 1, 0.4);
+		A.setVehicleVelocityProfile(6, 1, 0.4);
 		B.setClock(clock);
+		B.setVehicleAccelerationProfile(3, 1, 0.4);
+		B.setVehicleVelocityProfile(6, 1, 0.4);
 		C.setClock(clock);
+		C.setVehicleAccelerationProfile(3, 1, 0.4);
+		C.setVehicleVelocityProfile(6, 1, 0.4);
 		D.setClock(clock);
+		D.setVehicleAccelerationProfile(3, 1, 0.4);
+		D.setVehicleVelocityProfile(6, 1, 0.4);
 		
 		Junction junc = new Junction();
-		Network network = new Network();
+		RoadNetwork network = new RoadNetwork();
 						
 		/*
 		 * AM > Road-junction wiring
@@ -111,7 +119,7 @@ public class ScenarioReports {
 		//AM > Setup signal scheduler
 		junc.setSignalController();
 		TrafficSignalScheduler scheduler = new TrafficSignalScheduler();
-		scheduler.setSignalInterval(5);
+		scheduler.setSignalInterval(10);
 		scheduler.addSignalController(junc.getSignalController());
 		
 		DemandMatrix dm = new DemandMatrix();
@@ -143,10 +151,9 @@ public class ScenarioReports {
 		clock.addObserver(network);
 		clock.addObserver(scheduler);
 		
-		
 		clock.startClock();
 		System.out.println("Running scenario 1");
-		Thread.sleep(2*60*1000);
+		Thread.sleep(3*60*1000);
 		
 		clock.pauseClock();
 		
@@ -157,58 +164,6 @@ public class ScenarioReports {
 		report.addDestination(D);
 		
 		String path="Scenario1_report.txt";
-		
-		report.saveReport(path);
-		
-		dm.setDemand(A, B, 0.3);
-		dm.setDemand(A, C, 0.8);
-		dm.setDemand(A, D, 0.3);
-		
-		dm.setDemand(B, A, 0.3);
-		dm.setDemand(B, C, 0.8);
-		dm.setDemand(B, D, 0.3);
-		
-		dm.setDemand(C, B, 0.5);
-		dm.setDemand(C, A, 0.5);
-		dm.setDemand(C, D, 0.5);
-		
-		dm.setDemand(D, B, 0.3);
-		dm.setDemand(D, C, 0.8);
-		dm.setDemand(D, A, 0.3);
-		
-		clock.startClock();
-		System.out.println("Running scenario 2");
-		Thread.sleep(2*60*1000);
-		
-		clock.pauseClock();
-		
-		path="Scenario2_report.txt";
-		
-		report.saveReport(path);
-		
-		dm.setDemand(A, B, 0.5);
-		dm.setDemand(A, C, 0.1);
-		dm.setDemand(A, D, 0.3);
-		
-		dm.setDemand(B, A, 0.3);
-		dm.setDemand(B, C, 0.1);
-		dm.setDemand(B, D, 0.3);
-		
-		dm.setDemand(C, B, 0.3);
-		dm.setDemand(C, A, 0.3);
-		dm.setDemand(C, D, 0.3);
-		
-		dm.setDemand(D, B, 0.5);
-		dm.setDemand(D, C, 0.1);
-		dm.setDemand(D, A, 0.3);
-		
-		clock.startClock();
-		System.out.println("Running scenario 3");
-		Thread.sleep(2*60*1000);
-		
-		clock.pauseClock();
-		
-		path="Scenario3_report.txt";
 		
 		report.saveReport(path);
 		

@@ -2,6 +2,7 @@ package core.endpoints;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import service.SimulationClock;
 import core.vehicle.Vehicle;
@@ -17,6 +18,16 @@ public class Destination extends EndPoint {
 	private List<Vehicle> consumedQueue;
 	private SimulationClock clock;
 	private String label;
+	
+	//AM > Create a profile for generated vehicle velocity
+	private int minVehicleVelocity;
+	private int maxVehicleVelocity;
+	private double velocityProbability;
+	
+	//AM > Create a profile for generated vehicle acceleration
+	private int minVehicleAcceleration;
+	private int maxVehicleAcceleration;
+	private double accelerationProbability;
 	
 	public Destination()
 	{
@@ -65,11 +76,43 @@ public class Destination extends EndPoint {
 		if(v != null)
 		{
 			v.setSource(this);
+			
+			Random r = new Random();
+			//AM > Set a random velocity
+			if(r.nextDouble() < velocityProbability)
+			{
+				int velocity = r.nextInt((maxVehicleVelocity - minVehicleVelocity) + 1) + minVehicleVelocity;
+				v.setVelocity(velocity);
+			}
+			
+			//AM > Set a random acceleration
+			if(r.nextDouble() < accelerationProbability)
+			{
+				int acceleration  = r.nextInt((maxVehicleAcceleration - minVehicleAcceleration) + 1) + minVehicleAcceleration;
+				v.setAcceleration(acceleration);
+			}
+			
 			if(!waitingQueue.contains(v))
-			waitingQueue.add(v);
+				waitingQueue.add(v);
 			return true;
 		}
 		return false;
+	}
+	
+	public void setVehicleVelocityProfile(int max, int min, double probability)
+	{
+		this.maxVehicleVelocity = max > 1 ? max : 1;
+		this.minVehicleVelocity = min > 1 && min < maxVehicleVelocity ? min : 1;
+		if(probability >= 0.0 && probability <= 1.0)
+			this.velocityProbability = probability;
+	}
+	
+	public void setVehicleAccelerationProfile(int max, int min, double probability)
+	{
+		this.maxVehicleAcceleration = max > 0 ? max : 0;
+		this.minVehicleAcceleration = min >= 0 && min < maxVehicleAcceleration ? min : 0;
+		if(probability >= 0.0 && probability <= 1.0)
+			this.accelerationProbability = probability;
 	}
 	
 	public void consumeVehicle(Vehicle v)

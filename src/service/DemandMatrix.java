@@ -133,7 +133,6 @@ public class DemandMatrix implements Observer {
 						Vehicle v = (Vehicle) vehicleType.newInstance();
 						v.setSource(from);
 						v.setDestination(to);
-						
 						from.addVehicle(v);
 					}
 				}
@@ -153,5 +152,9 @@ public class DemandMatrix implements Observer {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public List<Destination> getDestinations(){
+		return destinations;
 	}
 }

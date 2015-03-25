@@ -25,11 +25,11 @@ public class ClockPanel extends JPanel {
 		
 		JButton start =new JButton("Start");
 		JButton stop =new JButton("Stop");
-		JButton pause = new JButton("Pause");
+		JButton save = new JButton("Save Report");
 		
 		add(start);
 		add(stop);
-		add(pause);
+		add(save);
 		
 	}
 

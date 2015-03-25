@@ -47,6 +47,11 @@ public class TrafficSignalScheduler implements Observer {
 		}
 	}
 	
+	public int getCycle()
+	{
+		return controllers.get(0).getCycle();
+	}
+	
 	@Override
 	public void update(Observable obs, Object obj)
 	{

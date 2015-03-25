@@ -10,7 +10,7 @@ import core.network.Road;
 import core.vehicle.Bus;
 import core.vehicle.Car;
 import core.vehicle.VehicleException;
-import service.Network;
+import service.RoadNetwork;
 import service.SimulationClock;
 
 public class SimulationClockTest {
@@ -41,7 +41,7 @@ public class SimulationClockTest {
 		Bus b1 = new Bus();
 		A.addVehicle(c1);
 		A.addVehicle(b1);
-		Network network= new Network();
+		RoadNetwork network= new RoadNetwork();
 		network.addRoad(road);
 		clock.addObserver(network);
 		clock.setInterval(100);
@@ -75,7 +75,7 @@ public class SimulationClockTest {
 		Bus b1 = new Bus();
 		A.addVehicle(c1);
 		A.addVehicle(b1);
-		Network network= new Network();
+		RoadNetwork network= new RoadNetwork();
 		network.addRoad(road);
 		clock.addObserver(network);
 		clock.setInterval(1000);
