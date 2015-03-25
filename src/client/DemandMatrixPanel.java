@@ -27,34 +27,17 @@ import javax.swing.ListModel;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import core.endpoints.Destination;
 import service.DemandMatrix;
 import service.DemandMatrixException;
-import service.ReportGenerator;
 
 public class DemandMatrixPanel extends JPanel{
 
 	private static final long serialVersionUID = -7688408801570692394L;
-	
-	//private	JTable table;
-	
+		
 	private DemandMatrix dm_cars;
 	private DemandMatrix dm_buses;
-	
-	// Create columns names
-	String columnNames[] = { "Column 1", "Column 2", "Column 3" ,"Column 1", "Column 2", "Column 3","Column 1", "Column 2", "Column 3" };
-
-	// Create some data
-	String dataValues[][] = {
-						{ "12", "234", "67","12", "234", "67","12", "234", "67" },
-						{ "-123", "43", "853","12", "234", "67","12", "234", "67" },
-						{ "93", "89.2", "109","12", "234", "67","12", "234", "67" },
-						{ "279", "9033", "3092","12", "234", "67","12", "234", "67" },
-						
-			};
 
 	JPanel demandPanel;
 	JTable table_cars;
@@ -160,7 +143,7 @@ public class DemandMatrixPanel extends JPanel{
 		DefaultTableModel dtm = (DefaultTableModel) table_cars.getModel();		
 		List <Destination>destinations=dm_cars.getDestinations();
 
-		String[] test2=new String[destinations.size()];
+		final String[] test2=new String[destinations.size()];
 		for(int i=0;i<destinations.size();i++){
 			test2[i]=destinations.get(i).getLabel();
 		}
@@ -204,7 +187,7 @@ public class DemandMatrixPanel extends JPanel{
 		DefaultTableModel dtm = (DefaultTableModel) table_buses.getModel();		
 		List <Destination>destinations=dm_buses.getDestinations();
 
-		String[] test2=new String[destinations.size()];
+		final String[] test2=new String[destinations.size()];
 		for(int i=0;i<destinations.size();i++){
 			test2[i]=destinations.get(i).getLabel();
 		}
