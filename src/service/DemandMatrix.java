@@ -155,4 +155,8 @@ public class DemandMatrix implements Observer {
 			}
 		}
 	}
+	
+	public List<Destination> getDestinations(){
+		return destinations;
+	}
 }
