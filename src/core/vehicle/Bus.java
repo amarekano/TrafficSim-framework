@@ -22,4 +22,9 @@ public class Bus extends Vehicle
 		return length;
 	}
 	
+	@Override
+	public Color getColor()
+	{
+		return color;
+	}	
 }

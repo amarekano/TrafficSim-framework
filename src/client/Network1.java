@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import client.Renderer;
 import service.DemandMatrix;
 import service.DemandMatrixException;
 import service.RoadNetwork;
@@ -125,7 +126,7 @@ public class Network1 extends Network {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-
+				
 				int panelWidth = (int) getSize().getWidth();
 				int panelHeight = (int) getSize().getHeight();
 				int roadHeight = 150;
@@ -237,7 +238,15 @@ public class Network1 extends Network {
 		            	}
 		            }   
 		        }
-		        
+
+				Renderer.renderRoad(
+					g,
+					100,
+					100,
+					50,
+					10,
+					Renderer.Direction.SOUTH
+				);
 			}
 		};
 		tm.start();

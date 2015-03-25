@@ -21,5 +21,9 @@ public class Car extends Vehicle
 		return length;
 	}
 	
-	
+	@Override
+	public Color getColor()
+	{
+		return this.color;
+	}
 }

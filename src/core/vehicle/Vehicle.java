@@ -5,6 +5,11 @@ import core.endpoints.Destination;
 
 public abstract class Vehicle 
 {
+	enum Color {
+		YELLOW,
+		RED
+	}
+	
 	private int velocity;
 	private int acceleration;
 	private int max_velocity;
@@ -12,11 +17,13 @@ public abstract class Vehicle
 	private Destination destination;
 	private long start_time;
 	private long end_time;
+	protected Color color;
 
 	private Destination source;
 
 	
 	public abstract int getLength();
+	public abstract Color getColor();
 	
 	protected Vehicle()
 	{
