@@ -1,4 +1,12 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{EM3}
+Quadstone paramics.
+\newblock \url{http://www.paramicsonline.com/ }.
+\newblock Accessed: 2015-03-22.
+
+\bibitem{EM2}
+Tss - traffic simulation systems.
 
 \bibitem{berdahl2000go}
 Daphne Berdahl.
@@ -22,9 +30,31 @@ E.~Eckermann.
 \newblock {\em World History of the Automobile}.
 \newblock Society of Automotive Engineers, 2001.
 
+\bibitem{EM1}
+Centre for Applied Informatics~(ZAIK) and the Institute of Transport Research
+  at~the German Aerospace~Centre.
+\newblock Simulation of urban mobility.
+
+\bibitem{michalopoulos1991enhancement}
+Panos Michalopoulos, Eil Kwon, and Jeong-Gyu Kang.
+\newblock Enhancement and field testing of a dynamic freeway simulation
+  program.
+\newblock {\em Transportation Research Record}, (1320), 1991.
+
 \bibitem{miller2001car}
 D.~Miller.
 \newblock {\em Car cultures}.
 \newblock Materializing culture. Berg, 2001.
+
+\bibitem{rathi1986freesim}
+Ajay~K Rathi and Zoltan~A Nemeth.
+\newblock {\em FREESIM: A MICROSCOPIC SIMULATION MODEL OF FREEWAY LANE CLOSURES
+  (ABRIDGMENT)}.
+\newblock Number 1091. 1986.
+
+\bibitem{ross1988some}
+Paul Ross.
+\newblock Some properties of macroscopic traffic models.
+\newblock {\em Transportation Research Record}, (1194), 1988.
 
 \end{thebibliography}
