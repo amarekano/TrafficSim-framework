@@ -72,7 +72,7 @@ public class Network2 extends Network
 	int lane_length = 10;
 	
 	private int vcarHeight =5;
-	private int vbusHeight = 5;
+	private int vbusHeight = 0;
 	private int vvehicleWidth=10;
 	
 	public Network2() {
@@ -93,12 +93,11 @@ public class Network2 extends Network
 		try {
 			dm_cars.initializeMatrix();
 			dm_cars.setVehicleType(Car.class);
-			dm_cars.setDemand(A, B, 0.5);
+			dm_cars.setDemand(A, B, 0.2);
 			
-			dm_cars.setDemand(B, A, 1);
+			dm_cars.setDemand(A, C, 1);
 			
-			dm_cars.setDemand(C, D, 1);
-			dm_cars.setDemand(D, C, 0.5);
+			dm_cars.setDemand(A, D, 1);
 			
 		} catch (DemandMatrixException e) {
 			e.printStackTrace();
@@ -495,8 +494,8 @@ public class Network2 extends Network
 		            		carX =  rightLaneDividerX - vdestinationWidth/8 - vvehicleWidth/2;
 		            	else
 		            		carX =  rightLaneDividerX + vdestinationWidth/8 - vvehicleWidth/2;
-		            	vcarHeight =  (int) (vblockHeight*0.8);
-		            	vbusHeight = (int)(vblockHeight*0.8);
+		            	vcarHeight =  (int) (vblockHeight*0.5);
+		            	vbusHeight = (int)(vblockHeight*0.9);
 		            	if(v instanceof Car){
 		            		g.fillRect(carX,carY,vvehicleWidth, vcarHeight);
 		            	}
@@ -527,8 +526,8 @@ public class Network2 extends Network
 		            		carX =  rightLaneDividerX - vdestinationWidth/8 - vvehicleWidth/2;
 		            	else
 		            		carX =  rightLaneDividerX + vdestinationWidth/8 - vvehicleWidth/2;
-		            	vcarHeight =  (int) (vblockHeight*0.8);
-		            	vbusHeight = (int)(vblockHeight*0.8);
+		            	vcarHeight =  (int) (vblockHeight*0.5);
+		            	vbusHeight = (int)(vblockHeight*0.9);
 		            	if(v instanceof Car){
 		            		g.fillRect(carX,carY,vvehicleWidth, vcarHeight);
 		            	}
@@ -559,8 +558,8 @@ public class Network2 extends Network
 		            		carX =  leftLaneDividerX - vdestinationWidth/8 - vvehicleWidth/2;
 		            	else
 		            		carX =  leftLaneDividerX + vdestinationWidth/8 - vvehicleWidth/2;
-		            	vcarHeight =  (int) (vblockHeight*0.8);
-		            	vbusHeight = (int)(vblockHeight*0.8);
+		            	vcarHeight =  (int)(vblockHeight*0.5);
+		            	vbusHeight = (int)(vblockHeight*0.9);
 		            	if(v instanceof Car){
 		            		g.fillRect(carX,carY,vvehicleWidth, vcarHeight);
 		            	}
@@ -591,8 +590,8 @@ public class Network2 extends Network
 		            		carX =  leftLaneDividerX - vdestinationWidth/8 - vvehicleWidth/2;
 		            	else
 		            		carX =  leftLaneDividerX + vdestinationWidth/8 - vvehicleWidth/2;
-		            	vcarHeight =  (int) (vblockHeight*0.8);
-		            	vbusHeight = (int)(vblockHeight*0.8);
+		            	vcarHeight =  (int) (vblockHeight*0.5);
+		            	vbusHeight = (int)(vblockHeight*0.9);
 		            	if(v instanceof Car){
 		            		g.fillRect(carX,carY,vvehicleWidth, vcarHeight);
 		            	}
