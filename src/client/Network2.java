@@ -15,8 +15,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import service.DemandMatrix;
+import service.DemandMatrixException;
+import service.RoadNetwork;
+import service.SimulationClock;
+import service.TrafficSignalScheduler;
+import core.endpoints.Destination;
 import core.endpoints.EndPointException;
 import core.network.Road;
+import core.network.interfaces.InterfaceException;
+import core.network.junction.Junction;
+import core.network.junction.JunctionRouter;
+import core.network.junction.Junction.JUNCTION;
 import core.vehicle.Bus;
 import core.vehicle.Car;
 import core.vehicle.Vehicle;
@@ -25,77 +35,169 @@ public class Network2 extends Network
 {
 
 	int counter;
-	Timer timer_change_lights;
-	Timer timer_move_cars;
+	Timer timer;
 	
 	private JPanel view;
 	private JPanel controls;
-	
-	
 	private ActionListener actionListener_move_cars;
-	private Road r1;
+	
+	private Destination A;
+	private Destination B;
+	private Destination C;
+	private Destination D;
+	private SimulationClock clock;
+	private Junction junc;
+	
+	Road ra_j;
+	Road rb_j;
+	Road rc_j;
+	Road rd_j;
+	
+	Road rj_a;
+	Road rj_b;
+	Road rj_c;
+	Road rj_d;
+	
+	RoadNetwork roadNetwork; 
+	
+	JunctionRouter juncRouter;
+	TrafficSignalScheduler scheduler;
+	DemandMatrix dm_cars;
+	DemandMatrix dm_buses;
+	
 	private List<Vehicle> vehicleList;
 	private int roadLength = 40; 
-	private int carWidth = 20;
-	private int vehicleHeight = 10;
-	private int busWidth = 30;
+	private int hcarWidth = 20;
+	private int hvehicleHeight = 10;
+	private int hbusWidth = 30;
+	
+	private int vcarHeight;
+	private int vbusHeight;
+	private int vvehicleWidth;
 	
 	public Network2() {
-
 		super();
 		counter=0;
+		
+		int number_of_lanes = 2;
+		int lane_length = 10;
+		
+		//AM > Setup the destinations
+		A = new Destination("A");
+		B = new Destination("B");
+		C = new Destination("C");
+		D = new Destination("D");
+		
+		dm_cars = new DemandMatrix();
+		dm_cars.addDestination(A);
+		dm_cars.addDestination(B);
+		dm_cars.addDestination(C);
+		dm_cars.addDestination(D);
+		try {
+			dm_cars.initializeMatrix();
+			dm_cars.setVehicleType(Car.class);
+			dm_cars.setDemand(A, B, 0.4);
+			
+		} catch (DemandMatrixException e) {
+			e.printStackTrace();
+		}
+		
+		dm_buses = new DemandMatrix();
+		dm_buses.addDestination(A);
+		dm_buses.addDestination(B);
+		dm_buses.addDestination(C);
+		dm_buses.addDestination(D);
+		try {
+			dm_buses.initializeMatrix();
+			dm_buses.setVehicleType(Bus.class);
+			dm_buses.setDemand(A, B, 1.0);
+			
+		} catch (DemandMatrixException e) {
+			e.printStackTrace();
+		}
+		
+		junc = new Junction();
+		roadNetwork = new RoadNetwork();
+		
+		try {
+			ra_j = new Road(number_of_lanes, lane_length);
+			ra_j.setSource(A);
+			ra_j.setSink(junc,JUNCTION.WEST);
+			roadNetwork.addRoad(ra_j);
+			
+			rb_j = new Road(number_of_lanes, lane_length);
+			rb_j.setSource(B);
+			rb_j.setSink(junc, JUNCTION.NORTH);
+			roadNetwork.addRoad(rb_j);
+			
+			rc_j = new Road(number_of_lanes, lane_length);
+			rc_j.setSource(C);
+			rc_j.setSink(junc, JUNCTION.EAST);
+			roadNetwork.addRoad(rc_j);
+			
+			rd_j = new Road(number_of_lanes, lane_length);
+			rd_j.setSource(D);
+			rd_j.setSink(junc, JUNCTION.SOUTH);
+			roadNetwork.addRoad(rd_j);
+			
+			rj_a = new Road(number_of_lanes, lane_length);
+			rj_a.setSink(A);
+			rj_a.setSource(junc,JUNCTION.WEST);
+			roadNetwork.addRoad(rj_a);
+			
+			rj_b = new Road(number_of_lanes, lane_length);
+			rj_b.setSink(B);
+			rj_b.setSource(junc, JUNCTION.NORTH);
+			roadNetwork.addRoad(rj_b);
+			
+			rj_c = new Road(number_of_lanes, lane_length);
+			rj_c.setSink(C);
+			rj_c.setSource(junc, JUNCTION.EAST);
+			roadNetwork.addRoad(rj_c);
+			
+			rj_d = new Road(number_of_lanes, lane_length);
+			rj_d.setSink(D);
+			rj_d.setSource(junc, JUNCTION.SOUTH);
+			roadNetwork.addRoad(rj_d);
+			
+			juncRouter = new JunctionRouter();
+			juncRouter.add(A, junc.getInterface(JUNCTION.WEST));
+			juncRouter.add(B, junc.getInterface(JUNCTION.NORTH));
+			juncRouter.add(C, junc.getInterface(JUNCTION.EAST));
+			juncRouter.add(D,  junc.getInterface(JUNCTION.SOUTH));
+			junc.setRoutingTable(juncRouter);
+			
+			junc.setSignalController();
+			scheduler = new TrafficSignalScheduler();
+			scheduler.setSignalInterval(10);
+			scheduler.addSignalController(junc.getSignalController());
+			
+		} catch (InterfaceException e) {
+			e.printStackTrace();
+		}
+		
+		clock = SimulationClock.getInstance();
+		clock.addObserver(scheduler);
+		clock.addObserver(roadNetwork);
+		clock.addObserver(dm_cars);
+		clock.addObserver(dm_buses);
+		
+		vehicleList = new ArrayList<Vehicle>();
+		
 		ActionListener actionListener = new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if(counter==3){
-					counter=-1;
-				}
-				counter++;
 				view.repaint();
+				clock.incrementClock();
 			}
 		};
 		
-		timer_change_lights = new Timer(1000, actionListener);
-		
-		
-		r1 = new Road(2,roadLength);
+		timer = new Timer(1000, actionListener);
 
-		vehicleList = new ArrayList<Vehicle>();
-		
-
-		//AM > Every time the clock ticks move cars
-		actionListener_move_cars = new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-				try {
-					r1.moveTraffic();
-					Vehicle v = new Car();
-					vehicleList.add(v);
-					r1.addVehicle(v);
-					view.repaint();
-					
-					Vehicle b = new Bus();
-					vehicleList.add(b);
-					r1.addVehicle(b);
-					view.repaint();
-				} catch (EndPointException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-		
-		timer_move_cars = new Timer(1000, actionListener_move_cars);
-		
 		controls = new ControlPanel();
 		view = new JPanel()
 		{
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -187,7 +289,13 @@ public class Network2 extends Network
 		        
 		        
 		        int blockWidth = (int)roadWidth/roadLength;
-		      //For each vehicle on the road get its co-ordinates
+		        vehicleList = ra_j.getVehiclesOnRoad();
+		      
+		        //AM > Draw junction box
+		        Image img = new ImageIcon("res/cycle"+scheduler.getCycle()+".png").getImage();
+		        g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
+		      
+		        //For each vehicle on the road get its co-ordinates
 		        for(Vehicle v : vehicleList)
 		        {
 		        	//Random r = new Random();
@@ -201,64 +309,26 @@ public class Network2 extends Network
 		        	//For each vehicle calculate its X and Y co-ordinates
 		            int carX = 0;
 		            int carY = 0;
-		            if(r1.getVehicleNodeIndex(v) != -1)
+		            if(ra_j.getVehicleNodeIndex(v) != -1)
 		            {
-		            	carX = hroadStartX + blockWidth*r1.getVehicleNodeIndex(v);
-		            	if(r1.getVehicleLaneIndex(v) == 0)
-		            		carY =  upperLaneDividerY - hroadHeight/8 - vehicleHeight/2;
+		            	carX = hroadStartX + blockWidth*ra_j.getVehicleNodeIndex(v);
+		            	if(ra_j.getVehicleLaneIndex(v) == 0)
+		            		carY =  upperLaneDividerY - hroadHeight/8 - hvehicleHeight/2;
 		            	else
-		            		carY =  (panelHeight/2 - hroadHeight/8) - vehicleHeight/2;
-		            	carWidth =  (int) (blockWidth*0.5);
-		            	busWidth = (int)(blockWidth*0.75);
+		            		carY =  (panelHeight/2 - hroadHeight/8) - hvehicleHeight/2;
+		            	hcarWidth =  (int) (blockWidth*0.5);
+		            	hbusWidth = (int)(blockWidth*0.75);
 		            	if(v instanceof Car){
-		            		g.fillRect(carX,carY,carWidth, vehicleHeight);
+		            		g.fillRect(carX,carY,hcarWidth, hvehicleHeight);
 		            	}
 		            	else if(v instanceof Bus){
-		            		g.fillRect(carX,carY,busWidth, vehicleHeight);
-		            	}
-		            	
-		            	
-		            	carX = roadEndX - blockWidth*r1.getVehicleNodeIndex(v)-carWidth;
-		            	if(r1.getVehicleLaneIndex(v) == 0)
-		            		carY =  upperLaneDividerY - hroadHeight/8 - vehicleHeight/2+ hroadHeight/2;
-		            	else
-		            		carY =  (panelHeight/2 - hroadHeight/8) - vehicleHeight/2+ hroadHeight/2;
-		            	carWidth =  (int) (blockWidth*0.5);
-		            	busWidth = (int)(blockWidth*0.75);
-		            	if(v instanceof Car){
-		            		g.fillRect(carX,carY,carWidth, vehicleHeight);
-		            	}
-		            	else if(v instanceof Bus){
-		            		g.fillRect(carX,carY,busWidth, vehicleHeight);
+		            		g.fillRect(carX,carY,hbusWidth, hvehicleHeight);
 		            	}
 		            }   
 		        }
-		        
-		        
-		        //AM > Draw junction box
-		        //g.setColor(Color.GRAY);
-		        //g.fillRect(panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2,vroadWidth, hroadHeight);
-		        if(counter==0){
-		        	Image img = new ImageIcon("res/cycle0.png").getImage();
-		        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
-		        }
-		        if(counter==1){
-		        	Image img = new ImageIcon("res/cycle1.png").getImage();
-		        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
-		        }
-		        if(counter==2){
-		        	Image img = new ImageIcon("res/cycle2.png").getImage();
-		        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
-		        }
-		        if(counter==3){
-		        	Image img = new ImageIcon("res/cycle3.png").getImage();
-		        	g.drawImage(img,panelWidth/2 - vroadWidth/2, panelHeight/2 - hroadHeight/2, vroadWidth, hroadHeight, this);
-		        }
-		        
-		        timer_move_cars.start();
-		        timer_change_lights.start();
 			  }
 		};
+		timer.start();
 	}
 	
 	@Override
