@@ -246,7 +246,7 @@ public class Network2 extends Network
 				g.setColor(Color.BLACK);
 				int hra_jStartX = 0 + hdestinationWidth;
 				int hra_jStartY = panelHeight/2 - hroadHeight/2;
-				int hra_jWidth = panelWidth/2 - hdestinationWidth;
+				int hra_jWidth = panelWidth/2 - 2*hdestinationWidth;
 				int hra_jEndX = hra_jStartX+hra_jWidth;
 				int hra_jEndY = hra_jStartY;
 				g.fillRect(hra_jStartX, hra_jStartY, hra_jWidth, hroadHeight);
