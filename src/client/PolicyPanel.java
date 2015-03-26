@@ -8,12 +8,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -99,34 +102,52 @@ public class PolicyPanel extends JPanel implements ChangeListener,ActionListener
 		destinationSelector.add(destinationBox);
 		profilePanel.add(destinationSelector);
 
+		JLabel max = new JLabel("Max");
+		JLabel min = new JLabel("Min");
+		JLabel prob = new JLabel("Probability");
 
 		//AM > Create controls to set the velocity profile
 		JPanel velocityProfile = new JPanel(new FlowLayout());
 		JLabel velocityLabel = new JLabel("Configure Velocity Profile");
 		maxVelocityTF = new JTextField("Max velocity",4);
+		maxVelocityTF.setInputVerifier(new MaxMinVerifier());
 		minVelocityTF = new JTextField("Min veloctiy",4);
+		minVelocityTF.setInputVerifier(new MaxMinVerifier());
 		velocityProbTF = new JTextField("Profile probability",4);
+		velocityProbTF.setInputVerifier(new ProbVerifier());
 		JButton applyVelocityProfile = new JButton("Apply");
 		applyVelocityProfile.setActionCommand("ApplyVelocity");
 		applyVelocityProfile.addActionListener(this);
 		velocityProfile.add(velocityLabel);
+		velocityProfile.add(max);
 		velocityProfile.add(maxVelocityTF);
+		velocityProfile.add(min);
 		velocityProfile.add(minVelocityTF);
+		velocityProfile.add(prob);
 		velocityProfile.add(velocityProbTF);
 		velocityProfile.add(applyVelocityProfile);
 		profilePanel.add(velocityProfile);
 
+		JLabel max2 = new JLabel("Max");
+		JLabel min2 = new JLabel("Min");
+		JLabel prob2 = new JLabel("Probability");
 		JPanel accelerationProfile = new JPanel(new FlowLayout());
 		JLabel accelerationLabel = new JLabel("Configure Acceleration Profile");
 		maxAccelerationTF = new JTextField("Max Acceleration",4);
+		maxAccelerationTF.setInputVerifier(new MaxMinVerifier());
 		minAccelerationTF = new JTextField("Min Acceleration",4);
+		minAccelerationTF.setInputVerifier(new MaxMinVerifier());
 		accelerationProbTF = new JTextField("Profile probability",4);
+		accelerationProbTF.setInputVerifier(new ProbVerifier());
 		JButton applyAccelerationProfile = new JButton("Apply");
 		applyAccelerationProfile.setActionCommand("ApplyAcceleration");
 		applyAccelerationProfile.addActionListener(this);
 		accelerationProfile.add(accelerationLabel);
+		accelerationProfile.add(max2);
 		accelerationProfile.add(maxAccelerationTF);
+		accelerationProfile.add(min2);
 		accelerationProfile.add(minAccelerationTF);
+		accelerationProfile.add(prob2);
 		accelerationProfile.add(accelerationProbTF);
 		accelerationProfile.add(applyAccelerationProfile);
 		profilePanel.add(accelerationProfile);
@@ -246,4 +267,37 @@ public class PolicyPanel extends JPanel implements ChangeListener,ActionListener
 		}
 
 	}
+	
+	class MaxMinVerifier extends InputVerifier {
+	    @Override
+	    public boolean verify(JComponent input) {
+	        String text = ((JTextField) input).getText();
+	        try {
+	            int value = Integer.parseInt(text);
+	            if(value >= 0)
+	             return true;
+	            else
+	            	return false;
+	        } catch (NumberFormatException e) {
+	            return false;
+	        }
+	    }
+	}
+	    
+	    class ProbVerifier extends InputVerifier {
+		    @Override
+		    public boolean verify(JComponent input) {
+		        String text = ((JTextField) input).getText();
+		        try {
+		            double value = Double.parseDouble(text);
+		            if(value >= 0 && value <= 1)
+		             return true;
+		            else
+		            	return false;
+		        } catch (NumberFormatException e) {
+		            return false;
+		        }
+		    }
+	    }
+	
 }

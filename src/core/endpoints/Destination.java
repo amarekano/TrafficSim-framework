@@ -26,7 +26,8 @@ public class Destination extends EndPoint {
 	}
 
 	public void setMinVehicleVelocity(int minVehicleVelocity) {
-		this.minVehicleVelocity = minVehicleVelocity;
+		if(minVehicleVelocity >= 1 && minVehicleVelocity <= this.maxVehicleVelocity)
+			this.minVehicleVelocity = minVehicleVelocity;
 	}
 
 	public int getMaxVehicleVelocity() {
@@ -34,7 +35,8 @@ public class Destination extends EndPoint {
 	}
 
 	public void setMaxVehicleVelocity(int maxVehicleVelocity) {
-		this.maxVehicleVelocity = maxVehicleVelocity;
+		if(maxVehicleVelocity >= 1 && maxVehicleVelocity >= this.minVehicleVelocity)
+			this.maxVehicleVelocity = maxVehicleVelocity;
 	}
 
 	public double getVelocityProbability() {
@@ -42,7 +44,8 @@ public class Destination extends EndPoint {
 	}
 
 	public void setVelocityProbability(double velocityProbability) {
-		this.velocityProbability = velocityProbability;
+		if(velocityProbability >=0.0 && velocityProbability <= 1.0)
+			this.velocityProbability = velocityProbability;
 	}
 
 	public int getMinVehicleAcceleration() {
@@ -50,6 +53,7 @@ public class Destination extends EndPoint {
 	}
 
 	public void setMinVehicleAcceleration(int minVehicleAcceleration) {
+		if(minVehicleAcceleration >= 0 && minVehicleAcceleration <= this.maxVehicleAcceleration)
 		this.minVehicleAcceleration = minVehicleAcceleration;
 	}
 
@@ -58,7 +62,8 @@ public class Destination extends EndPoint {
 	}
 
 	public void setMaxVehicleAcceleration(int maxVehicleAcceleration) {
-		this.maxVehicleAcceleration = maxVehicleAcceleration;
+		if(maxVehicleAcceleration >= 0 && maxVehicleAcceleration >= this.minVehicleAcceleration)
+			this.maxVehicleAcceleration = maxVehicleAcceleration;
 	}
 
 	public double getAccelerationProbability() {
