@@ -1,30 +1,29 @@
 package client;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.JSpinner.DefaultEditor;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import service.TrafficSignalScheduler;
 
 public class PolicyPanel extends JPanel implements ChangeListener {
 
 	private static final long serialVersionUID = 6241308576167461723L;
 	private Timer timer;
-
+	private List<TrafficSignalScheduler> schedulers = new ArrayList<TrafficSignalScheduler>();
+	JSlider interval_slider;
+	
 	public PolicyPanel() {
 		super();
 		setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -32,7 +31,7 @@ public class PolicyPanel extends JPanel implements ChangeListener {
 		setLayout(new GridLayout(3,1));
 		
 		
-		JSlider interval_slider = new JSlider();
+		interval_slider = new JSlider();
 		interval_slider = new JSlider();
 	    interval_slider.setPaintTicks(true);
 	    interval_slider.setPaintLabels(true);
@@ -42,13 +41,13 @@ public class PolicyPanel extends JPanel implements ChangeListener {
 	    interval_slider.setMinorTickSpacing(5);
 	    interval_slider.setPreferredSize(new Dimension(7,5));
 	    interval_slider.addChangeListener(this);
-	    interval_slider.setName("funky 1");
+	    interval_slider.setName("lights");
+	    interval_slider.setEnabled(false);
 	   // add(interval_slider);
 	    
 	    JPanel interval_panel = new JPanel(new GridLayout(2,1));
-	    interval_panel.add(new JLabel("Traffic Light Interval"));
+	    interval_panel.add(new JLabel("Traffic Light Interval (clock ticks)"));
 	    interval_panel.add(interval_slider);
-	    
 	    
 	    add(interval_panel);
 	    
@@ -68,7 +67,6 @@ public class PolicyPanel extends JPanel implements ChangeListener {
 	    JPanel velocity_panel = new JPanel(new GridLayout(2,1));
 	    velocity_panel.add(new JLabel("Max Velocity"));
 	    velocity_panel.add(velocity_slider);
-	    
 	    
 	    add(velocity_panel);
 	    
@@ -105,6 +103,13 @@ public class PolicyPanel extends JPanel implements ChangeListener {
 		this.timer = tm;
 	}
 	
+	public void addLightScheduler(TrafficSignalScheduler scheduler)
+	{
+		schedulers.add(scheduler);
+		if(schedulers.size() > 0)
+			interval_slider.setEnabled(true);
+	}
+	
 	@Override
 	public void stateChanged(ChangeEvent e) {
 	    JSlider source = (JSlider) e.getSource();
@@ -114,6 +119,16 @@ public class PolicyPanel extends JPanel implements ChangeListener {
         	{
         	  timer.setDelay(source.getValue() < 1 ? 1: source.getValue());
         	}	
+        }
+        if(source.getName().equalsIgnoreCase("lights"))
+        {
+        	if(!source.getValueIsAdjusting())
+        	{
+        		for(TrafficSignalScheduler scheduler: schedulers)
+        		{
+        			scheduler.setSignalInterval(source.getValue() < 1 ? 1 : source.getValue());
+        		}
+        	}
         }
     
 		

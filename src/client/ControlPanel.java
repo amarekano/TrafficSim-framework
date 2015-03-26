@@ -9,6 +9,7 @@ import javax.swing.Timer;
 import service.DemandMatrix;
 import service.ReportGenerator;
 import service.SimulationClock;
+import service.TrafficSignalScheduler;
 
 public class ControlPanel extends JPanel {
 
@@ -51,5 +52,9 @@ public class ControlPanel extends JPanel {
 		clock_panel.setReportGenerator(generator);
 	}
 
+	public void addTrafficScheduler(TrafficSignalScheduler scheduler)
+	{
+		policy_panel.addLightScheduler(scheduler);
+	}
 
 }

@@ -210,6 +210,7 @@ public class Network2 extends Network
 		controls = new ControlPanel(timer,clock);
 		controls.setDemandMatrixCars(dm_cars);
 		controls.setDemandMatrixBuses(dm_buses);
+		controls.addTrafficScheduler(scheduler);
 		
 		ReportGenerator generator = new ReportGenerator();
 		generator.addDestination(A);
