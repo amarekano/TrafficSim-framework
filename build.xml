@@ -18,7 +18,6 @@
  <!-- Set library variables -->
  <property name="lib.dir" location="${dist}/lib" />
  <property name="jar.dir" location="${dist}/build"/>
-<property name="res.dir" location="${dist}/res"/>
 
  <!-- Build the CLASSPATH -->
  <path id="classpath">
@@ -80,7 +79,7 @@
  <!--
    Build the distribution files
   -->
- <target name="build" depends="compile,docs,jar" description="generate the distribution" >
+ <target name="build" depends="test,compile,docs,jar" description="generate the distribution" >
 
  </target>
 	
