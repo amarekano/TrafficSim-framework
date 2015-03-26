@@ -1,6 +1,8 @@
 \documentclass[titlepage]{article}
 \usepackage{graphicx}
 \usepackage{pdfpages}
+\usepackage{longtable}
+\usepackage{tabu}
 
 \title{The Undecided - Final Report - 7CCSMGRP}
 \author{Nathalie Caliacmani, Amar Menezes, \\ Belema Norman-William, Paul Orlean-Taub, Tony Sellen}
@@ -44,6 +46,9 @@ This project is our attempt at producing a software  package that shows the effe
 
 \appendix
 \section{Git log}
-\include{./files/gitlog}
+\input{./files/gitlog.tex}
+\section{Source code}
+\includepdf[pages=-]{./files/TrafficSimSourceCode.pdf}
+
 
 \end{document}
