@@ -1,0 +1,205 @@
+\begin{center}
+\begin{longtabu} to \textwidth {|
+    X[4,l]|
+    X[3,c]|
+    X[8,l]|}
+    \hline
+    \textbf{Author} & \textbf{Date} & \textbf{Message} \ \hline
+Amar Menezes & 2015-01-28 & Initial commit \\ \hline
+Amar Menezes & 2015-01-28 & Updated Readme \\ \hline
+Amar Menezes & 2015-01-28 & Initial Import \\ \hline
+Amar Menezes & 2015-01-28 & Created Lane model to simulate a road \\ \hline
+Amar Menezes & 2015-01-28 & Fixed OutOfBounds bug when cars exited the lane \\ \hline
+Amar Menezes & 2015-01-29 & Cleaned up Main.java \\ \hline
+Amar Menezes & 2015-01-29 & Fixed CarJump bug \\ \hline
+Amar Menezes & 2015-01-29 & Cleared unused data structures \\ \hline
+Amar Menezes & 2015-01-30 & Fixed CarJump bug when variable car speeds are used \\ \hline
+Amar Menezes & 2015-01-31 & Added car acceleration \\ \hline
+Amar Menezes & 2015-02-01 & Added unit tests \\ \hline
+Amar Menezes & 2015-02-01 & Added tests for lane leaving \\ \hline
+Amar Menezes & 2015-02-01 & Added tests for car following \\ \hline
+Amar Menezes & 2015-02-01 & Added unit test for Car acceleration \\ \hline
+Amar Menezes & 2015-02-02 & Cars now have a max velocity \\ \hline
+Amar Menezes & 2015-02-02 & Cars randomly decelerate with a specified probability \\ \hline
+Amar Menezes & 2015-02-04 & Partial Road model implementation \\ \hline
+Nathalie Caliacmani & 2015-02-04 & Completed move traffic \\ \hline
+Amar Menezes & 2015-02-04 & Merge pull request \#2 from nathalieee1989/modeling-roads \\ \hline
+Amar Menezes & 2015-02-05 & Added bounds checks for Road and Lane \\ \hline
+Amar Menezes & 2015-02-05 & Major refactoring \\ \hline
+Amar Menezes & 2015-02-05 & Return a list of cars exiting a lane \\ \hline
+Amar Menezes & 2015-02-05 & Traffic transfer between two Destinations \\ \hline
+Amar Menezes & 2015-02-06 & Added Junction and basic vehicle routing \\ \hline
+Amar Menezes & 2015-02-06 & Removed unused code in EndPoint \\ \hline
+Amar Menezes & 2015-02-07 & Removed unused imports and updated Exception classes \\ \hline
+Amar Menezes & 2015-02-07 & Added TrafficSignals \\ \hline
+Amar Menezes & 2015-02-08 & Added more unit tests for TrafficSignals \\ \hline
+Amar Menezes & 2015-02-09 & Redesign to Junction Road wiring \\ \hline
+Nathalie Caliacmani & 2015-02-09 & Demo for presentation \\ \hline
+Amar Menezes & 2015-02-09 & Merge pull request \#3 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-02-09 & Merge branch `master' of https://github.com/AmarEkanO/TrafficSim-framework into junction-modeling \\ \hline
+Nathalie Caliacmani & 2015-02-09 & Changed InvalidEndpointException to Exception \\ \hline
+Amar Menezes & 2015-02-09 & Merge pull request \#4 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-02-09 & Merge branch `master' of https://github.com/AmarEkanO/TrafficSim-framework into junction-modeling \\ \hline
+Amar Menezes & 2015-02-10 & Update to algorithm comments \\ \hline
+Nathalie Caliacmani & 2015-02-13 & Refactored LaneTest \\ \hline
+Amar Menezes & 2015-02-13 & Merge pull request \#5 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-02-13 & Added state behaviour to Lane \\ \hline
+Amar Menezes & 2015-02-13 & Added unit tests for change of lane state \\ \hline
+Amar Menezes & 2015-02-13 & Merge branch `master' of https://github.com/AmarEkanO/TrafficSim-framework \\ \hline
+Amar Menezes & 2015-02-13 & Vehicles now have a Destination \\ \hline
+Amar Menezes & 2015-02-14 & Vehicles can be transfered between lanes \\ \hline
+Amar Menezes & 2015-02-14 & Implemented junction transfer logic \\ \hline
+Amar Menezes & 2015-02-15 & Fixed failing tests \\ \hline
+Amar Menezes & 2015-02-15 & Refactored moveTraffic \\ \hline
+Amar Menezes & 2015-02-15 & Refactored Road \\ \hline
+Amar Menezes & 2015-02-15 & Junction constructor should not throw exceptions \\ \hline
+Amar Menezes & 2015-02-15 & Added integration testing \\ \hline
+Amar Menezes & 2015-02-15 & JunctionExits and JunctionEntries can have only one connected Road \\ \hline
+Amar Menezes & 2015-02-15 & Destinations maintain queues for ingress and egress traffic \\ \hline
+Amar Menezes & 2015-02-15 & Testing bi-directional Traffic \\ \hline
+Nathalie Caliacmani & 2015-02-16 & Implemented buses \\ \hline
+Nathalie Caliacmani & 2015-02-16 & Merged upstream and added unit tests for Buses \\ \hline
+Nathalie Caliacmani & 2015-02-16 & Added updated Lane.java \\ \hline
+Nathalie Caliacmani & 2015-02-16 & Merge remote-tracking branch `upstream/master' \\ \hline
+Amar Menezes & 2015-02-16 & Merge pull request \#7 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-02-18 & Cars wait in lane when signal is red \\ \hline
+Amar Menezes & 2015-02-19 & Vehicles have a source and destination \\ \hline
+Amar Menezes & 2015-02-19 & Refactored Exception classes \\ \hline
+Nathalie Caliacmani & 2015-02-20 & Implemented start and end time \\ \hline
+Amar Menezes & 2015-02-20 & Implemented Traffic Signal Controller \\ \hline
+Amar Menezes & 2015-02-20 & Added integration test for traffic signal routing \\ \hline
+Nathalie Caliacmani & 2015-02-20 & Unit test for start and end time \\ \hline
+Nathalie Caliacmani & 2015-02-20 & Refactored SimulationClock \\ \hline
+Nathalie Caliacmani & 2015-02-20 & Merge remote-tracking branch `upstream/master' \\ \hline
+Amar Menezes & 2015-02-20 & Merge pull request \#8 from nathalieee1989/master \\ \hline
+Nathalie Caliacmani & 2015-02-20 & Implemented SimulationClock \\ \hline
+Amar Menezes & 2015-02-20 & Merge pull request \#9 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-02-20 & Initial commit for signal scheduler \\ \hline
+Amar Menezes & 2015-02-20 & Merge branch `master' of https://github.com/AmarEkanO/TrafficSim-framework \\ \hline
+Amar Menezes & 2015-02-20 & Completed implementation of TrafficSignalScheduler \\ \hline
+Amar Menezes & 2015-02-21 & Added Thread safety to SimulationClock \\ \hline
+Amar Menezes & 2015-03-04 & Simplified SimulationClock design \\ \hline
+Amar Menezes & 2015-03-04 & Updated unit-tests for SimulationClock \\ \hline
+Amar Menezes & 2015-03-05 & Added integration tests using SimulationClock \\ \hline
+Amar Menezes & 2015-03-05 & Testing junction transfer with Traffic Signal scheduler \\ \hline
+Amar Menezes & 2015-03-05 & Testing 4-way junction transfer \\ \hline
+Amar Menezes & 2015-03-05 & Updated road wiring comments \\ \hline
+Amar Menezes & 2015-03-05 & Package restructuring \\ \hline
+Amar Menezes & 2015-03-05 & Relocated IntegrationTest.java \\ \hline
+Amar Menezes & 2015-03-06 & Initial model for Demand Matrix \\ \hline
+Amar Menezes & 2015-03-06 & Implemented setters and getters for demand \\ \hline
+Amar Menezes & 2015-03-06 & Corrected typos \\ \hline
+Amar Menezes & 2015-03-06 & DemandMatrix controls generation of vehicles at registered Destinations \\ \hline
+Nathalie Caliacmani & 2015-03-06 & Initial ReportGenerator Implementation \\ \hline
+Nathalie Caliacmani & 2015-03-06 & Merge remote-tracking branch `upstream/master' \\ \hline
+belsbj & 2015-03-11 & Initial UI work \\ \hline
+Amar Menezes & 2015-03-11 & Merge pull request \#11 from belsbj/master \\ \hline
+Nathalie Caliacmani & 2015-03-11 & Merge remote-tracking branch `upstream/master' \\ \hline
+Nathalie Caliacmani & 2015-03-16 & ReportGenerator implemented \\ \hline
+Amar Menezes & 2015-03-16 & Merge pull request \#12 from nathalieee1989/master \\ \hline
+Nathalie Caliacmani & 2015-03-16 & Added integration test for report generator \\ \hline
+Amar Menezes & 2015-03-16 & Merge pull request \#13 from nathalieee1989/master \\ \hline
+Nathalie Caliacmani & 2015-03-21 & build script \\ \hline
+Nathalie Caliacmani & 2015-03-21 & changed main class \\ \hline
+Amar Menezes & 2015-03-21 & Merge pull request \#14 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-03-21 & Fixed bug in targets clean and jar \\ \hline
+Amar Menezes & 2015-03-21 & Refactored build script \\ \hline
+Nathalie Caliacmani & 2015-03-22 & Revamped UI \\ \hline
+Nathalie Caliacmani & 2015-03-22 & Added background to MapPanel \\ \hline
+Amar Menezes & 2015-03-22 & Merge pull request \#16 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-03-22 & Some code cleanup \\ \hline
+Amar Menezes & 2015-03-23 & Added network1 visualization \\ \hline
+Amar Menezes & 2015-03-23 & Very basic network animation \\ \hline
+Amar Menezes & 2015-03-23 & Simple multi-lane traffic \\ \hline
+Amar Menezes & 2015-03-23 & Fixed allignment issues \\ \hline
+Nathalie Caliacmani & 2015-03-23 & Roads return a list of vehicles \\ \hline
+Amar Menezes & 2015-03-23 & Merge pull request \#17 from nathalieee1989/master \\ \hline
+Nathalie Caliacmani & 2015-03-23 & Added buses to straight roaded and implemented save report \\ \hline
+Amar Menezes & 2015-03-23 & Merge pull request \#18 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-03-23 & Generate reports for documentation \\ \hline
+Amar Menezes & 2015-03-23 & Merge branch `master' of https://github.com/AmarEkanO/TrafficSim-framework \\ \hline
+Amar Menezes & 2015-03-23 & Code cleanup \\ \hline
+Amar Menezes & 2015-03-23 & Removed unused resources \\ \hline
+Nathalie Caliacmani & 2015-03-23 & changed bounds and map2 \\ \hline
+Nathalie Caliacmani & 2015-03-23 & Merge remote-tracking branch `upstream/master' \\ \hline
+Amar Menezes & 2015-03-23 & Merge pull request \#19 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-03-23 & Destinations can clear their comsumed vehicles queue \\ \hline
+Amar Menezes & 2015-03-23 & Cleanup in Simulator \\ \hline
+Amar Menezes & 2015-03-23 & Screen resizing \\ \hline
+Amar Menezes & 2015-03-23 & Refactoring \\ \hline
+Amar Menezes & 2015-03-23 & client package restructuring \\ \hline
+Amar Menezes & 2015-03-23 & Completed Network2 base layout \\ \hline
+Nathalie Caliacmani & 2015-03-24 & Images for traffic lights \\ \hline
+Amar Menezes & 2015-03-24 & Merge pull request \#20 from nathalieee1989/master \\ \hline
+MC & 2015-03-24 & Reports \\ \hline
+Amar Menezes & 2015-03-24 & Merge pull request \#22 from Mighty-Caterpillar/master \\ \hline
+Nathalie Caliacmani & 2015-03-24 & select demand matrix for different vehicles \\ \hline
+Amar Menezes & 2015-03-24 & Merge pull request \#23 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-03-24 & Client refactoring \\ \hline
+Amar Menezes & 2015-03-24 & Merge branch `master' of https://github.com/AmarEkanO/TrafficSim-framework \\ \hline
+Amar Menezes & 2015-03-24 & Client package restructure \\ \hline
+Amar Menezes & 2015-03-24 & Created data model for network1 \\ \hline
+Nathalie Caliacmani & 2015-03-24 & More animation for network2 \\ \hline
+Nathalie Caliacmani & 2015-03-24 & Merge remote-tracking branch `upstream/master' \\ \hline
+Nathalie Caliacmani & 2015-03-24 & implemeted bi-directional traffic in network1 \\ \hline
+Amar Menezes & 2015-03-24 & Merge pull request \#24 from nathalieee1989/master \\ \hline
+MC & 2015-03-24 & data check \\ \hline
+Amar Menezes & 2015-03-24 & Merge pull request \#25 from Mighty-Caterpillar/master \\ \hline
+Amar Menezes & 2015-03-24 & Folder rename \\ \hline
+Amar Menezes & 2015-03-25 & Fixed bug in report generator \\ \hline
+Amar Menezes & 2015-03-25 & Added data model and wiring for network2 \\ \hline
+Nathalie Caliacmani & 2015-03-25 & Added row header and sync table with DemandMatrix \\ \hline
+Nathalie Caliacmani & 2015-03-25 & Merge remote-tracking branch `upstream/master' \\ \hline
+Amar Menezes & 2015-03-25 & Merge pull request \#26 from nathalieee1989/master \\ \hline
+MC & 2015-03-25 & Restructuring tex file, more added \\ \hline
+Amar Menezes & 2015-03-25 & Setting acceleration and velocity profiles for generated vehivles \\ \hline
+Amar Menezes & 2015-03-25 & Merge branch `master' of https://github.com/AmarEkanO/TrafficSim-framework \\ \hline
+Nathalie Caliacmani & 2015-03-25 & Implemented demand matrix for buses \\ \hline
+Amar Menezes & 2015-03-25 & Merge pull request \#28 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-03-25 & Merge pull request \#27 from Mighty-Caterpillar/master \\ \hline
+MC & 2015-03-25 & Document Report Changes \\ \hline
+MC & 2015-03-25 & Merge remote-tracking branch `upstream/master' \\ \hline
+Amar Menezes & 2015-03-25 & Initial work on network2 \\ \hline
+Amar Menezes & 2015-03-25 & Merge branch `master' of https://github.com/AmarEkanO/TrafficSim-framework \\ \hline
+MC & 2015-03-25 & Merge remote-tracking branch `upstream/master' \\ \hline
+MC & 2015-03-25 & Create renderer. \\ \hline
+MC & 2015-03-25 & renderer \\ \hline
+Amar Menezes & 2015-03-25 & Traffic transfer across junction \\ \hline
+Amar Menezes & 2015-03-25 & Completed two-way traffic across junction \\ \hline
+Amar Menezes & 2015-03-25 & Network2 rendering complete \\ \hline
+Amar Menezes & 2015-03-25 & Adjusting vehicle rendering in Vertical lanes \\ \hline
+Amar Menezes & 2015-03-26 & fixed newline bug in report generator \\ \hline
+Amar Menezes & 2015-03-26 & Added controls for Simulation clock \\ \hline
+MC & 2015-03-26 & More updates on tex file \\ \hline
+Amar Menezes & 2015-03-26 & Added functionality to save reports \\ \hline
+Amar Menezes & 2015-03-26 & Implemented clock interval slider \\ \hline
+Amar Menezes & 2015-03-26 & Implemented slider to control traffic signal interval \\ \hline
+Amar Menezes & 2015-03-26 & Removed max velocity slider and minor tweaks \\ \hline
+Nathalie Caliacmani & 2015-03-26 & Completed DemandMatrix table implementation \\ \hline
+Nathalie Caliacmani & 2015-03-26 & Merge remote-tracking branch `upstream/master' \\ \hline
+Amar Menezes & 2015-03-26 & Initial work on profile selector \\ \hline
+Amar Menezes & 2015-03-26 & Merge pull request \#29 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-03-26 & Initial work on profile configuration \\ \hline
+Nathalie Caliacmani & 2015-03-26 & Implemented Legend \\ \hline
+Nathalie Caliacmani & 2015-03-26 & Changed Color in Demand Matrix \\ \hline
+Amar Menezes & 2015-03-26 & Merge pull request \#30 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-03-26 & Added wiring to profile controls \\ \hline
+Amar Menezes & 2015-03-26 & Merge branch `master' of https://github.com/AmarEkanO/TrafficSim-framework \\ \hline
+Amar Menezes & 2015-03-26 & Completed Vehicle profile controls \\ \hline
+Amar Menezes & 2015-03-26 & Updated readme with build and install instructions \\ \hline
+Amar Menezes & 2015-03-26 & using getResource to fetch images \\ \hline
+Amar Menezes & 2015-03-26 & Road width correction \\ \hline
+Amar Menezes & 2015-03-26 & Resources included in jar file \\ \hline
+Amar Menezes & 2015-03-26 & Added test execution to build script \\ \hline
+MC & 2015-03-26 & Renderer \\ \hline
+MC & 2015-03-26 & Merge remote-tracking branch `upstream/master' \\ \hline
+MC & 2015-03-26 & Replace Roads in Network 1 \\ \hline
+MC & 2015-03-26 & Label Options \\ \hline
+MC & 2015-03-26 & Replace Roads Network 2 \\ \hline
+MC & 2015-03-26 & Replace Seperators \\ \hline
+Amar Menezes & 2015-03-26 & Merge pull request \#31 from Mighty-Caterpillar/master \\ \hline
+Nathalie Caliacmani & 2015-03-26 & Added an extra verification in input values in demand matrix \\ \hline
+Amar Menezes & 2015-03-26 & Merge pull request \#32 from nathalieee1989/master \\ \hline
+Amar Menezes & 2015-03-26 & UML diagrams from Emily \\ \hline
+\end{longtabu}
+\end{center}
