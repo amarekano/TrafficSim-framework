@@ -118,6 +118,8 @@ public class Network1 extends Network {
 
 		controls.setDemandMatrixCars(dm_cars);
 		controls.setDemandMatrixBuses(dm_buses);
+		controls.addDestinations(A);
+		controls.addDestinations(B);
 
 		vehicleList = new ArrayList<Vehicle>();
 

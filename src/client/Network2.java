@@ -211,6 +211,11 @@ public class Network2 extends Network
 		controls.setDemandMatrixCars(dm_cars);
 		controls.setDemandMatrixBuses(dm_buses);
 		controls.addTrafficScheduler(scheduler);
+		controls.addDestinations(A);
+		controls.addDestinations(B);
+		controls.addDestinations(C);
+		controls.addDestinations(D);
+		
 		
 		ReportGenerator generator = new ReportGenerator();
 		generator.addDestination(A);

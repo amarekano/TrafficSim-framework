@@ -1,11 +1,12 @@
 package client;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import core.endpoints.Destination;
 import service.DemandMatrix;
 import service.ReportGenerator;
 import service.SimulationClock;
@@ -54,4 +55,8 @@ public class ControlPanel extends JPanel {
 		policy_panel.addLightScheduler(scheduler);
 	}
 
+	public void addDestinations(Destination d)
+	{
+		policy_panel.addDesitnation(d);
+	}
 }

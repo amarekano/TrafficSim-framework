@@ -21,6 +21,54 @@ public class Destination extends EndPoint {
 	
 	//AM > Create a profile for generated vehicle velocity
 	private int minVehicleVelocity;
+	public int getMinVehicleVelocity() {
+		return minVehicleVelocity;
+	}
+
+	public void setMinVehicleVelocity(int minVehicleVelocity) {
+		this.minVehicleVelocity = minVehicleVelocity;
+	}
+
+	public int getMaxVehicleVelocity() {
+		return maxVehicleVelocity;
+	}
+
+	public void setMaxVehicleVelocity(int maxVehicleVelocity) {
+		this.maxVehicleVelocity = maxVehicleVelocity;
+	}
+
+	public double getVelocityProbability() {
+		return velocityProbability;
+	}
+
+	public void setVelocityProbability(double velocityProbability) {
+		this.velocityProbability = velocityProbability;
+	}
+
+	public int getMinVehicleAcceleration() {
+		return minVehicleAcceleration;
+	}
+
+	public void setMinVehicleAcceleration(int minVehicleAcceleration) {
+		this.minVehicleAcceleration = minVehicleAcceleration;
+	}
+
+	public int getMaxVehicleAcceleration() {
+		return maxVehicleAcceleration;
+	}
+
+	public void setMaxVehicleAcceleration(int maxVehicleAcceleration) {
+		this.maxVehicleAcceleration = maxVehicleAcceleration;
+	}
+
+	public double getAccelerationProbability() {
+		return accelerationProbability;
+	}
+
+	public void setAccelerationProbability(double accelerationProbability) {
+		this.accelerationProbability = accelerationProbability;
+	}
+
 	private int maxVehicleVelocity;
 	private double velocityProbability;
 	
@@ -150,4 +198,9 @@ public class Destination extends EndPoint {
 		return consumedQueue;
 	}
 
+	@Override
+	public String toString()
+	{
+		return label;
+	}
 }
