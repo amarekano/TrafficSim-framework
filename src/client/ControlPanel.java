@@ -14,7 +14,7 @@ public class ControlPanel extends JPanel {
 
 	private static final long serialVersionUID = 5379117713281763963L;
 	
-	private JPanel policy_panel;
+	private PolicyPanel policy_panel;
 	private DemandMatrixPanel demand_matrix_panel;
 	private ClockPanel clock_panel;
 
@@ -23,6 +23,8 @@ public class ControlPanel extends JPanel {
 		setLayout(new BorderLayout());
 		
 		policy_panel = new PolicyPanel();
+		policy_panel.setClockTimer(tm);
+		
 		Dimension dim=getSize();
 		policy_panel.setPreferredSize(new Dimension((int)dim.getWidth()/2,(int)dim.getHeight()));
 		

@@ -16,12 +16,14 @@ import javax.swing.JSpinner;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class PolicyPanel extends JPanel implements ChangeListener {
 
 	private static final long serialVersionUID = 6241308576167461723L;
+	private Timer timer;
 
 	public PolicyPanel() {
 		super();
@@ -76,39 +78,44 @@ public class PolicyPanel extends JPanel implements ChangeListener {
 	    clock_interval_slider = new JSlider();
 	    clock_interval_slider.setPaintTicks(true);
 	    clock_interval_slider.setPaintLabels(true);
-	    clock_interval_slider.setMaximum(60);
-	    clock_interval_slider.setMinimum(0);
-	    clock_interval_slider.setMajorTickSpacing(10);
-	    clock_interval_slider.setMinorTickSpacing(5);
+	    clock_interval_slider.setMaximum(5000);
+	    clock_interval_slider.setMinimum(100);
+	    clock_interval_slider.setMajorTickSpacing(500);
+	    clock_interval_slider.setMinorTickSpacing(50);
 	    clock_interval_slider.addChangeListener(this);
-	    clock_interval_slider.setName("funky 3");
+	    java.util.Hashtable<Integer,JLabel> labelTable = new java.util.Hashtable<Integer,JLabel>();
+	    labelTable.put(new Integer(0), new JLabel("0.0"));
+	    labelTable.put(new Integer(250), new JLabel("0.25"));
+	    labelTable.put(new Integer(500), new JLabel("0.5"));
+	    labelTable.put(new Integer(1000), new JLabel("1.0"));
+	    labelTable.put(new Integer(2000), new JLabel("2.0"));
+	    labelTable.put(new Integer(5000), new JLabel("5.0"));
+	    clock_interval_slider.setLabelTable( labelTable );
+	    clock_interval_slider.setName("clock");
 	   // add(interval_slider);
 	    
 	    JPanel clock_interval_panel = new JPanel(new GridLayout(2,1));
-	    clock_interval_panel.add(new JLabel("Clock Interval"));
+	    clock_interval_panel.add(new JLabel("Clock Interval (seconds)"));
 	    clock_interval_panel.add(clock_interval_slider);
-	    
-	    
 	    add(clock_interval_panel);
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-		
 	}
 
+	public void setClockTimer(Timer tm)
+	{
+		this.timer = tm;
+	}
+	
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		// TODO Auto-generated method stub
-		// update text field when the slider value changes
-        JSlider source = (JSlider) e.getSource();
-        System.out.println("" + source.getValue());
-        System.out.println("name" + source.getName());
-        //textField.setText();
+	    JSlider source = (JSlider) e.getSource();
+        if(source.getName().equalsIgnoreCase("clock"))
+        {
+        	if(!source.getValueIsAdjusting())
+        	{
+        	  timer.setDelay(source.getValue() < 1 ? 1: source.getValue());
+        	}	
+        }
+    
 		
 	}
 
