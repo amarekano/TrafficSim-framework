@@ -14,7 +14,7 @@ import core.vehicle.VehicleException;
 
 public class TimestampTest {
 
-	@Test
+	/*@Test
 	public void test_timestamp() throws EndPointException, VehicleException {
 		int laneLength=5;
 		int numOfLanes=1;
@@ -49,6 +49,6 @@ public class TimestampTest {
 		
 		assertEquals(-1,road.getVehicleNodeIndex(c1));
 		assertEquals(-1,road.getVehicleNodeIndex(b1));
-	}
+	}*/
 
 }
