@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import client.Renderer;
 import service.DemandMatrix;
 import service.DemandMatrixException;
 import service.ReportGenerator;
@@ -249,7 +250,7 @@ public class Network2 extends Network
 				int hra_jWidth = panelWidth/2 - 2*hdestinationWidth;
 				int hra_jEndX = hra_jStartX+hra_jWidth;
 				int hra_jEndY = hra_jStartY;
-				g.fillRect(hra_jStartX, hra_jStartY, hra_jWidth, hroadHeight);
+				Renderer.renderRoad(g, "A", "", hra_jStartX, hra_jStartY, hra_jWidth, hroadHeight, Renderer.Direction.EAST);
 				
 		 		//AM > Draw a vertical road form C to junction
 		 		g.setColor(Color.BLACK);
@@ -259,7 +260,7 @@ public class Network2 extends Network
 				int vrc_jHeight= panelHeight/2 - hroadHeight/2 - vdestinationHeight;
 				int vrc_jEndY = vrc_jStartY + vrc_jHeight;
 				int vrc_jEndX = vrc_jStartX;
-		 		g.fillRect(vrc_jStartX, vrc_jStartY, vrc_jWidth, vrc_jHeight);
+				Renderer.renderRoad(g, "", "C", vrc_jStartX, vrc_jStartY, vrc_jHeight, hroadHeight, Renderer.Direction.SOUTH);
 		 		
 		 		//AM > Draw vertical road from Junction to D
 		 		g.setColor(Color.BLACK);
@@ -269,7 +270,7 @@ public class Network2 extends Network
 				int vrj_dHeight= panelHeight/2 - hroadHeight/2 -vdestinationHeight;
 				int vrj_dEndY = vrj_dStartY + vrj_dHeight;
 				int vrj_dEndX = vrj_dStartX;
-		 		g.fillRect(vrj_dStartX, vrj_dStartY, vrj_dWidth, vrj_dHeight);
+				Renderer.renderRoad(g, "", "D", vrj_dStartX, vrj_dStartY, vrj_dHeight, hroadHeight, Renderer.Direction.SOUTH);
 		 		
 		 		//AM > Draw a horizontal road from junction to B
 				g.setColor(Color.BLACK);
@@ -278,7 +279,8 @@ public class Network2 extends Network
 				int hrj_bWidth = panelWidth/2 - hdestinationWidth - vrc_jWidth/2;
 				int hrj_bEndX = hrj_bStartX+hrj_bWidth;
 				int hrj_bEndY = hrj_bStartY;
-				g.fillRect(hrj_bStartX, hrj_bStartY, hrj_bWidth, hroadHeight);
+				Renderer.renderRoad(g, "", "B", hrj_bStartX, hrj_bStartY, hrj_bWidth, hroadHeight, Renderer.Direction.EAST);
+//				g.fillRect(hrj_bStartX, hrj_bStartY, hrj_bWidth, hroadHeight);
 		 		
 				//AM > Draw destination A
 		 		int textOffsetX = 5;
