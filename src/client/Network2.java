@@ -280,7 +280,6 @@ public class Network2 extends Network
 				int hrj_bEndX = hrj_bStartX+hrj_bWidth;
 				int hrj_bEndY = hrj_bStartY;
 				Renderer.renderRoad(g, "", "B", hrj_bStartX, hrj_bStartY, hrj_bWidth, hroadHeight, Renderer.Direction.EAST);
-//				g.fillRect(hrj_bStartX, hrj_bStartY, hrj_bWidth, hroadHeight);
 		 		
 				//AM > Draw destination A
 		 		int textOffsetX = 5;
@@ -310,48 +309,12 @@ public class Network2 extends Network
 				textOffsetX = 5;
 				textOffsetY = 5;
 				g.drawString("D", vrj_dEndX +vrj_dWidth/2 - textOffsetX, vrj_dEndY + vdestinationHeight/2 + textOffsetY);
-				
-				//AM > Draw road divider from A to junction
-				g.setColor(Color.WHITE);
-				g.drawLine(hra_jStartX , panelHeight/2, hra_jEndX -1, panelHeight/2);
-				//AM > Draw road divider from junction to B
-				g.drawLine(hrj_bStartX , panelHeight/2, hrj_bEndX -1, panelHeight/2);
-				
-				//AM > Draw horizontal lane separators form A to junction
-				Graphics2D g2d = (Graphics2D) g.create();
-				Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-		        g2d.setStroke(dashed);
-		        g2d.setColor(Color.WHITE);
-		        int upperLaneDividerY = panelHeight/2 - hroadHeight/4;
-		        int lowerLaneDividerY = panelHeight/2 + hroadHeight/4;
-		        g2d.drawLine(hra_jStartX, upperLaneDividerY, hra_jEndX -1, upperLaneDividerY);
-		        g2d.drawLine(hra_jStartX, lowerLaneDividerY, hra_jEndX -1, lowerLaneDividerY);
-		        
-		        //AM > Draw horizontal lane separators form junction to B
-		        g2d.setColor(Color.WHITE);
-		        upperLaneDividerY = panelHeight/2 - hroadHeight/4;
-		        lowerLaneDividerY = panelHeight/2 + hroadHeight/4;
-		        g2d.drawLine(hrj_bStartX, upperLaneDividerY, hrj_bEndX -1, upperLaneDividerY);
-		        g2d.drawLine(hrj_bStartX, lowerLaneDividerY, hrj_bEndX -1, lowerLaneDividerY);
-		        
-		        
-		        //AM > Draw a center line between lane boundaries
-		        //g.setColor(Color.RED);
-		        //g.drawLine(roadStartX, upperLaneDividerY - roadHeight/8, roadEndX, upperLaneDividerY - roadHeight/8);
-		        //g.drawLine(roadStartX, panelHeight/2 - roadHeight/8, roadEndX, panelHeight/2 - roadHeight/8);
-		        
-		        //AM > Draw Vertical divider
-		        g.setColor(Color.WHITE);
-		        g.drawLine(panelWidth/2, vdestinationHeight, panelWidth/2, vrj_dEndY);
-		        
-		        //AM > Draw vertical lane separators
-		        int leftLaneDividerX = panelWidth/2 - vrc_jWidth/4;
-		        int rightLaneDividerX = panelWidth/2 + vrc_jWidth/4;
-		        g2d.drawLine(leftLaneDividerX, vrc_jStartY, leftLaneDividerX, vrj_dEndY);
-		        g2d.drawLine(rightLaneDividerX, vrc_jStartY, rightLaneDividerX, vrj_dEndY);
-		        
-		        int blockWidth= (int)(hra_jWidth/lane_length);
-		        vehicleList = ra_j.getVehiclesOnRoad();
+			        int upperLaneDividerY = panelHeight/2 - hroadHeight/4;
+			        int lowerLaneDividerY = panelHeight/2 + hroadHeight/4;
+			        int leftLaneDividerX = panelWidth/2 - vrc_jWidth/4;
+			        int rightLaneDividerX = panelWidth/2 + vrc_jWidth/4;
+			        int blockWidth= (int)(hra_jWidth/lane_length);
+			        vehicleList = ra_j.getVehiclesOnRoad();
 		        
 		        //AM > Draw junction box
 		        Image img = new ImageIcon(getClass().getResource("res/cycle"+scheduler.getCycle()+".png")).getImage();
