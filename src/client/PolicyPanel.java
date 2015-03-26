@@ -1,17 +1,22 @@
 package client;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -28,9 +33,7 @@ public class PolicyPanel extends JPanel implements ChangeListener {
 	public PolicyPanel() {
 		super();
 		setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		//setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setLayout(new GridLayout(3,1));
-		
 		
 		interval_slider = new JSlider();
 		interval_slider = new JSlider();
@@ -46,10 +49,9 @@ public class PolicyPanel extends JPanel implements ChangeListener {
 	    interval_slider.setEnabled(false);
 	   // add(interval_slider);
 	    
-	    JPanel interval_panel = new JPanel(new GridLayout(2,1));
+	    JPanel interval_panel = new JPanel(new GridLayout(2, 1));
 	    interval_panel.add(new JLabel("Traffic Light Interval (clock ticks)"));
 	    interval_panel.add(interval_slider);
-	    
 	    add(interval_panel);
 	   
 	    JSlider clock_interval_slider = new JSlider();
@@ -85,12 +87,59 @@ public class PolicyPanel extends JPanel implements ChangeListener {
 	    destinationSelector.add(destinationLabel);
 	    destinationSelector.add(destinationBox);
 	    profilePanel.add(destinationSelector);
-	    add(profilePanel);
+	    
 	    
 	    //AM > Create controls to set the velocity profile
 	    JPanel velocityProfile = new JPanel(new FlowLayout());
-	    JLabel velcoityLabel = new JLabel("Configure Velocity");
+	    JLabel velocityLabel = new JLabel("Configure Velocity Profile");
+	    JTextField maxVelocityTF = new JTextField("Max velocity");
+	    JTextField minVelocityTF = new JTextField("Min veloctiy");
+	    JTextField velocityProbTF = new JTextField("Profile probability");
+	    JButton applyVelocityProfile = new JButton("Apply");
+	    velocityProfile.add(velocityLabel);
+	    velocityProfile.add(maxVelocityTF);
+	    velocityProfile.add(minVelocityTF);
+	    velocityProfile.add(velocityProbTF);
+	    velocityProfile.add(applyVelocityProfile);
+	    profilePanel.add(velocityProfile);
 	    
+	    JPanel accelerationProfile = new JPanel(new FlowLayout());
+	    JLabel accelerationLabel = new JLabel("Configure Acceleration Profile");
+	    JTextField maxAccelerationTF = new JTextField("Max Acceleration");
+	    JTextField minAccelerationTF = new JTextField("Min Acceleration");
+	    JTextField accelerationProbTF = new JTextField("Profile probability");
+	    JButton applyAccelerationProfile = new JButton("Apply");
+	    accelerationProfile.add(accelerationLabel);
+	    accelerationProfile.add(maxAccelerationTF);
+	    accelerationProfile.add(minAccelerationTF);
+	    accelerationProfile.add(accelerationProbTF);
+	    accelerationProfile.add(applyAccelerationProfile);
+	    profilePanel.add(accelerationProfile);
+	    
+	  /*  //AM > Create a slider to configure driver behaviour
+	    JPanel driverBehaviour = new JPanel(new GridLayout(2,1));
+	    JLabel behaviourLabel = new JLabel("Driver Behaviour");
+	    JSlider behaviourSlider = new JSlider();
+	    behaviourSlider.setPaintTicks(true);
+	    behaviourSlider.setPaintLabels(true);
+	    behaviourSlider.setMaximum(100);
+	    behaviourSlider.setMinimum(0);
+	    behaviourSlider.setMajorTickSpacing(50);
+	    behaviourSlider.setMinorTickSpacing(10);
+	    behaviourSlider.addChangeListener(this);
+	    java.util.Hashtable<Integer,JLabel> labelTable2 = new java.util.Hashtable<Integer,JLabel>();
+	    labelTable2.put(new Integer(0), new JLabel("Reckless"));
+	    labelTable2.put(new Integer(25), new JLabel("Aggressive"));
+	    labelTable2.put(new Integer(50), new JLabel("Cruise Control"));
+	    labelTable2.put(new Integer(75), new JLabel("Cautious"));
+	    labelTable2.put(new Integer(100), new JLabel("Extremely Cautious"));
+	    behaviourSlider.setLabelTable( labelTable2 );
+	    behaviourSlider.setName("behaviour");
+	    driverBehaviour.add(behaviourLabel);
+	    driverBehaviour.add(behaviourSlider);
+	    profilePanel.add(driverBehaviour);
+	    gbc.gridy = 2;*/
+	    add(profilePanel);
 	}
 
 	public void setClockTimer(Timer tm)
