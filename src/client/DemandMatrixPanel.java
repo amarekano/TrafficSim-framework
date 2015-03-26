@@ -127,7 +127,11 @@ public class DemandMatrixPanel extends JPanel {
 			        		double previous_value=dm_cars.getDemand(from, to);
 			        		
 			        		double data_double=Double.parseDouble(data);
-			        		if(data_double>=0 && data_double<=1){
+			        		
+			        		int len = data.length(); 
+			        		char lastChar = data.charAt(len - 1);
+			        		
+			        		if(data_double>=0 && data_double<=1 && lastChar!='.'){
 			        			dm_cars.setDemand(from, to, data_double);
 			        		}
 			        		else{
@@ -223,7 +227,11 @@ public class DemandMatrixPanel extends JPanel {
 			        		double previous_value=dm_buses.getDemand(from, to);
 			        		
 			        		double data_double=Double.parseDouble(data);
-			        		if(data_double>=0 && data_double<=1){
+			        		
+			        		int len = data.length(); 
+			        		char lastChar = data.charAt(len - 1); 
+			        		
+			        		if(data_double>=0 && data_double<=1 && lastChar!='.'){
 			        			dm_buses.setDemand(from, to, data_double);
 			        		}
 			        		else{
