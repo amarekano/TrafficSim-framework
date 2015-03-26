@@ -8,12 +8,17 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.border.TitledBorder;
+
+import service.SimulationClock;
 
 public class ClockPanel extends JPanel {
 
 	private static final long serialVersionUID = -2166709692460369850L;
-
+	SimulationClock simClock;
+	Timer tm;
+	
 	public ClockPanel() {
 		super();
 		setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -31,6 +36,12 @@ public class ClockPanel extends JPanel {
 		add(stop);
 		add(save);
 		
+	}
+	
+	public void setClock(Timer tm, SimulationClock simClock)
+	{
+		this.tm = tm;
+		this.simClock = simClock;
 	}
 
 }

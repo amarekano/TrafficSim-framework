@@ -4,14 +4,13 @@ import java.util.Observable;
 
 public class SimulationClock extends Observable implements Runnable{
 	private long currentTime;
-	public final static SimulationClock clock = new SimulationClock();
 	private long interval;
 	
 	private Thread systemClock;
 	private volatile boolean suspended = false;
 	private volatile boolean running = false;
 	
-	private SimulationClock()
+	public SimulationClock()
 	{
 		this.currentTime = 0;
 		//AM > Time in ms between each clock tick
@@ -25,12 +24,12 @@ public class SimulationClock extends Observable implements Runnable{
 		{
 			while(true)
 			{
-				Thread.sleep(clock.getInterval());
+				Thread.sleep(this.getInterval());
 				synchronized(this)
 				{
 					if(!suspended)
 					{
-						clock.incrementClock();
+						this.incrementClock();
 					}
 				}
 			}
@@ -42,7 +41,7 @@ public class SimulationClock extends Observable implements Runnable{
 	
 	public static SimulationClock getInstance()
 	{
-		return clock;
+		return new SimulationClock();
 	}
 	
 	public long getTime()

@@ -15,12 +15,6 @@ import service.SimulationClock;
 
 public class SimulationClockTest {
 
-	@Test
-	public void test_only_one_clock_instance_should_exist() {
-		SimulationClock clock = SimulationClock.getInstance();
-		SimulationClock clock2 = SimulationClock.getInstance();
-		assertEquals(clock,clock2);
-	}
 	
 	@Test
 	public void test_roads_move_traffic_based_on_simulation_clock() throws EndPointException, VehicleException, InterruptedException {
