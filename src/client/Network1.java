@@ -142,48 +142,15 @@ public class Network1 extends Network {
 				int panelHeight = (int) getSize().getHeight();
 				int roadHeight = 150;
 				int destinationWidth = 75;
-
-				//AM > Draw a straight road
-				g.setColor(Color.BLACK);
 				int roadStartX = 0 + destinationWidth;
 				int roadStartY = panelHeight/2 - roadHeight/2;
 				int roadWidth = panelWidth - destinationWidth*2;
 				int roadEndX = roadStartX+roadWidth;
 				int roadEndY = roadStartY;
-				g.fillRect(roadStartX, roadStartY, roadWidth, roadHeight);
-
-				//AM > Draw destination A
-				int textOffsetX = 5;
-				int textOffsetY = 5;
-				g.setColor(Color.GRAY);
-				g.fillRect(0,roadStartY, destinationWidth,roadHeight);
-				g.setColor(Color.BLACK);
-				g.drawString("A", destinationWidth/2 - textOffsetX, roadStartY + roadHeight/2 + textOffsetY);
-
-				//AM > Draw destination B
-				g.setColor(Color.GRAY);
-				g.fillRect(roadEndX, roadEndY, destinationWidth, roadHeight);
-				g.setColor(Color.BLACK);
-				g.drawString("B", roadEndX +destinationWidth/2 - textOffsetX, roadStartY + roadHeight/2 + textOffsetY);
-
-				//AM > Draw road divider
-				g.setColor(Color.WHITE);
-				g.drawLine(roadStartX , panelHeight/2, roadEndX -1, panelHeight/2);
-
-				//AM > Draw lane separators
-				Graphics2D g2d = (Graphics2D) g.create();
-				Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-				g2d.setStroke(dashed);
-				g2d.setColor(Color.WHITE);
 				int upperLaneDividerY = panelHeight/2 - roadHeight/4;
 				int lowerLaneDividerY = panelHeight/2 + roadHeight/4;
-				g2d.drawLine(roadStartX, upperLaneDividerY, roadEndX -1, upperLaneDividerY);
-				g2d.drawLine(roadStartX, lowerLaneDividerY, roadEndX -1, lowerLaneDividerY);
 
-				//AM > Draw a center line between lane boundaries, debug purposes
-				//g.setColor(Color.RED);
-				//g.drawLine(roadStartX, upperLaneDividerY - roadHeight/8, roadEndX, upperLaneDividerY - roadHeight/8);
-				//g.drawLine(roadStartX, panelHeight/2 - roadHeight/8, roadEndX, panelHeight/2 - roadHeight/8);
+				Renderer.renderRoad(g, roadStartX, roadStartY, roadWidth, roadHeight, Renderer.Direction.EAST);
 
 				//AM > Draw cars on road A to B 
 				int blockWidth = (int)roadWidth/roadLength;
