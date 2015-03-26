@@ -1,16 +1,25 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{EM3}
+Quadstone paramics.
+\newblock http://www.paramicsonline.com/.
+\newblock Accessed: 2015-03-22.
+
+\bibitem{EM1}
+Simulation of urban mobility.
+\newblock http://sumo.sourceforge.net/.
+\newblock Accessed: 2015-03-20.
+
+\bibitem{EM2}
+Tss - traffic simulation systems.
+\newblock http://www.aimsun.com/site/.
+\newblock Accessed: 2015-03-22.
 
 \bibitem{berdahl2000go}
 Daphne Berdahl.
 \newblock " go, trabi, go!": Reflections on a car and its symbolization over
   time.
 \newblock {\em Anthropology and Humanism}, 25(2):131--141, 2000.
-
-\bibitem{blunden1983congestion}
-WR~Blunden.
-\newblock Congestion-friend or foe?
-\newblock In {\em University of Wollongong Vice-Chancellor's Seminar, 1983
-  Wollongong, New South Wales, Australia}, 1983.
 
 \bibitem{benzpatent}
 Benz~\& Co.
@@ -22,9 +31,26 @@ E.~Eckermann.
 \newblock {\em World History of the Automobile}.
 \newblock Society of Automotive Engineers, 2001.
 
+\bibitem{michalopoulos1991enhancement}
+Panos Michalopoulos, Eil Kwon, and Jeong-Gyu Kang.
+\newblock Enhancement and field testing of a dynamic freeway simulation
+  program.
+\newblock {\em Transportation Research Record}, (1320), 1991.
+
 \bibitem{miller2001car}
 D.~Miller.
 \newblock {\em Car cultures}.
 \newblock Materializing culture. Berg, 2001.
+
+\bibitem{rathi1986freesim}
+Ajay~K Rathi and Zoltan~A Nemeth.
+\newblock {\em FREESIM: A MICROSCOPIC SIMULATION MODEL OF FREEWAY LANE CLOSURES
+  (ABRIDGMENT)}.
+\newblock Number 1091. 1986.
+
+\bibitem{ross1988some}
+Paul Ross.
+\newblock Some properties of macroscopic traffic models.
+\newblock {\em Transportation Research Record}, (1194), 1988.
 
 \end{thebibliography}

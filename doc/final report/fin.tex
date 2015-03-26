@@ -1,11 +1,13 @@
 \documentclass[titlepage]{article}
 \usepackage{graphicx}
+\usepackage{pdfpages}
 
 \title{The Undecided - Final Report - 7CCSMGRP}
 \author{Nathalie Caliacmani, Amar Menezes, \\ Belema Norman-William, Paul Orlean-Taub, Tony Sellen}
 \date{March 2015}
 
 \begin{document}
+\includepdf[pages={1,2}]{CoverSheet.pdf}
 \maketitle
 
 \begin{abstract}
@@ -39,5 +41,9 @@ This project is our attempt at producing a software  package that shows the effe
 	
 \bibliographystyle{plain}
 \bibliography{./files/bibfile}
+
+\appendix
+\section{Git log}
+\include{./files/gitlog}
 
 \end{document}
