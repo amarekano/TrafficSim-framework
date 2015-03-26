@@ -2,18 +2,20 @@ package client;
 
 import java.awt.Color;
 import java.awt.Dimension;
-
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import service.TrafficSignalScheduler;
 
 public class PolicyPanel extends JPanel implements ChangeListener {
@@ -73,6 +75,22 @@ public class PolicyPanel extends JPanel implements ChangeListener {
 	    clock_interval_panel.add(new JLabel("Clock Interval (seconds)"));
 	    clock_interval_panel.add(clock_interval_slider);
 	    add(clock_interval_panel);
+	    
+	    //AM > Add controls to set acceleration and velocity profiles at destinations
+	    JPanel profilePanel = new JPanel(new GridLayout(3,1));
+	    //AM >  Create controls to select destinations
+	    JPanel destinationSelector = new JPanel(new FlowLayout());
+	    JComboBox<String> destinationBox = new JComboBox<String>();
+	    JLabel destinationLabel = new JLabel("Destination Selected");
+	    destinationSelector.add(destinationLabel);
+	    destinationSelector.add(destinationBox);
+	    profilePanel.add(destinationSelector);
+	    add(profilePanel);
+	    
+	    //AM > Create controls to set the velocity profile
+	    JPanel velocityProfile = new JPanel(new FlowLayout());
+	    JLabel velcoityLabel = new JLabel("Configure Velocity");
+	    
 	}
 
 	public void setClockTimer(Timer tm)
