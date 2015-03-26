@@ -1,10 +1,23 @@
+\subsection{Objectives}
+Our primary objective is to create a system which can take as input a road system and a journey matrix and produce overall statistics about journey times between the entry/exit points and allow us to change something about the network or the demand and produce new statistics for comparison. Our aim is to model individual vehicle movements as realistically as possible, taking into account driver type, vehicle type, car following behaviour, lane switching behaviour and junction modelling. The system will output statis- tics and raw data for each vehicle journey which could be further analysed using a statistical analysis tool such as SPSS.
+
+\subsection{Project timeline}
+This is a very important component in every project in order to achieve goals, aims and objectives of this project, the project is divided into two parts the program development and project documentation. The program development is sub-divided into three parts; client, core, services and documentation. The project documentation contains the following; introduction, review, requirement and design, implementation, teamwork, evaluation and peer assessment. Below is the time plan:
+\begin{center}
+\includegraphics[]{./images/ganttchart.png}
+\includegraphics[scale=0.8]{./images/schedule.png}
+\end{center}
+
+\subsection{Implementation detail}
+
+
 \subsection{Output}
 We designed the software to output individual car journeys for a transport consultant to analyse using statistical analysis packages.  The basic idea is that the software is used to support decisions about  changes to the road network or for supporting planning decisions.  We present two scenarios here. Instead of using a statistical analysis package such as SPSS we wrote a custom python script to summarise the data.  The script also serves as a sanity check for the output of our software.  The python script is included in the appendix to this report. 
 
 
 
 \subsubsection{Shopping Centre Development}
-We have a simple network as shown below.  The consultant does a survey to measure existing traffic movements which we translate into a \textit{demand matrix} for the road system.  The demand matrix is just a count of car movements between each end point of the network over a given time period.  We are keeping things simple in our example and only considering one vehicle type.  In reality the model would take into account of other vehicle types and our software does allow for that.  We convert this demand matrix into a table which specifies the probability of a car entering the network at for each combination of origin and destination for each tick of the simulation clock.  This drives the creation of vehicles in our simulation for the base case.  \\ The consultant runs other models, based on the size of the new shopping centre and proximity of other centres to estimate a new demand matrix for when the centre is built.  Our software is then run in the base case and the modelled case using the new demand matrix and reports are generated showing the effect on journey times.\\ \textbf{Network diagram}
+We have a simple network as shown below.  The consultant does a survey to measure existing traffic movements which we translate into a \textit{demand matrix} for the road system.  The demand matrix is just a count of car movements between each end point of the network over a given time period.  We are keeping things simple in our example and only considering one vehicle type.  In reality the model would take into account of other vehicle types and our software does allow for that.  We convert this demand matrix into a table which specifies the probability of a car entering the network at for each combination of origin and destination for each tick of the simulation clock.  This drives the creation of vehicles in our simulation for the base case.  \\ The consultant runs other models, based on the size of the new shopping centre and proximity of other centres to estimate a new demand matrix for when the centre is built.  Our software is then run in the base case and the modelled case using the new demand matrix and reports are generated showing the effect on journey times.\\ \textbf{Network diagram}\\
 \includegraphics[scale=0.5]{./images/network.png}
 
 We used the following trip matrix for the base case:
@@ -33,9 +46,9 @@ We used the following trip matrix for the base case:
 	\end{tabular}
 	\end{center}
     
-    The output shows the expected behaviour:  proportionally more cars going to and from C and the average journey times to C increased.  The output for the two cases is shown below\\ \textbf{Base case}\\
-    \includegraphics[scale=1.0]{./images/scenario1.png}\\ \textbf{Planned Shopping Centre}\\
-    \includegraphics[scale=1.0]{./images/scenario2.png}
+    The output supports the case for the shopping centre  proportionally more cars going to and from C but the average journey times overall have not increased, although journeys to the shopping centre inself have slowed. This shows that the road network can support extra traffic without significant problems except around the centre itself.  The output for the two cases is shown below\\ \textbf{Base case}\\
+    \includegraphics[scale=0.8]{./images/scenario1.png}\\ \textbf{Planned Shopping Centre}\\
+    \includegraphics[scale=0.8]{./images/scenario2_1.png}
     
     
 \subsubsection{Congestion Charge}
@@ -56,5 +69,5 @@ In this case we used the following trip matrix and got the output below, which s
 		
 	\end{tabular}
 	\end{center}
-~ \\ \textbf{Planned Shopping Centre}\\
+~ \\ \textbf{Congestion charge}\\
     \includegraphics[scale=1.0]{./images/scenario3.png}
