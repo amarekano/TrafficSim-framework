@@ -17,11 +17,12 @@
 
  <!-- Set library variables -->
  <property name="lib.dir" location="${dist}/lib" />
- <property name="jar.dir" location="${dist}/bin"/>
+ <property name="jar.dir" location="${dist}/build"/>
+<property name="res.dir" location="${dist}/res"/>
 
  <!-- Build the CLASSPATH -->
  <path id="classpath">
-  <fileset dir="${lib.dir}" includes="*.jar"/>
+  <fileset dir="${lib.dir}" includes="*.jar"/>	
  </path>
 
  <path id="classpath.test">
@@ -79,12 +80,11 @@
  <!--
    Build the distribution files
   -->
- <target name="build" depends="test,compile,docs,jar" description="generate the distribution" >
+ <target name="build" depends="compile,docs,jar" description="generate the distribution" >
 
  </target>
 	
-	<target name="jar" depends="test">
-	        <mkdir dir="${bin}"/>
+	<target name="jar" depends="">
 	        <jar destfile="${bin}/${ant.project.name}.jar" basedir="${build}">
 	            <manifest>
 	                <attribute name="Main-Class" value="${main-class}"/>

@@ -251,7 +251,7 @@ public class Network1 extends Network {
 						}
 					}   
 				}
-				Image legend = new ImageIcon("res/legend.png").getImage();
+				Image legend = new ImageIcon(getClass().getResource("res/legend.png")).getImage();
 				g.drawImage(legend, 0, 0, null);
 
 

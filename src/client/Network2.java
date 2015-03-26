@@ -352,7 +352,7 @@ public class Network2 extends Network
 		        vehicleList = ra_j.getVehiclesOnRoad();
 		        
 		        //AM > Draw junction box
-		        Image img = new ImageIcon("res/cycle"+scheduler.getCycle()+".png").getImage();
+		        Image img = new ImageIcon(getClass().getResource("res/cycle"+scheduler.getCycle()+".png")).getImage();
 		        g.drawImage(img,panelWidth/2 - vrc_jWidth/2, panelHeight/2 - hroadHeight/2, vrc_jWidth, hroadHeight, this);
 		      
 		        //AM > Debug: Draw block width
@@ -622,7 +622,7 @@ public class Network2 extends Network
 		            	}
 		            }
 		        }
-		        Image legend = new ImageIcon("res/legend.png").getImage();
+		        Image legend = new ImageIcon(getClass().getResource("res/legend.png")).getImage();
 
 				g.drawImage(legend, 0, 0, null);
 			}
