@@ -111,7 +111,7 @@
 
   <!-- Define the package set to include: all source files except unit tests -->
   <packageset dir="src" defaultexcludes="yes">
-   <include name="**/**"/>
+   <include name="**/**" />
    <exclude name="**/*Test*" />
   </packageset>
   </javadoc>
