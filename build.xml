@@ -17,11 +17,11 @@
 
  <!-- Set library variables -->
  <property name="lib.dir" location="${dist}/lib" />
- <property name="jar.dir" location="${dist}/bin"/>
+ <property name="jar.dir" location="${dist}/build"/>
 
  <!-- Build the CLASSPATH -->
  <path id="classpath">
-  <fileset dir="${lib.dir}" includes="*.jar"/>
+  <fileset dir="${lib.dir}" includes="*.jar"/>	
  </path>
 
  <path id="classpath.test">
@@ -83,12 +83,14 @@
 
  </target>
 	
-	<target name="jar" depends="test">
-	        <mkdir dir="${bin}"/>
+	<target name="jar" depends="">
 	        <jar destfile="${bin}/${ant.project.name}.jar" basedir="${build}">
 	            <manifest>
 	                <attribute name="Main-Class" value="${main-class}"/>
 	            </manifest>
+	        	<fileset dir="${src}">
+	        	   <include name="client/res/**/*.png" />
+	        	</fileset>
 	        </jar>
 	    </target>
 

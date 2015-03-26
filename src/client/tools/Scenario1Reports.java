@@ -153,7 +153,7 @@ public class Scenario1Reports {
 		
 		clock.startClock();
 		System.out.println("Running scenario 1");
-		Thread.sleep(3*60*1000);
+		Thread.sleep(1*60*1000);
 		
 		clock.pauseClock();
 		

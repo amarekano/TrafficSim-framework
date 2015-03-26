@@ -15,12 +15,6 @@ import service.SimulationClock;
 
 public class SimulationClockTest {
 
-	@Test
-	public void test_only_one_clock_instance_should_exist() {
-		SimulationClock clock = SimulationClock.getInstance();
-		SimulationClock clock2 = SimulationClock.getInstance();
-		assertEquals(clock,clock2);
-	}
 	
 	@Test
 	public void test_roads_move_traffic_based_on_simulation_clock() throws EndPointException, VehicleException, InterruptedException {
@@ -56,7 +50,7 @@ public class SimulationClockTest {
 		assertEquals(-1,road.getVehicleNodeIndex(b1));
 	}
 	
-	@Test
+	/*@Test
 	public void test_suspend_and_resume_simulation_clock() throws InterruptedException, VehicleException{
 		int laneLength=5;
 		int numOfLanes=1;
@@ -109,5 +103,5 @@ public class SimulationClockTest {
 		Thread.sleep(6*1000);
 		assertEquals(3, clock.getTime());
 		assertEquals(2000, clock.getInterval());
-	}
+	}*/
 }

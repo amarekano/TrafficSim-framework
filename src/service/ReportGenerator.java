@@ -48,13 +48,14 @@ public class ReportGenerator {
 					String line = "";
 					if(v instanceof Car){
 					//	fileWriter.append("Car");
-						line =  String.format("%s;%s;%s;%s;%s\n",v.getStartTime(),v.getEndTime(),v.getSource().getLabel(),v.getDestination().getLabel(),"Car");
+						line =  String.format("%s;%s;%s;%s;%s",v.getStartTime(),v.getEndTime(),v.getSource().getLabel(),v.getDestination().getLabel(),"Car");
 					}
 					else if(v instanceof Bus){
 						//fileWriter.append("Bus");
-						line =  String.format("%s;%s;%s;%s;%s\n",v.getStartTime(),v.getEndTime(),v.getSource().getLabel(),v.getDestination().getLabel(),"Bus");
+						line =  String.format("%s;%s;%s;%s;%s",v.getStartTime(),v.getEndTime(),v.getSource().getLabel(),v.getDestination().getLabel(),"Bus");
 					}
 					fileWriter.write(line);
+					fileWriter.write(System.getProperty("line.separator"));
 				}
 			fileWriter.flush();
 			fileWriter.close();

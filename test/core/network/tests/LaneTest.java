@@ -517,4 +517,25 @@ public class LaneTest {
 		lane.moveVehicles();
 		assertEquals(-1, lane.getVehicleIndex(b1));
 	}
+	
+	@Test
+	public void test_should_be_able_to_return_a_list_of_vehicles()
+	{
+		Lane lane = new Lane(5);
+		Vehicle v1 = new Car();
+		Vehicle v2 = new Car();
+		Vehicle v3 = new Bus();
+		
+		lane.addVehicle(v3);
+		lane.moveVehicles();
+		lane.moveVehicles();
+		lane.addVehicle(v2);
+		lane.moveVehicles();
+		lane.addVehicle(v1);
+		
+		assertEquals(3, lane.getVehicles().size());
+		assertEquals(true, lane.getVehicles().contains(v3));
+		assertEquals(true, lane.getVehicles().contains(v2));
+		assertEquals(true, lane.getVehicles().contains(v1));
+	}
 }
