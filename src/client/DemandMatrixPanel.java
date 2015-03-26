@@ -1,22 +1,16 @@
 package client;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -55,31 +49,30 @@ public class DemandMatrixPanel extends JPanel {
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		String[] petStrings = { "Demand Matrix for Cars", "Demand Matrix for Buses" };
+		String[] demand_matrix_strings = { "Demand Matrix for Cars", "Demand Matrix for Buses" };
 
 		//Create the combo box, select item at index 4.
 		//Indices start at 0, so 4 specifies the pig.
-		JComboBox petList = new JComboBox(petStrings);
-		petList.setSelectedIndex(0);
-		petList.addActionListener (new ActionListener () {
+		JComboBox demand_matrix_combo = new JComboBox(demand_matrix_strings);
+		demand_matrix_combo.setSelectedIndex(0);
+		demand_matrix_combo.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	JComboBox cb = (JComboBox)e.getSource();
-		        String petName = (String)cb.getSelectedItem();
+		        String myselection = (String)cb.getSelectedItem();
 		        //updateLabel(petName);
 		        //table.
 		        
 		        CardLayout cl = (CardLayout)(demandPanel.getLayout());
 				
-				if(petName=="Demand Matrix for Cars"){
+				if(myselection=="Demand Matrix for Cars"){
 					cl.show(demandPanel,"Cars");
 				}
-				else if(petName=="Demand Matrix for Buses"){
+				else if(myselection=="Demand Matrix for Buses"){
 					cl.show(demandPanel, "Buses");
-					//System.out.println("test");
 				}
 		    }
 		});
-		add(petList);		
+		add(demand_matrix_combo);		
 		
 		ListModel lm = new AbstractListModel() {
 		      String headers[] = { "aaa", "b", "c", "d", "e", "f", "g", "h", "i" };
@@ -115,12 +108,9 @@ public class DemandMatrixPanel extends JPanel {
 			        String columnName = model.getColumnName(column);
 			        
 			        String data = model.getValueAt(row, column).toString();
-			        System.out.println("data"+data);
-			        System.out.println("columnName"+columnName);
 			        
 			        ListModel listmodel1=rowHeader.getModel();
 			        String rowName=listmodel1.getElementAt(row).toString();
-			        System.out.println("rowName"+rowName);
 			        Destination from=new Destination();
 			        Destination to=new Destination();
 			        for(Destination des: destinations_cars){
@@ -148,7 +138,6 @@ public class DemandMatrixPanel extends JPanel {
 			        	} catch (NumberFormatException error) {
 			        		model.setValueAt(dm_cars.getDemand(from, to), row, column);
 			        	}
-						System.out.println("new Value"+dm_cars.getDemand(from, to));
 					} catch (NumberFormatException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -165,6 +154,7 @@ public class DemandMatrixPanel extends JPanel {
 		    table_cars.setRowSelectionAllowed(false);
 
 		    rowHeader = new JList(lm);
+		    rowHeader.setBackground(new Color(0f,0f,0f,0f ));
 		    ListModel model = new AbstractListModel() {
 			      String headers[] = { "hello", "b", "c", "d", "e", "f", "g", "h", "i" };
 
@@ -213,13 +203,10 @@ public class DemandMatrixPanel extends JPanel {
 			        String columnName = model.getColumnName(column);
 			        
 			        String data = model.getValueAt(row, column).toString();
-			        System.out.println("data"+data);
-			        System.out.println("columnName"+columnName);
 			        
 			        
 			        ListModel listmodel1=rowHeader2.getModel();
 			        String rowName=listmodel1.getElementAt(row).toString();
-			        System.out.println("rowName"+rowName);
 			        Destination from=new Destination();
 			        Destination to=new Destination();
 			        for(Destination des: destinations_buses){
@@ -232,7 +219,6 @@ public class DemandMatrixPanel extends JPanel {
 			        	}
 			        }
 			        try {
-			        	//if(from==to)return;
 			        	try {
 			        		double previous_value=dm_buses.getDemand(from, to);
 			        		
@@ -248,7 +234,6 @@ public class DemandMatrixPanel extends JPanel {
 			        	} catch (NumberFormatException error) {
 			        		model.setValueAt(dm_buses.getDemand(from, to), row, column);
 			        	}
-						System.out.println("new Value"+dm_buses.getDemand(from, to));
 					} catch (NumberFormatException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -265,6 +250,7 @@ public class DemandMatrixPanel extends JPanel {
 		    table_buses.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		     rowHeader2 = new JList(lm);
+		     rowHeader2.setBackground(new Color(0f,0f,0f,0f ));
 		    rowHeader2.setFixedCellWidth(50);
 
 		    rowHeader2.setFixedCellHeight(table_buses.getRowHeight());
@@ -388,60 +374,6 @@ public class DemandMatrixPanel extends JPanel {
 		  }
 		}        
  
-/*
-	@Override
-	public void tableChanged(TableModelEvent e) {
-		int row = e.getFirstRow();
-        int column = e.getColumn();
-        if(row==-1 || column==-1){
-        	return;
-        }
-        TableModel model = (TableModel)e.getSource();
-        String columnName = model.getColumnName(column);
-        
-        String data = model.getValueAt(row, column).toString();
-        System.out.println("data"+data);
-        System.out.println("columnName"+columnName);
-        
-        ListModel listmodel1=rowHeader.getModel();
-        ListModel listmodel2=rowHeader2.getModel();
-        String rowName=listmodel1.getElementAt(row).toString();
-        String rowName2=listmodel2.getElementAt(row).toString();
-        Destination from=new Destination();
-        Destination to=new Destination();
-        for(Destination des: destinations_buses){
-        	String label=des.getLabel();
-        	if(label.equals(columnName)){
-        		from=des;
-        	}
-        	if(label.equals(rowName)){
-        		to=des;
-        	}
-        }
-        for(Destination des: destinations_cars){
-        	String label=des.getLabel();
-        	if(label.equals(columnName)){
-        		from=des;
-        	}
-        	if(label.equals(rowName)){
-        		to=des;
-        	}
-        }
-        try {
-        	if(from==to)return;
-			dm_buses.setDemand(from, to, Double.parseDouble(data));
-			System.out.println("new Value"+dm_buses.getDemand(from, to));
-			repaint();
-		} catch (NumberFormatException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (DemandMatrixException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-	}
-	
-	*/
+
 
 }
