@@ -80,16 +80,7 @@ public class Simulator extends JFrame implements ActionListener
         JMenuItem network2 = new JMenuItem("Network 2");
         mapsMenu.add(network2);
         network2.addActionListener(this);
-        
-        
-        JMenu reportMenu = new JMenu("Report");
-        
-        menuBar.add(reportMenu);
-        
-        JMenuItem save_report = new JMenuItem("Save report");
-        reportMenu.add(save_report);
-        save_report.addActionListener(this);
-		
+
         setTitle("Traffic Simulator");
         setVisible(true);
 	}
@@ -117,27 +108,11 @@ public class Simulator extends JFrame implements ActionListener
 			//AM > Set controls for network1
 			control_cl.show(controlPanel, MAP1PANEL);
 		}
-		else if(e.getActionCommand()=="Network 2"){
+		if(e.getActionCommand()=="Network 2"){
 			view_cl.show(mapPanel, MAP2PANEL);
 			//AM > Set controls for network2
 			control_cl.show(controlPanel, MAP2PANEL);
 		}
-		else if(e.getActionCommand()=="Save report"){
-			//Create a file chooser
-			final JFileChooser fc = new JFileChooser();
-			int returnVal = fc.showSaveDialog(this);
-
-	        if (returnVal == JFileChooser.APPROVE_OPTION) {
-	            File file = fc.getSelectedFile();
-	            ReportGenerator myreport= new ReportGenerator();
-				myreport.saveReport(file.getAbsolutePath()+".txt");
-	        } else {
-	        	System.out.println("Open command cancelled by user.");
-	        }
-			
-			
-		}
-		
 	}
 
 	

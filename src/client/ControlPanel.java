@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import service.DemandMatrix;
+import service.ReportGenerator;
 import service.SimulationClock;
 
 public class ControlPanel extends JPanel {
@@ -16,8 +17,6 @@ public class ControlPanel extends JPanel {
 	private JPanel policy_panel;
 	private DemandMatrixPanel demand_matrix_panel;
 	private ClockPanel clock_panel;
-	private DemandMatrix dm_cars;
-	private DemandMatrix dm_buses;
 
 	public ControlPanel(Timer tm, SimulationClock simClock) {
 		super();
@@ -38,13 +37,16 @@ public class ControlPanel extends JPanel {
 	}
 	
 	public void setDemandMatrixCars(DemandMatrix dm){
-		this.dm_cars=dm;
-		demand_matrix_panel.setDemandMatrixCars(dm_cars);
+		demand_matrix_panel.setDemandMatrixCars(dm);
 	}
 	
 	public void setDemandMatrixBuses(DemandMatrix dm){
-		this.dm_buses=dm;
-		demand_matrix_panel.setDemandMatrixBuses(dm_buses);
+		demand_matrix_panel.setDemandMatrixBuses(dm);
+	}
+	
+	public void setReportGenerator(ReportGenerator generator)
+	{
+		clock_panel.setReportGenerator(generator);
 	}
 
 

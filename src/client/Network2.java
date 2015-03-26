@@ -17,6 +17,7 @@ import javax.swing.Timer;
 
 import service.DemandMatrix;
 import service.DemandMatrixException;
+import service.ReportGenerator;
 import service.RoadNetwork;
 import service.SimulationClock;
 import service.TrafficSignalScheduler;
@@ -97,6 +98,11 @@ public class Network2 extends Network
 		B = new Destination("B");
 		C = new Destination("C");
 		D = new Destination("D");
+		
+		A.setClock(clock);
+		B.setClock(clock);
+		C.setClock(clock);
+		D.setClock(clock);
 		
 		dm_cars = new DemandMatrix();
 		dm_cars.addDestination(A);
@@ -204,6 +210,13 @@ public class Network2 extends Network
 		controls = new ControlPanel(timer,clock);
 		controls.setDemandMatrixCars(dm_cars);
 		controls.setDemandMatrixBuses(dm_buses);
+		
+		ReportGenerator generator = new ReportGenerator();
+		generator.addDestination(A);
+		generator.addDestination(B);
+		generator.addDestination(C);
+		generator.addDestination(D);
+		controls.setReportGenerator(generator);
 		
 		vehicleList = new ArrayList<Vehicle>();
 		
