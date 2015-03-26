@@ -153,7 +153,8 @@ public class DemandMatrixPanel extends JPanel {
 		    table_cars.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		    table_cars.setRowSelectionAllowed(false);
 
-		    rowHeader = new JList(lm);//rowHeader.setBackground(Color.PINK);
+		    rowHeader = new JList(lm);
+		    rowHeader.setBackground(new Color(0f,0f,0f,0f ));
 		    ListModel model = new AbstractListModel() {
 			      String headers[] = { "hello", "b", "c", "d", "e", "f", "g", "h", "i" };
 
@@ -249,6 +250,7 @@ public class DemandMatrixPanel extends JPanel {
 		    table_buses.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		     rowHeader2 = new JList(lm);
+		     rowHeader2.setBackground(new Color(0f,0f,0f,0f ));
 		    rowHeader2.setFixedCellWidth(50);
 
 		    rowHeader2.setFixedCellHeight(table_buses.getRowHeight());
