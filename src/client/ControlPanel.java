@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import service.DemandMatrix;
+import service.SimulationClock;
 
 public class ControlPanel extends JPanel {
 
@@ -13,11 +15,11 @@ public class ControlPanel extends JPanel {
 	
 	private JPanel policy_panel;
 	private DemandMatrixPanel demand_matrix_panel;
-	private JPanel clock_panel;
+	private ClockPanel clock_panel;
 	private DemandMatrix dm_cars;
 	private DemandMatrix dm_buses;
 
-	public ControlPanel() {
+	public ControlPanel(Timer tm, SimulationClock simClock) {
 		super();
 		setLayout(new BorderLayout());
 		
@@ -31,6 +33,7 @@ public class ControlPanel extends JPanel {
 		add(demand_matrix_panel,BorderLayout.EAST);
 		
 		clock_panel= new ClockPanel();
+		clock_panel.setClock(tm, simClock);
 		add(clock_panel,BorderLayout.SOUTH);
 	}
 	

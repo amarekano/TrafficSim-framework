@@ -77,6 +77,19 @@ public class Network2 extends Network
 	
 	public Network2() {
 		super();
+		ActionListener actionListener = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				view.repaint();
+				clock.incrementClock();
+			}
+		};
+		
+		timer = new Timer(1000, actionListener);
+	
+		clock = new SimulationClock();
+		
 		counter=0;
 		
 		//AM > Setup the destinations
@@ -182,29 +195,19 @@ public class Network2 extends Network
 			e.printStackTrace();
 		}
 		
-		clock = SimulationClock.getInstance();
+		
 		clock.addObserver(scheduler);
 		clock.addObserver(roadNetwork);
 		clock.addObserver(dm_cars);
 		clock.addObserver(dm_buses);
 		
-		controls = new ControlPanel();
+		controls = new ControlPanel(timer,clock);
 		controls.setDemandMatrixCars(dm_cars);
 		controls.setDemandMatrixBuses(dm_buses);
 		
 		vehicleList = new ArrayList<Vehicle>();
 		
-		ActionListener actionListener = new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				view.repaint();
-				clock.incrementClock();
-			}
-		};
 		
-		timer = new Timer(1000, actionListener);
-	
 		view = new JPanel()
 		{
 			private static final long serialVersionUID = 1L;
@@ -602,7 +605,6 @@ public class Network2 extends Network
 		        }
 			}
 		};
-		timer.start();
 	}
 	
 	@Override
