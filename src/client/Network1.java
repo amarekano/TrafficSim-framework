@@ -4,12 +4,14 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -135,6 +137,8 @@ public class Network1 extends Network {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
+				
+				
 
 				int panelWidth = (int) getSize().getWidth();
 				int panelHeight = (int) getSize().getHeight();
@@ -247,6 +251,9 @@ public class Network1 extends Network {
 						}
 					}   
 				}
+				Image legend = new ImageIcon("res/legend.png").getImage();
+				g.drawImage(legend, 0, 0, null);
+
 
 			}
 		};

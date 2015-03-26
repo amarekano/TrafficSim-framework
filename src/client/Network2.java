@@ -622,6 +622,9 @@ public class Network2 extends Network
 		            	}
 		            }
 		        }
+		        Image legend = new ImageIcon("res/legend.png").getImage();
+
+				g.drawImage(legend, 0, 0, null);
 			}
 		};
 	}
