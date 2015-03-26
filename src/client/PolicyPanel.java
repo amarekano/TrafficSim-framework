@@ -14,7 +14,6 @@ import javax.swing.JSlider;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import service.TrafficSignalScheduler;
 
 public class PolicyPanel extends JPanel implements ChangeListener {
@@ -50,47 +49,25 @@ public class PolicyPanel extends JPanel implements ChangeListener {
 	    interval_panel.add(interval_slider);
 	    
 	    add(interval_panel);
-	    
-	    
-	    JSlider velocity_slider = new JSlider();
-		velocity_slider = new JSlider();
-	    velocity_slider.setPaintTicks(true);
-	    velocity_slider.setPaintLabels(true);
-	    velocity_slider.setMaximum(50);
-	    velocity_slider.setMinimum(0);
-	    velocity_slider.setMajorTickSpacing(10);
-	    velocity_slider.setMinorTickSpacing(5);
-	    velocity_slider.addChangeListener(this);
-	    velocity_slider.setName("funky 2");
-	   // add(interval_slider);
-	    
-	    JPanel velocity_panel = new JPanel(new GridLayout(2,1));
-	    velocity_panel.add(new JLabel("Max Velocity"));
-	    velocity_panel.add(velocity_slider);
-	    
-	    add(velocity_panel);
-	    
-	    
-	    
+	   
 	    JSlider clock_interval_slider = new JSlider();
 	    clock_interval_slider = new JSlider();
 	    clock_interval_slider.setPaintTicks(true);
 	    clock_interval_slider.setPaintLabels(true);
 	    clock_interval_slider.setMaximum(5000);
-	    clock_interval_slider.setMinimum(100);
+	    clock_interval_slider.setMinimum(0);
 	    clock_interval_slider.setMajorTickSpacing(500);
 	    clock_interval_slider.setMinorTickSpacing(50);
 	    clock_interval_slider.addChangeListener(this);
 	    java.util.Hashtable<Integer,JLabel> labelTable = new java.util.Hashtable<Integer,JLabel>();
-	    labelTable.put(new Integer(0), new JLabel("0.0"));
-	    labelTable.put(new Integer(250), new JLabel("0.25"));
+	    labelTable.put(new Integer(0), new JLabel("0.1"));
 	    labelTable.put(new Integer(500), new JLabel("0.5"));
 	    labelTable.put(new Integer(1000), new JLabel("1.0"));
 	    labelTable.put(new Integer(2000), new JLabel("2.0"));
+	    labelTable.put(new Integer(3500), new JLabel("3.5"));
 	    labelTable.put(new Integer(5000), new JLabel("5.0"));
 	    clock_interval_slider.setLabelTable( labelTable );
 	    clock_interval_slider.setName("clock");
-	   // add(interval_slider);
 	    
 	    JPanel clock_interval_panel = new JPanel(new GridLayout(2,1));
 	    clock_interval_panel.add(new JLabel("Clock Interval (seconds)"));
@@ -110,6 +87,7 @@ public class PolicyPanel extends JPanel implements ChangeListener {
 			interval_slider.setEnabled(true);
 	}
 	
+	
 	@Override
 	public void stateChanged(ChangeEvent e) {
 	    JSlider source = (JSlider) e.getSource();
@@ -117,7 +95,7 @@ public class PolicyPanel extends JPanel implements ChangeListener {
         {
         	if(!source.getValueIsAdjusting())
         	{
-        	  timer.setDelay(source.getValue() < 1 ? 1: source.getValue());
+        	  timer.setDelay(source.getValue() <= 100 ? 100: source.getValue());
         	}	
         }
         if(source.getName().equalsIgnoreCase("lights"))
@@ -130,8 +108,6 @@ public class PolicyPanel extends JPanel implements ChangeListener {
         		}
         	}
         }
-    
-		
 	}
 
 
