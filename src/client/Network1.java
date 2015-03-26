@@ -15,6 +15,7 @@ import javax.swing.Timer;
 
 import service.DemandMatrix;
 import service.DemandMatrixException;
+import service.ReportGenerator;
 import service.RoadNetwork;
 import service.SimulationClock;
 import core.endpoints.Destination;
@@ -72,6 +73,9 @@ public class Network1 extends Network {
 		rb_a = new Road(numOfLanes, roadLength);
 		A = new Destination("A");
 		B = new Destination("B");
+		
+		A.setClock(clock);
+		B.setClock(clock);
 
 		ra_b.setSource(A);
 		ra_b.setSink(B);
@@ -107,7 +111,6 @@ public class Network1 extends Network {
 		} catch (DemandMatrixException e) {
 			e.printStackTrace();
 		}
-
 		
 		clock.addObserver(roadNetwork);
 		clock.addObserver(dm_cars);
@@ -118,9 +121,11 @@ public class Network1 extends Network {
 
 		vehicleList = new ArrayList<Vehicle>();
 
-
-
-
+		ReportGenerator generator = new ReportGenerator();
+		generator.addDestination(A);
+		generator.addDestination(B);
+		controls.setReportGenerator(generator);
+		
 		view = new JPanel()
 		{
 			private static final long serialVersionUID = 1L;

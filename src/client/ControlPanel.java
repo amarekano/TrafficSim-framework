@@ -7,23 +7,25 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import service.DemandMatrix;
+import service.ReportGenerator;
 import service.SimulationClock;
+import service.TrafficSignalScheduler;
 
 public class ControlPanel extends JPanel {
 
 	private static final long serialVersionUID = 5379117713281763963L;
 	
-	private JPanel policy_panel;
+	private PolicyPanel policy_panel;
 	private DemandMatrixPanel demand_matrix_panel;
 	private ClockPanel clock_panel;
-	private DemandMatrix dm_cars;
-	private DemandMatrix dm_buses;
 
 	public ControlPanel(Timer tm, SimulationClock simClock) {
 		super();
 		setLayout(new BorderLayout());
 		
 		policy_panel = new PolicyPanel();
+		policy_panel.setClockTimer(tm);
+		
 		Dimension dim=getSize();
 		policy_panel.setPreferredSize(new Dimension((int)dim.getWidth()/2,(int)dim.getHeight()));
 		
@@ -38,14 +40,21 @@ public class ControlPanel extends JPanel {
 	}
 	
 	public void setDemandMatrixCars(DemandMatrix dm){
-		this.dm_cars=dm;
-		demand_matrix_panel.setDemandMatrixCars(dm_cars);
+		demand_matrix_panel.setDemandMatrixCars(dm);
 	}
 	
 	public void setDemandMatrixBuses(DemandMatrix dm){
-		this.dm_buses=dm;
-		demand_matrix_panel.setDemandMatrixBuses(dm_buses);
+		demand_matrix_panel.setDemandMatrixBuses(dm);
+	}
+	
+	public void setReportGenerator(ReportGenerator generator)
+	{
+		clock_panel.setReportGenerator(generator);
 	}
 
+	public void addTrafficScheduler(TrafficSignalScheduler scheduler)
+	{
+		policy_panel.addLightScheduler(scheduler);
+	}
 
 }
