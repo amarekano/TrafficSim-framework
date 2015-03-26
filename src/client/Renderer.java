@@ -16,7 +16,7 @@ public class Renderer
 		WEST
 	}
 
-	public static void renderRoad(Graphics g, int x, int y, int length, int width, Direction direction)
+	public static void renderRoad(Graphics g, String source, String dest, int x, int y, int length, int width, Direction direction)
 	{
 		int offsetX    = 0;
 		int offsetY    = 0;
@@ -65,8 +65,8 @@ public class Renderer
 
 		/* Render Letters. */
 		g.setColor(Color.WHITE);
-		g.drawString("A", x + blockY - (blockX / 2), y + blockX - (blockY / 2));
-		g.drawString("B", x + offsetX + blockY + (blockX / 2), y + offsetY - blockX - (blockY / 2));
+		g.drawString(source, x + blockY - (blockX / 2), y + blockX - (blockY / 2));
+		g.drawString(dest, x + offsetX + blockY + (blockX / 2), y + offsetY - blockX - (blockY / 2));
 
 		/* Render Letters. */
 		g.setColor(old);

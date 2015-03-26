@@ -150,7 +150,7 @@ public class Network1 extends Network {
 				int upperLaneDividerY = panelHeight/2 - roadHeight/4;
 				int lowerLaneDividerY = panelHeight/2 + roadHeight/4;
 
-				Renderer.renderRoad(g, roadStartX, roadStartY, roadWidth, roadHeight, Renderer.Direction.EAST);
+				Renderer.renderRoad(g, "A", "B", roadStartX, roadStartY, roadWidth, roadHeight, Renderer.Direction.EAST);
 
 				//AM > Draw cars on road A to B 
 				int blockWidth = (int)roadWidth/roadLength;
