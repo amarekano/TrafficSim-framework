@@ -1,11 +1,10 @@
 package client;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+
 import java.awt.Image;
-import java.awt.Stroke;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ import service.RoadNetwork;
 import service.SimulationClock;
 import service.TrafficSignalScheduler;
 import core.endpoints.Destination;
-import core.endpoints.EndPointException;
 import core.network.Road;
 import core.network.interfaces.InterfaceException;
 import core.network.junction.Junction;

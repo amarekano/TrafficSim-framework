@@ -50,7 +50,7 @@ public class SimulationClockTest {
 		assertEquals(-1,road.getVehicleNodeIndex(b1));
 	}
 	
-	/*@Test
+	@Test
 	public void test_suspend_and_resume_simulation_clock() throws InterruptedException, VehicleException{
 		int laneLength=5;
 		int numOfLanes=1;
@@ -76,7 +76,7 @@ public class SimulationClockTest {
 		clock.resetClock();
 		clock.startClock();
 		
-		Thread.sleep(5*1000);
+		Thread.sleep(6*1000);
 		clock.pauseClock();
 		assertEquals(5, clock.getTime());
 
@@ -94,7 +94,7 @@ public class SimulationClockTest {
 		clock.setInterval(1000);
 		clock.resetClock();
 		clock.startClock();
-		Thread.sleep(5*1000);
+		Thread.sleep(6*1000);
 		assertEquals(5, clock.getTime());
 		assertEquals(1000, clock.getInterval());
 		
@@ -103,5 +103,5 @@ public class SimulationClockTest {
 		Thread.sleep(6*1000);
 		assertEquals(3, clock.getTime());
 		assertEquals(2000, clock.getInterval());
-	}*/
+	}
 }
